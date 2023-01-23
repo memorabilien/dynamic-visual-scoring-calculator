@@ -1,0 +1,109 @@
+.dynamic_visual_scoring_calculator {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    gap: 50px;
+}
+
+.dvsc_output_svg {
+    height: 200px;
+    width: 200px;
+    position: relative;
+}
+
+.dvsc_output_svg * {
+    transition: all 0.4s ease-out;
+}
+
+#dvsc_score_indicator {
+    cx: 50;
+    cy: 50;
+    r: 40;
+    stroke-width: 4px;
+    stroke-linecap: round;
+    fill: none;
+}
+
+#dvsc_score_text {
+    text-anchor: middle;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 32px;
+    font-weight: bold;
+    dominant-baseline: middle;
+}
+
+.dvsc_fraction {
+    cx: 50;
+    cy: 50;
+    r: 46;
+    stroke-width: 3px;
+    stroke-linecap: round;
+    fill: none;
+    transform-origin: center;
+}
+
+.dvsc_fraction_bg {
+    opacity: 0.5;
+}
+
+.dvsc_fraction_bar {
+    opacity: 1;
+}
+
+
+.dvsc_tab,
+.dvsc_tab>p {
+    tab-size: 4;
+    margin: 0;
+    text-align: end;
+    white-space: nowrap;
+    word-break: keep-all;
+}
+
+div.dvsc_settings>table>thead>tr {
+    border-bottom: 1px solid #00000080;
+    padding: 8px 0;
+}
+
+div.dvsc_settings>table>thead>tr,
+div.dvsc_settings>table>tbody>tr {
+    display: grid;
+    grid-gap: 45px;
+    grid-auto-flow: column;
+    grid-template-columns: 90px 65px 216px 164px 216px 110px;
+    justify-content: space-between;
+}
+
+div.dvsc_settings>table>tbody>tr>td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: nowrap;
+    text-align: end;
+}
+
+
+div.dvsc_settings>table>thead>tr>th:nth-child(1) {
+    text-align: left;
+}
+
+div.dvsc_settings>table>tbody>tr>td:nth-child(2),
+div.dvsc_settings>table>tbody>tr>td:nth-child(6) {
+    justify-content: center;
+}
+
+
+div.dvsc_settings>table>tbody>tr>th {
+    text-align: left;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+}
