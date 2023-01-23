@@ -294,7 +294,7 @@ function setOffset(){
     });
     category_score_circles.forEach((element,index)=>{
         //console.log(Math.min((2.0 * 46 * Math.PI - 6) * (1.0 - weighting_inputs[index].value * (scores[index] / 1000) * 0.01), 2 * 46 * Math.PI - 12));
-         element.setAttribute("stroke-dashoffset", Math.min( ((2.0 * 46 * Math.PI-6) * (1.0 - weighting_inputs[index].value*(scores[index]/1000)*0.01)), (2*46* Math.PI)-12)+5);
+         element.setAttribute("stroke-dashoffset", 2.0 * 46 * Math.PI * (1.0 - weighting_inputs[index].value * (scores[index] / 1000) * 0.01) > 278 ? 278: 2.0 * 46 * Math.PI * (1.0 - weighting_inputs[index].value * (scores[index] / 1000) * 0.01) < 2 * 46 * Math.PI * (1 - weighting_inputs[index].value / 100.0) + 2 * 46 * Math.PI * (1 - weighting_inputs[index].value / 100.0) * 0.05	? 2 * 46 * Math.PI * (1 - weighting_inputs[index].value / 100.0): 2.0 * 46 * Math.PI * (1.0 - weighting_inputs[index].value * (scores[index] / 1000) * 0.01));
           if (index >= 1) {
 			element.setAttribute("transform", "rotate(" + setScore(index).toString() + ")");
 		}
