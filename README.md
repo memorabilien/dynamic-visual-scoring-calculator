@@ -2,6 +2,8 @@
 
 A dynamically adjustable scoring calculator with a lighthouse style data visualization. Get a score between 0 to 100 from data, with dynamically adjustable target value, a from -5 to +5 adjustable bias , and a self adjusting weighting system.
 
+[Live Demo](https://memorabilien.github.io/dynamic-visual-scoring-calculator/src/)
+
 ### Config
 
 ```js
