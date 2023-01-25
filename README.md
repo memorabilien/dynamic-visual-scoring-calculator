@@ -49,7 +49,7 @@ To calculate a single category Score, the main principle is the difference betwe
     ![linear bias example plot](https://raw.githubusercontent.com/memorabilien/dynamic-visual-scoring-calculator/test-branch-1/docs/calc/linear.svg "Linear Bias Plot")
   * **quadratic**
 
-    ![img]()
+    ![quadratic bias example plot](https://raw.githubusercontent.com/memorabilien/dynamic-visual-scoring-calculator/test-branch-1/docs/calc/quad.svg "Quadratic Bias Plot")
   * **cubic**
 
     comeing soon...
