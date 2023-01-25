@@ -20,3 +20,15 @@ let config = {
 	colors: ["#ff0000", "#ff7b00", "#ffbb00", "#00dfba", "#127efa", "#8921ff", "#d500e9"], // define the circle colors
 };
 ```
+
+## Score Claculation
+
+To calculate a single category Score, the main principle is the difference between the `category_target_value` and the acutal `data_value`. Things to note are as follows:
+
+* The `data_value` can not be dynamically adjusted by the front end user, because it is a measured value in open world.
+* The `target_value` is adjustabe, with the `min` or `max` value  automatically beeing set to the `data_value`.
+  Should the `data_value >= target_value` the `category_direction = 1` . E.g. the category goal is it to omptimize the measured process for as little time as possible). If set correctly the `target_value` cannot be set bigger than the `data_value`. The Result is the ajdustable `target_value` will automatically stop at `max = data_value`.
+  Now The other way arround: Should the `data_value <= target_value` the `category_direction = -1` . E.g. the category goal is it to opptimize the measured process for the hightest efficientcy possible. If set correctly the `target_value` cannot be set smaller than the `data_value`. The Result is the ajdustable `target_value` will automatically stop at `min = data_value`.
+* The `category_weight` can be adjusted, which affects the overall score, but **not** the ``category_score``! When adjusting one `category_weighting` all the other `category_weightings` will adjust accordingly to   `∑[^category_count][_i = 1] category_weight[_i] = 1 = 100%`
+* The `bias_value` is adjustable, with the `bias_value` accepting any value between x ∈ [-5 , 5] ,  x ∈ Z. If `0 < bias_value < 5 ` means, you favor the category and therfore giving it a better score. If the  `bias_value == 5` the `categegory_score ≅ 1 ≅ 100%` .
+  Ifyou set  `-5 < bias_value < 0 ` means, you disfavor the category and therfore giving it a worse score. If the `bias_value == -5` the `categegory_score ≅ 0 ≅ 0%` .
