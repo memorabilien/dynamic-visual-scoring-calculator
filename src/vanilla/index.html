@@ -1,0 +1,36 @@
+<!DOCTYPE html >
+<html lang="en">
+<body>   
+        <div class="dynamic_visual_scoring_calculator">
+            <div class="dvsc_settings">
+                <table>
+                    <thead>
+                        <th>Category</th>
+                        <th>Value</th>
+                        <th>Target Value</th>
+                        <th>Bias</th>
+                        <th>Weighting</th>
+                        <th>Score</th>
+                    </thead>
+                    <tbody class="dvsc_table_body">
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="dvsc_output">
+                <svg xmlns="http://www.w3.org/2000/svg" class="dvsc_output_svg" viewBox="0 0 100 100">
+                <g id="dvsc_fractions">
+                    </g>
+                    <g id="dvsc_total_score">
+                        <circle id="dvsc_score_indicator"></circle>
+                        <text id="dvsc_score_text" x="50" y="50">100</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    
+</body>
+<script src="./matrix.js" async type="module" ></script>
+<script src="./script.js" async type="module"></script>
+<link  href="./style.css" type="text/css" rel="stylesheet">
+</html>
