@@ -53,10 +53,10 @@ To calculate a single category Score, the main principle is the difference betwe
     In this example `target_value` (the blue line) is set to 200 and ` data_value` (the red line) is set to 700. Because  `data_value `>`targe_tvalue `our `category_direction` is +1.
     `bias_value` shall be 0 and the `category_grain` is set to 500. By design if the `data_value == category_grain - traget_value` the `category_score` shall always be 500(purple line)
 
-    ![linear bias example plot](https://raw.githubusercontent.com/memorabilien/dynamic-visual-scoring-calculator/test-branch-1/docs/calc/linear.svg "Linear Bias Plot")
+    ![linear bias example plot](./docs/calc/linear.svg "Linear Bias Plot")
   * **quadratic**
 
-    ![quadratic bias example plot](https://raw.githubusercontent.com/memorabilien/dynamic-visual-scoring-calculator/test-branch-1/docs/calc/quad.svg "Quadratic Bias Plot")
+    ![quadratic bias example plot](./docs/calc/quad.svg "Quadratic Bias Plot")
   * **cubic**
 
     coming soon...
