@@ -1,10 +1,8 @@
-import calculator from "../matrix.js";
-import { getScoreLinear, getScoreQuadratic, getScoreCubic } from "../scoreCalc.js";
+import calculator from "./matrix.js";
+import { getScoreLinear, getScoreQuadratic, getScoreCubic } from "./scoreCalc.js";
 // import matrix.js for simpler linear algebra calculation
 
-
 let inputData = [ 20, 23, 80, 2];// the set which will be evaluated
-
 
 // config
 let config = {
@@ -19,6 +17,8 @@ let config = {
 	category_weighting_preset: [25, 25, 25, 25], // presets
 	colors: ["#ff0000", "#ff7b00", "#ffbb00", "#00dfba", "#127efa", "#8921ff", "#d500e9"], // define the circle colors
 };
+
+
 
 const frame = document.querySelector("div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody.dvsc_table_body");
 const fractions = document.querySelector("div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions");

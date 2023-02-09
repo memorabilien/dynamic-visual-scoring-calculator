@@ -18,7 +18,7 @@ DEALINGS IN THE SOFTWARE.
  */
 
 
-export default function calculator( inputMatrix, inputVektor){
+export default function calculator(inputMatrix, inputVektor){
 
 let output;
 

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+</head>
+
+<body>
+    <h1>Dynamic Visual Scoring Calculator</h1>
+    <div class="dvsc_schowcase">
+        <h2>Demo</h2>
+        <p class="description">This Demo has the minimum amount of CSS and is written in 100% vanilla JS. The Modulues
+            written for "Web
+            Components", "Vue", "React" or "Angular" my behave different in some cases. But overall the Framework of
+            choice makes no difference, the are all the same end result...</p>
+
+        <div class="dynamic_visual_scoring_calculator" id="no1">
+            <div class="dvsc_settings">
+                <table>
+                    <thead>
+                        <th>Category</th>
+                        <th>Value</th>
+                        <th>Target Value</th>
+                        <th>Bias</th>
+                        <th>Weighting</th>
+                        <th>Score</th>
+                    </thead>
+                    <tbody class="dvsc_table_body">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="dvsc_output">
+                <svg xmlns="http://www.w3.org/2000/svg" class="dvsc_output_svg" viewBox="0 0 100 100">
+                    <g id="dvsc_fractions">
+                    </g>
+                    <g id="dvsc_total_score">
+                        <circle id="dvsc_score_indicator"></circle>
+                        <text id="dvsc_score_text" x="50" y="50">100</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <p>This is the config for this example</p>
+        <div class="config">
+            <pre>
+<code id="htmlViewer" style= "  border-radius: 16px; color:rgb(171, 178, 191); font-weight:400;background-color:rgb(40, 44, 52);background:rgb(40, 44, 52);display:block;padding: 16px;"><span style="color:rgb(198, 120, 221); font-weight:400;">let</span> config = {
+    category_count: <span style="color:rgb(209, 154, 102); font-weight:400;">4</span>,<span style="color:rgb(92, 99, 112); font-weight:400;">// number of category</span>
+    category_names: [<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;Time&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;Cost&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;Efficiency&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;Personell&quot;</span>],<span style="color:rgb(92, 99, 112); font-weight:400;">//category title to display</span>
+    category_value_unit: [<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;s&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;€&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;%&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;P&quot;</span>],<span style="color:rgb(92, 99, 112); font-weight:400;">// category unit to display</span>
+    category_target_values: [<span style="color:rgb(209, 154, 102); font-weight:400;">10</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">20</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">100</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">0</span>],<span style="color:rgb(92, 99, 112); font-weight:400;">// target value to which a data Point in the data set should converge</span>
+    category_target_value_step: [<span style="color:rgb(209, 154, 102); font-weight:400;">1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">0.01</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">0.01</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">1</span>],<span style="color:rgb(92, 99, 112); font-weight:400;">//how big on step on the slider should be</span>
+    category_direction: [<span style="color:rgb(209, 154, 102); font-weight:400;">1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">-1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">1</span>],<span style="color:rgb(92, 99, 112); font-weight:400;">// 1: data point &gt; target value; -1: data point &lt; target value </span>
+    category_grain: [<span style="color:rgb(209, 154, 102); font-weight:400;">1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">1</span>],<span style="color:rgb(92, 99, 112); font-weight:400;">// fine tune to the acceptable difference between data point and target value ( IMPORTANT: g !== 0 always)!</span>
+    category_evaluation: [<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;linear&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;linear&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;linear&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;linear&quot;</span>], <span style="color:rgb(92, 99, 112); font-weight:400;">// how should the score of a category be calculated</span>
+    category_weighting_preset: [<span style="color:rgb(209, 154, 102); font-weight:400;">25</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">25</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">25</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">25</span>], <span style="color:rgb(92, 99, 112); font-weight:400;">// presets</span>
+    colors: [<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#ff0000&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#ff7b00&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#ffbb00&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#00dfba&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#127efa&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#8921ff&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#d500e9&quot;</span>], <span style="color:rgb(92, 99, 112); font-weight:400;">// define the circle colors</span>
+};</code>
+</pre>
+       </div>
+       <h2>Guide</h2>
+        <div data-target="readme-toc.content" class="guide">
+            <article  itemprop="text">
+                <p dir="auto">To calculate a single category Score, the main principle is the difference between the
+                    <code>category_target_value</code> and the acutal <code>data_value</code>. Things to note are as
+                    follows:</p>
+                <ul dir="auto">
+                    <li>
+                        <p dir="auto">The <code>data_value</code> can not be dynamically adjusted by the front end user,
+                            because it is a measured value in open world.</p>
+                    </li>
+                    <li>
+                        <p dir="auto">The <code>target_value</code> is adjustabe, with the <code>min</code> or
+                            <code>max</code> value automatically beeing set to the <code>data_value</code>.
+                            Should the <code>data_value &gt;= target_value</code> the
+                            <code>category_direction = 1</code> . E.g. the category goal is it to omptimize the measured
+                            process for as little time as possible). If set correctly the <code>target_value</code>
+                            cannot be set bigger than the <code>data_value</code>. The Result is the ajdustable
+                            <code>target_value</code> will automatically stop at <code>max = data_value</code>.
+                            Now The other way arround: Should the <code>data_value &lt;= target_value</code> the
+                            <code>category_direction = -1</code> . E.g. the category goal is it to opptimize the
+                            measured process for the hightest efficientcy possible. If set correctly the
+                            <code>target_value</code> cannot be set smaller than the <code>data_value</code>. The Result
+                            is the ajdustable <code>target_value</code> will automatically stop at
+                            <code>min = data_value</code>.</p>
+                    </li>
+                    <li>
+                        <p dir="auto">The <code>category_weight</code> can be adjusted, which affects the overall score,
+                            but <strong>not</strong> the <code>category_score</code>! When adjusting one
+                            <code>category_weighting</code> all the other <code>category_weightings</code> will adjust
+                            accordingly, so:</p>
+                        <p dir="auto"><math-renderer style="display: inline"
+                                data-static-url="https://github.githubassets.com/static"
+                                data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
+                                    style="position: relative;" display="true" jax="CHTML"
+                                    class="MathJax CtxtMenu_Attached_0" tabindex="0" ctxtmenu_counter="0"><mjx-math
+                                        style="margin-left: 0px; margin-right: 0px;" aria-hidden="true" class="MJX-TEX"
+                                        display="true"><mjx-munderover><mjx-over
+                                                style="padding-bottom: 0.192em; padding-left: 0.569em;"><mjx-mi size="s"
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D450 TEX-I"></mjx-c></mjx-mi></mjx-over><mjx-box><mjx-munder><mjx-row><mjx-base><mjx-mo
+                                                                class="mjx-lop"><mjx-c
+                                                                    class="mjx-c2211 TEX-S2"></mjx-c></mjx-mo></mjx-base></mjx-row><mjx-row><mjx-under
+                                                            style="padding-top: 0.167em; padding-left: 0.148em;"><mjx-texatom
+                                                                size="s"><mjx-mi class="mjx-i"><mjx-c
+                                                                        class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                                    class="mjx-n"><mjx-c
+                                                                        class="mjx-c3D"></mjx-c></mjx-mo><mjx-mn
+                                                                    class="mjx-n"><mjx-c
+                                                                        class="mjx-c31"></mjx-c></mjx-mn></mjx-texatom></mjx-under></mjx-row></mjx-munder></mjx-box></mjx-munderover><mjx-mi
+                                            space="2" class="mjx-i"><mjx-c
+                                                class="mjx-c1D450 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D461 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D452 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D45C TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D45F TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D466 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D446 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D450 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D45C TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D45F TEX-I"></mjx-c></mjx-mi><mjx-msub><mjx-mi
+                                                class="mjx-i"><mjx-c
+                                                    class="mjx-c1D452 TEX-I"></mjx-c></mjx-mi><mjx-script
+                                                style="vertical-align: -0.15em;"><mjx-mi size="s" class="mjx-i"><mjx-c
+                                                        class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msub><mjx-mo
+                                            space="4" class="mjx-n"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mn
+                                            space="4" class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo
+                                            space="4" class="mjx-n"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mn
+                                            space="4" class="mjx-n"><mjx-c class="mjx-c31"></mjx-c><mjx-c
+                                                class="mjx-c30"></mjx-c><mjx-c
+                                                class="mjx-c30"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml
+                                        display="block" unselectable="on"><math display="block"
+                                            xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <munderover>
+                                                <mo data-mjx-texclass="OP">∑</mo>
+                                                <mrow data-mjx-texclass="ORD">
+                                                    <mi>i</mi>
+                                                    <mo>=</mo>
+                                                    <mn>1</mn>
+                                                </mrow>
+                                                <mi>c</mi>
+                                            </munderover>
+                                            <mi>c</mi>
+                                            <mi>a</mi>
+                                            <mi>t</mi>
+                                            <mi>e</mi>
+                                            <mi>g</mi>
+                                            <mi>o</mi>
+                                            <mi>r</mi>
+                                            <mi>y</mi>
+                                            <mi>S</mi>
+                                            <mi>c</mi>
+                                            <mi>o</mi>
+                                            <mi>r</mi>
+                                            <msub>
+                                                <mi>e</mi>
+                                                <mi>i</mi>
+                                            </msub>
+                                            <mo>=</mo>
+                                            <mn>1</mn>
+                                            <mo>=</mo>
+                                            <mn>100</mn>
+                                        </math></mjx-assistive-mml></mjx-container></math-renderer></p>
+                        <p dir="auto">For ease of use the lowest individual <code>category_weight</code> is 0.01 %. This
+                            ensures, that no <code>category_weight</code> will be stuck at 0%. <em>Due to the nature of
+                                using linear Alegebra (more specific Matrix calculations) for calculation the weights.
+                                Depending on the number of categorys, if one category reaches 0% it will stay at 0% and
+                                the other weight will compensate, which is an unwanted effect</em></p>
+                    </li>
+                    <li>
+                        <p dir="auto">The <code>bias_value</code> is adjustable, with the <code>bias_value</code>
+                            accepting any value between <math-renderer class="js-inline-math" style="display: inline"
+                                data-static-url="https://github.githubassets.com/static"
+                                data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
+                                    style="position: relative;" jax="CHTML" class="MathJax CtxtMenu_Attached_0"
+                                    tabindex="0" ctxtmenu_counter="1"><mjx-math aria-hidden="true"
+                                        class="MJX-TEX"><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c
+                                                class="mjx-c1D460 TEX-I"></mjx-c></mjx-mi><mjx-mo space="4"
+                                            class="mjx-n"><mjx-c class="mjx-c2208"></mjx-c></mjx-mo><mjx-mo space="4"
+                                            class="mjx-n"><mjx-c class="mjx-c5B"></mjx-c></mjx-mo><mjx-mo
+                                            class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn
+                                            class="mjx-n"><mjx-c class="mjx-c35"></mjx-c></mjx-mn><mjx-mo
+                                            class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mn space="2"
+                                            class="mjx-n"><mjx-c class="mjx-c35"></mjx-c></mjx-mn><mjx-mo
+                                            class="mjx-n"><mjx-c class="mjx-c5D"></mjx-c></mjx-mo><mjx-mo
+                                            class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mi space="2"
+                                            class="mjx-i"><mjx-c class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi><mjx-mi
+                                            class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi><mjx-mi
+                                            class="mjx-i"><mjx-c class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi><mjx-mi
+                                            class="mjx-i"><mjx-c class="mjx-c1D460 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                            space="4" class="mjx-n"><mjx-c class="mjx-c2208"></mjx-c></mjx-mo><mjx-mi
+                                            space="4" class="mjx-i"><mjx-c
+                                                class="mjx-c1D44D TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml
+                                        display="inline" unselectable="on"><math
+                                            xmlns="http://www.w3.org/1998/Math/MathML">
+                                            <mi>b</mi>
+                                            <mi>i</mi>
+                                            <mi>a</mi>
+                                            <mi>s</mi>
+                                            <mo>∈</mo>
+                                            <mo stretchy="false">[</mo>
+                                            <mo>−</mo>
+                                            <mn>5</mn>
+                                            <mo>,</mo>
+                                            <mn>5</mn>
+                                            <mo stretchy="false">]</mo>
+                                            <mo>,</mo>
+                                            <mi>b</mi>
+                                            <mi>i</mi>
+                                            <mi>a</mi>
+                                            <mi>s</mi>
+                                            <mo>∈</mo>
+                                            <mi>Z</mi>
+                                        </math></mjx-assistive-mml></mjx-container></math-renderer>. If
+                            <code>0 &lt; bias_value &lt; 5 </code> means, you favor the category and therfore giving it
+                            a better score. If the <code>bias_value == 5</code> the
+                            <code>categegory_score ≅ 1 ≅ 100%</code> .
+                            If you set <code>-5 &lt; bias_value &lt; 0 </code> means, you disfavor the category and
+                            therfore giving it a worse score. If the <code>bias_value == -5</code> the
+                            <code>categegory_score ≅ 0 ≅ 0%</code> . To control how the bias impacts the
+                            <code>category_score</code> there are three differnet option which must be chosen in the
+                            <code>config</code>. There are three evaluation methods:</p>
+                        <ul dir="auto">
+                            <li>
+                                <p dir="auto"><strong>linear:</strong>
+                                    s(v) returns a score with 0 &gt;= <code>category_score</code> &lt;= 1000 , dependent
+                                    on the <code>target_value</code> <math-renderer class="js-inline-math"
+                                        style="display: inline" data-static-url="https://github.githubassets.com/static"
+                                        data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
+                                            style="position: relative;" jax="CHTML" class="MathJax CtxtMenu_Attached_0"
+                                            tabindex="0" ctxtmenu_counter="2"><mjx-math aria-hidden="true"
+                                                class="MJX-TEX"><mjx-mi class="mjx-i"><mjx-c
+                                                        class="mjx-c1D461 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml
+                                                display="inline" unselectable="on"><math
+                                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <mi>t</mi>
+                                                </math></mjx-assistive-mml></mjx-container></math-renderer>, the actual
+                                    <code>data_value</code> <math-renderer class="js-inline-math"
+                                        style="display: inline" data-static-url="https://github.githubassets.com/static"
+                                        data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
+                                            style="position: relative;" jax="CHTML" class="MathJax CtxtMenu_Attached_0"
+                                            tabindex="0" ctxtmenu_counter="3"><mjx-math aria-hidden="true"
+                                                class="MJX-TEX"><mjx-mi class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml
+                                                display="inline" unselectable="on"><math
+                                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <mi>v</mi>
+                                                </math></mjx-assistive-mml></mjx-container></math-renderer> ,
+                                    <code>bias_value</code> <math-renderer class="js-inline-math"
+                                        style="display: inline" data-static-url="https://github.githubassets.com/static"
+                                        data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
+                                            style="position: relative;" jax="CHTML" class="MathJax CtxtMenu_Attached_0"
+                                            tabindex="0" ctxtmenu_counter="4"><mjx-math aria-hidden="true"
+                                                class="MJX-TEX"><mjx-mi class="mjx-i"><mjx-c
+                                                        class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml
+                                                display="inline" unselectable="on"><math
+                                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <mi>b</mi>
+                                                </math></mjx-assistive-mml></mjx-container></math-renderer> ,
+                                    <code>category_direction</code> <math-renderer class="js-inline-math"
+                                        style="display: inline" data-static-url="https://github.githubassets.com/static"
+                                        data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
+                                            style="position: relative;" jax="CHTML" class="MathJax CtxtMenu_Attached_0"
+                                            tabindex="0" ctxtmenu_counter="5"><mjx-math aria-hidden="true"
+                                                class="MJX-TEX"><mjx-mi class="mjx-i"><mjx-c
+                                                        class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml
+                                                display="inline" unselectable="on"><math
+                                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <mi>p</mi>
+                                                </math></mjx-assistive-mml></mjx-container></math-renderer> and the
+                                    <code>category_grain </code><math-renderer class="js-inline-math"
+                                        style="display: inline" data-static-url="https://github.githubassets.com/static"
+                                        data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
+                                            style="position: relative;" jax="CHTML" class="MathJax CtxtMenu_Attached_0"
+                                            tabindex="0" ctxtmenu_counter="6"><mjx-math aria-hidden="true"
+                                                class="MJX-TEX"><mjx-mi class="mjx-i"><mjx-c
+                                                        class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml
+                                                display="inline" unselectable="on"><math
+                                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <mi>g</mi>
+                                                </math></mjx-assistive-mml></mjx-container></math-renderer> , which
+                                    should be set to relative resolution, which ís dependent on the use case, i.e. when
+                                    running a marathon anything from 10 seconds to 10 minutues would be the grain, on
+                                    the other hand when running a 100m dash the grain would be 0.5 Seconds to 0.005
+                                    Seconds.</p>
+                                <p dir="auto"><math-renderer class="js-inline-math" style="display: inline"
+                                        data-static-url="https://github.githubassets.com/static"
+                                        data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
+                                            style="position: relative;" display="true" jax="CHTML"
+                                            class="MathJax CtxtMenu_Attached_0" tabindex="0"
+                                            ctxtmenu_counter="7"><mjx-math style="margin-left: 0px; margin-right: 0px;"
+                                                aria-hidden="true" class="MJX-TEX" display="true"><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi><mjx-mo space="4"
+                                                    class="mjx-n"><mjx-c class="mjx-c2208"></mjx-c></mjx-mo><mjx-mo
+                                                    space="4" class="mjx-n"><mjx-c
+                                                        class="mjx-c5B"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c
+                                                        class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c
+                                                        class="mjx-c35"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c
+                                                        class="mjx-c2C"></mjx-c></mjx-mo><mjx-mn space="2"
+                                                    class="mjx-n"><mjx-c class="mjx-c35"></mjx-c></mjx-mn><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c5D"></mjx-c></mjx-mo><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c3B"></mjx-c></mjx-mo><mjx-mtext
+                                                    space="2" class="mjx-n"><mjx-c
+                                                        class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mi class="mjx-i"><mjx-c
+                                                        class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi><mjx-mo space="4"
+                                                    class="mjx-n"><mjx-c class="mjx-c2208"></mjx-c></mjx-mo><mjx-mi
+                                                    space="4" class="mjx-i"><mjx-c
+                                                        class="mjx-c1D44D TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c3B"></mjx-c></mjx-mo><mjx-mtext
+                                                    space="2" class="mjx-n"><mjx-c
+                                                        class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mtext
+                                                    class="mjx-n"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mtext
+                                                    class="mjx-n"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D461 TEX-I"></mjx-c></mjx-mi><mjx-mo space="4"
+                                                    class="mjx-n"><mjx-c class="mjx-c2264"></mjx-c></mjx-mo><mjx-mi
+                                                    space="4" class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo space="3"
+                                                    class="mjx-n"><mjx-c class="mjx-c2228"></mjx-c></mjx-mo><mjx-mi
+                                                    space="3" class="mjx-i"><mjx-c
+                                                        class="mjx-c1D461 TEX-I"></mjx-c></mjx-mi><mjx-mo space="4"
+                                                    class="mjx-n"><mjx-c class="mjx-c2265"></mjx-c></mjx-mo><mjx-mi
+                                                    space="4" class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c3B"></mjx-c></mjx-mo><mjx-mtext
+                                                    space="2" class="mjx-n"><mjx-c
+                                                        class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mtext
+                                                    class="mjx-n"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mtext
+                                                    class="mjx-n"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo space="4"
+                                                    class="mjx-n"><mjx-c class="mjx-c2208"></mjx-c></mjx-mo><mjx-mo
+                                                    space="4" class="mjx-n"><mjx-c
+                                                        class="mjx-c5B"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c
+                                                        class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c
+                                                        class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c
+                                                        class="mjx-c2C"></mjx-c></mjx-mo><mjx-mn space="2"
+                                                    class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c5D"></mjx-c></mjx-mo><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c3B"></mjx-c></mjx-mo><mjx-mtext
+                                                    space="2" class="mjx-n"><mjx-c
+                                                        class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mi class="mjx-i"><mjx-c
+                                                        class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo space="4"
+                                                    class="mjx-n"><mjx-c class="mjx-c2208"></mjx-c></mjx-mo><mjx-mi
+                                                    space="4" class="mjx-i"><mjx-c
+                                                        class="mjx-c1D44D TEX-I"></mjx-c></mjx-mi><mjx-mtext
+                                                    class="mjx-n"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mtext
+                                                    class="mjx-n"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mtext
+                                                    class="mjx-n"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D461 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mi
+                                                    space="2" class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mi
+                                                    space="2" class="mjx-i"><mjx-c
+                                                        class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-mo space="4"
+                                                    class="mjx-n"><mjx-c class="mjx-c2208"></mjx-c></mjx-mo><mjx-mi
+                                                    space="4" class="mjx-i"><mjx-c
+                                                        class="mjx-c1D445 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml
+                                                display="block" unselectable="on"><math display="block"
+                                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <mi>b</mi>
+                                                    <mo>∈</mo>
+                                                    <mo stretchy="false">[</mo>
+                                                    <mo>−</mo>
+                                                    <mn>5</mn>
+                                                    <mo>,</mo>
+                                                    <mn>5</mn>
+                                                    <mo stretchy="false">]</mo>
+                                                    <mo>;</mo>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mi>b</mi>
+                                                    <mo>∈</mo>
+                                                    <mi>Z</mi>
+                                                    <mo>;</mo>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mi>t</mi>
+                                                    <mo>≤</mo>
+                                                    <mi>v</mi>
+                                                    <mo>∨</mo>
+                                                    <mi>t</mi>
+                                                    <mo>≥</mo>
+                                                    <mi>v</mi>
+                                                    <mo>;</mo>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mi>p</mi>
+                                                    <mo>∈</mo>
+                                                    <mo stretchy="false">[</mo>
+                                                    <mo>−</mo>
+                                                    <mn>1</mn>
+                                                    <mo>,</mo>
+                                                    <mn>1</mn>
+                                                    <mo stretchy="false">]</mo>
+                                                    <mo>;</mo>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mi>p</mi>
+                                                    <mo>∈</mo>
+                                                    <mi>Z</mi>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mi>t</mi>
+                                                    <mo>,</mo>
+                                                    <mi>v</mi>
+                                                    <mo>,</mo>
+                                                    <mi>g</mi>
+                                                    <mo>∈</mo>
+                                                    <mi>R</mi>
+                                                </math></mjx-assistive-mml></mjx-container></math-renderer></p>
+                                <p dir="auto"><math-renderer class="js-inline-math" style="display: inline"
+                                        data-static-url="https://github.githubassets.com/static"
+                                        data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
+                                            style="position: relative;" display="true" jax="CHTML"
+                                            class="MathJax CtxtMenu_Attached_0" tabindex="0"
+                                            ctxtmenu_counter="8"><mjx-math style="margin-left: 0px; margin-right: 0px;"
+                                                aria-hidden="true" class="MJX-TEX" display="true"><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D460 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    space="4" class="mjx-n"><mjx-c
+                                                        class="mjx-c3D"></mjx-c></mjx-mo><mjx-mi space="4"
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D453 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    space="3" class="mjx-n"><mjx-c
+                                                        class="mjx-c2B"></mjx-c></mjx-mo><mjx-mi space="3"
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D453 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mo
+                                                    class="mjx-n"><mjx-c
+                                                        class="mjx-c2212"></mjx-c></mjx-mo><mjx-msub><mjx-mi
+                                                        class="mjx-i"><mjx-c
+                                                            class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi><mjx-script
+                                                        style="vertical-align: -0.15em;"><mjx-mn size="s"
+                                                            class="mjx-n"><mjx-c
+                                                                class="mjx-c31"></mjx-c></mjx-mn></mjx-script></mjx-msub><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    space="3" class="mjx-n"><mjx-c
+                                                        class="mjx-c2B"></mjx-c></mjx-mo><mjx-mn space="3"
+                                                    class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    space="3" class="mjx-n"><mjx-c
+                                                        class="mjx-c2B"></mjx-c></mjx-mo><mjx-mi space="3"
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D453 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo space="3"
+                                                    class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mfrac
+                                                    space="3"><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mn
+                                                                class="mjx-n"><mjx-c
+                                                                    class="mjx-c31"></mjx-c></mjx-mn></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-mrow><mjx-mi
+                                                                                class="mjx-i"><mjx-c
+                                                                                    class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-msub><mjx-mi
+                                                                                    class="mjx-i"><mjx-c
+                                                                                        class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi><mjx-script
+                                                                                    style="vertical-align: -0.15em;"><mjx-mn
+                                                                                        size="s" class="mjx-n"><mjx-c
+                                                                                            class="mjx-c31"></mjx-c></mjx-mn></mjx-script></mjx-msub></mjx-mrow></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    class="mjx-n"><mjx-c
+                                                        class="mjx-c28"></mjx-c></mjx-mo><mjx-msub><mjx-mi
+                                                        class="mjx-i"><mjx-c
+                                                            class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi><mjx-script
+                                                        style="vertical-align: -0.15em;"><mjx-mn size="s"
+                                                            class="mjx-n"><mjx-c
+                                                                class="mjx-c31"></mjx-c></mjx-mn></mjx-script></mjx-msub><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    space="3" class="mjx-n"><mjx-c
+                                                        class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn space="3"
+                                                    class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    space="3" class="mjx-n"><mjx-c
+                                                        class="mjx-c2B"></mjx-c></mjx-mo><mjx-mn space="3"
+                                                    class="mjx-n"><mjx-c class="mjx-c35"></mjx-c><mjx-c
+                                                        class="mjx-c30"></mjx-c><mjx-c
+                                                        class="mjx-c30"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml
+                                                display="block" unselectable="on"><math display="block"
+                                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <mi>s</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mi>v</mi>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo>=</mo>
+                                                    <mi>f</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mo>−</mo>
+                                                    <mi>h</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mi>v</mi>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo>+</mo>
+                                                    <mi>f</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mi>h</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mi>v</mi>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mo>−</mo>
+                                                    <msub>
+                                                        <mi>b</mi>
+                                                        <mn>1</mn>
+                                                    </msub>
+                                                    <mi>h</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mi>v</mi>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo>+</mo>
+                                                    <mn>1</mn>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo>+</mo>
+                                                    <mi>f</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mi>h</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mi>v</mi>
+                                                    <mo>−</mo>
+                                                    <mfrac>
+                                                        <mn>1</mn>
+                                                        <mrow>
+                                                            <mi>p</mi>
+                                                            <msub>
+                                                                <mi>b</mi>
+                                                                <mn>1</mn>
+                                                            </msub>
+                                                        </mrow>
+                                                    </mfrac>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo stretchy="false">(</mo>
+                                                    <msub>
+                                                        <mi>b</mi>
+                                                        <mn>1</mn>
+                                                    </msub>
+                                                    <mi>h</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mi>v</mi>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo>−</mo>
+                                                    <mn>1</mn>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo>+</mo>
+                                                    <mn>500</mn>
+                                                </math></mjx-assistive-mml></mjx-container></math-renderer></p>
+                                <p dir="auto"><math-renderer class="js-inline-math" style="display: inline"
+                                        data-static-url="https://github.githubassets.com/static"
+                                        data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
+                                            style="position: relative;" display="true" jax="CHTML"
+                                            class="MathJax CtxtMenu_Attached_0" tabindex="0"
+                                            ctxtmenu_counter="9"><mjx-math style="margin-left: 0px; margin-right: 0px;"
+                                                aria-hidden="true" class="MJX-TEX" display="true"><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D453 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    space="4" class="mjx-n"><mjx-c
+                                                        class="mjx-c3D"></mjx-c></mjx-mo><mjx-mfrac
+                                                    space="4"><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mn
+                                                                class="mjx-n"><mjx-c class="mjx-c31"></mjx-c><mjx-c
+                                                                    class="mjx-c30"></mjx-c><mjx-c
+                                                                    class="mjx-c30"></mjx-c><mjx-c
+                                                                    class="mjx-c30"></mjx-c></mjx-mn></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-mi
+                                                                            class="mjx-i"><mjx-c
+                                                                                class="mjx-c1D70B TEX-I"></mjx-c></mjx-mi></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D45F TEX-I"></mjx-c></mjx-mi><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D450 TEX-I"></mjx-c></mjx-mi><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D461 TEX-I"></mjx-c></mjx-mi><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D45B TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mn
+                                                    class="mjx-n"><mjx-c class="mjx-c39"></mjx-c><mjx-c
+                                                        class="mjx-c39"></mjx-c><mjx-c class="mjx-c39"></mjx-c><mjx-c
+                                                        class="mjx-c39"></mjx-c><mjx-c class="mjx-c39"></mjx-c><mjx-c
+                                                        class="mjx-c39"></mjx-c></mjx-mn><mjx-mi class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c
+                                                        class="mjx-c29"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml
+                                                display="block" unselectable="on"><math display="block"
+                                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <mi>f</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mi>v</mi>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo>=</mo>
+                                                    <mfrac>
+                                                        <mn>1000</mn>
+                                                        <mi>π</mi>
+                                                    </mfrac>
+                                                    <mi>a</mi>
+                                                    <mi>r</mi>
+                                                    <mi>c</mi>
+                                                    <mi>t</mi>
+                                                    <mi>a</mi>
+                                                    <mi>n</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mn>999999</mn>
+                                                    <mi>v</mi>
+                                                    <mo stretchy="false">)</mo>
+                                                </math></mjx-assistive-mml></mjx-container></math-renderer></p>
+                                <p dir="auto"><math-renderer class="js-inline-math" style="display: inline"
+                                        data-static-url="https://github.githubassets.com/static"
+                                        data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
+                                            style="position: relative;" display="true" jax="CHTML"
+                                            class="MathJax CtxtMenu_Attached_0" tabindex="0"
+                                            ctxtmenu_counter="10"><mjx-math style="margin-left: 0px; margin-right: 0px;"
+                                                aria-hidden="true" class="MJX-TEX" display="true"><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c210E TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo
+                                                    space="4" class="mjx-n"><mjx-c
+                                                        class="mjx-c3D"></mjx-c></mjx-mo><mjx-mi space="4"
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D45D TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D463 TEX-I"></mjx-c></mjx-mi><mjx-mo space="3"
+                                                    class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi
+                                                    space="3" class="mjx-i"><mjx-c
+                                                        class="mjx-c1D461 TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                    class="mjx-n"><mjx-c
+                                                        class="mjx-c29"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml
+                                                display="block" unselectable="on"><math display="block"
+                                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <mi>h</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mi>v</mi>
+                                                    <mo stretchy="false">)</mo>
+                                                    <mo>=</mo>
+                                                    <mi>p</mi>
+                                                    <mo stretchy="false">(</mo>
+                                                    <mi>v</mi>
+                                                    <mo>−</mo>
+                                                    <mi>t</mi>
+                                                    <mo stretchy="false">)</mo>
+                                                </math></mjx-assistive-mml></mjx-container></math-renderer></p>
+                                <p dir="auto"><math-renderer class="js-inline-math" style="display: inline"
+                                        data-static-url="https://github.githubassets.com/static"
+                                        data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
+                                            style="position: relative;" display="true" jax="CHTML"
+                                            class="MathJax CtxtMenu_Attached_0" tabindex="0"
+                                            ctxtmenu_counter="11"><mjx-math style="margin-left: 0px; margin-right: 0px;"
+                                                aria-hidden="true" class="MJX-TEX" display="true"><mjx-msub><mjx-mi
+                                                        class="mjx-i"><mjx-c
+                                                            class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi><mjx-script
+                                                        style="vertical-align: -0.15em;"><mjx-mn size="s"
+                                                            class="mjx-n"><mjx-c
+                                                                class="mjx-c31"></mjx-c></mjx-mn></mjx-script></mjx-msub><mjx-mo
+                                                    space="4" class="mjx-n"><mjx-c
+                                                        class="mjx-c3D"></mjx-c></mjx-mo><mjx-mfrac
+                                                    space="4"><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mrow><mjx-mi
+                                                                    class="mjx-i"><mjx-c
+                                                                        class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                                    space="3" class="mjx-n"><mjx-c
+                                                                        class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn
+                                                                    space="3" class="mjx-n"><mjx-c
+                                                                        class="mjx-c35"></mjx-c><mjx-c
+                                                                        class="mjx-c2E"></mjx-c><mjx-c
+                                                                        class="mjx-c30"></mjx-c><mjx-c
+                                                                        class="mjx-c30"></mjx-c><mjx-c
+                                                                        class="mjx-c31"></mjx-c></mjx-mn></mjx-mrow></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-mrow><mjx-mo
+                                                                                class="mjx-n"><mjx-c
+                                                                                    class="mjx-c2212"></mjx-c></mjx-mo><mjx-mi
+                                                                                class="mjx-i"><mjx-c
+                                                                                    class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi><mjx-mo
+                                                                                space="3" class="mjx-n"><mjx-c
+                                                                                    class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn
+                                                                                space="3" class="mjx-n"><mjx-c
+                                                                                    class="mjx-c35"></mjx-c><mjx-c
+                                                                                    class="mjx-c2E"></mjx-c><mjx-c
+                                                                                    class="mjx-c30"></mjx-c><mjx-c
+                                                                                    class="mjx-c30"></mjx-c><mjx-c
+                                                                                    class="mjx-c31"></mjx-c></mjx-mn></mjx-mrow></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mn
+                                                                class="mjx-n"><mjx-c
+                                                                    class="mjx-c31"></mjx-c></mjx-mn></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-msub><mjx-mi
+                                                                                class="mjx-i"><mjx-c
+                                                                                    class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-script
+                                                                                style="vertical-align: -0.15em;"><mjx-mn
+                                                                                    size="s" class="mjx-n"><mjx-c
+                                                                                        class="mjx-c31"></mjx-c></mjx-mn></mjx-script></mjx-msub></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac><mjx-mtext
+                                                    class="mjx-n"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mtext
+                                                    class="mjx-n"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mtext
+                                                    class="mjx-n"><mjx-c
+                                                        class="mjx-cA0"></mjx-c></mjx-mtext><mjx-msub><mjx-mi
+                                                        class="mjx-i"><mjx-c
+                                                            class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-script
+                                                        style="vertical-align: -0.15em;"><mjx-mn size="s"
+                                                            class="mjx-n"><mjx-c
+                                                                class="mjx-c31"></mjx-c></mjx-mn></mjx-script></mjx-msub><mjx-mo
+                                                    space="4" class="mjx-n"><mjx-c
+                                                        class="mjx-c3D"></mjx-c></mjx-mo><mjx-mn space="4"
+                                                    class="mjx-n"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mi
+                                                    class="mjx-i"><mjx-c
+                                                        class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml
+                                                display="block" unselectable="on"><math display="block"
+                                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                                                    <msub>
+                                                        <mi>b</mi>
+                                                        <mn>1</mn>
+                                                    </msub>
+                                                    <mo>=</mo>
+                                                    <mfrac>
+                                                        <mrow>
+                                                            <mi>b</mi>
+                                                            <mo>−</mo>
+                                                            <mn>5.001</mn>
+                                                        </mrow>
+                                                        <mrow>
+                                                            <mo>−</mo>
+                                                            <mi>b</mi>
+                                                            <mo>−</mo>
+                                                            <mn>5.001</mn>
+                                                        </mrow>
+                                                    </mfrac>
+                                                    <mfrac>
+                                                        <mn>1</mn>
+                                                        <msub>
+                                                            <mi>g</mi>
+                                                            <mn>1</mn>
+                                                        </msub>
+                                                    </mfrac>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <mtext>&nbsp;</mtext>
+                                                    <msub>
+                                                        <mi>g</mi>
+                                                        <mn>1</mn>
+                                                    </msub>
+                                                    <mo>=</mo>
+                                                    <mn>2</mn>
+                                                    <mi>g</mi>
+                                                </math></mjx-assistive-mml></mjx-container></math-renderer></p>
+                                <p dir="auto">In this example <code>target_value</code> (the blue line) is set to 200
+                                    and <code> data_value</code> (the red line) is set to 700. Because
+                                    <code>data_value </code>&gt;<code>targe_tvalue </code>our
+                                    <code>category_direction</code> is +1.
+                                    <code>bias_value</code> shall be 0 and the <code>category_grain</code> is set to
+                                    500. By design if the <code>data_value == category_grain - traget_value</code> the
+                                    <code>category_score</code> shall always be 500(purple line)
+                                </p>
+                                <p dir="auto"><a target="_blank" rel="noopener noreferrer nofollow"><img
+                                            src="../calc/linear.svg"
+                                            alt="linear bias example plot" title="Linear Bias Plot"
+                                            style="max-width: 100%;"></a></p>
+                            </li>
+                            <li>
+                                <p dir="auto"><strong>quadratic</strong></p>
+                                <p dir="auto"><a target="_blank" rel="noopener noreferrer nofollow"><img
+                                            src="../calc/quad.svg"
+                                            alt="quadratic bias example plot" title="Quadratic Bias Plot"
+                                            style="max-width: 100%;"></a></p>
+                            </li>
+                            <li>
+                                <p dir="auto"><strong>cubic</strong></p>
+                                <p dir="auto">coming soon...</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <p dir="auto">To calculate the overall Score all <code>categeory_scores</code> are used to get the
+                    average, which then is being modified to be a score between 0 and 100</p>
+            </article>
+        </div>
+</body>
+<script src="./script.js" defer type="module"></script>
+<link href="./style.css" type="text/css" rel="stylesheet">
+<link href="./demo.css" type="text/css" rel="stylesheet">
+</html>
