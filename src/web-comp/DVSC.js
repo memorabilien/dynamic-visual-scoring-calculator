@@ -7,8 +7,8 @@ scoringCategory.innerHTML = `<tr><th class="category_name"></th><td><output clas
 class ScoringCalc extends HTMLElement{
     constructor(){
         super();
-        const shadow = this.attachShadow({ mode: "open", slotAssignment: "manual"});
-        shadow.append(scoringCalculator.content.cloneNode(true));
+        this._root = this.attachShadow({ mode: "closed", slotAssignment: "manual"});
+        this._root.append(scoringCalculator.content.cloneNode(true));
         this.elements = this.children;
         this.categoryCount = null;
         this.categoryNumbers = [];
@@ -23,7 +23,7 @@ class ScoringCalc extends HTMLElement{
         this.categoryWeights = [];
         this.categoryColors = [];
         this.categoryGrains = [];
-        this.row = shadow.querySelectorAll("scoring-calc-category");
+        this.row = this._root.querySelectorAll("scoring-calc-category");
     };
     
    
@@ -31,8 +31,8 @@ class ScoringCalc extends HTMLElement{
 
     connectedCallback(){
         this.#assignSlots();
-        let totalScoreCircle = this.shadowRoot.querySelector("#dvsc_score_indicator");
-        let svgFractions = this.shadowRoot.querySelector("#dvsc_fractions");
+        let totalScoreCircle = this._root.querySelector("#dvsc_score_indicator");
+        let svgFractions = this._root.querySelector("#dvsc_fractions");
         totalScoreCircle.setAttribute("stroke-dasharray", ((2 * 40 * Math.PI) - 6).toString());
     
         for(let i = 0; i < this.categoryCount; i++){
@@ -68,12 +68,12 @@ class ScoringCalc extends HTMLElement{
                 svgName.innerHTML = this.categoryNames[i];
                 svgFractions.appendChild(svgName);
         }
-        this.#svgBackgroundCircles = Array.from(this.shadowRoot.querySelectorAll(".dvsc_fraction_bg"));
-        this.#svgScoreCircles  = Array.from(this.shadowRoot.querySelectorAll(".dvsc_fraction_bar"));
-        this.#svgTexts = Array.from(this.shadowRoot.querySelectorAll(".category_text"));
+        this.#svgBackgroundCircles = Array.from(this._root.querySelectorAll(".dvsc_fraction_bg"));
+        this.#svgScoreCircles  = Array.from(this._root.querySelectorAll(".dvsc_fraction_bar"));
+        this.#svgTexts = Array.from(this._root.querySelectorAll(".category_text"));
     }
     #assignSlots(){
-        let tableBody = this.shadowRoot.querySelector(".dvsc_table_body");
+        let tableBody = this._root.querySelector(".dvsc_table_body");
         for(let i = 0; i <this.elements.length; i++){
             tableBody.appendChild(document.createElement("slot")).assign(this.elements.item(i));
         }
@@ -196,8 +196,8 @@ class ScoringCalc extends HTMLElement{
             numerator += (scores[i]/1000)*parseFloat(allWeights[i]/100);
         }
         let totalScore = numerator*100;
-        let totalScoreElement = this.shadowRoot.querySelector("#dvsc_score_text");
-        let totalScoreInd = this.shadowRoot.querySelector("#dvsc_score_indicator");
+        let totalScoreElement = this._root.querySelector("#dvsc_score_text");
+        let totalScoreInd = this._root.querySelector("#dvsc_score_indicator");
         totalScoreElement.innerHTML = totalScore.toFixed(0);
         totalScoreElement.setAttribute("fill" , "hsl("+((totalScore/100)*115).toString()+",78%,45%)");
         totalScoreInd.setAttribute("stroke", "hsl(" + ((totalScore / 100) * 115).toString() + ",78%,45%)");
