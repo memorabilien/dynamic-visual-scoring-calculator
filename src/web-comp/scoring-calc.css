@@ -21,6 +21,15 @@ div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody{
     align-items: stretch;
 }
 
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr>th{
+    font-weight: 500;
+    opacity: 0.5;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr>th:nth-child(1) {
+    text-align: left;
+}
+
 div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr {
     border-bottom: 1px solid #64646480;
     padding: 8px 0;
@@ -35,55 +44,9 @@ div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr {
     justify-content: space-between;
 }
 
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: nowrap;
-    text-align: end;
-}
-
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr>th{
-    font-weight: 500;
-    opacity: 0.5;
-}
-
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr>th:nth-child(1) {
-    text-align: left;
-}
-
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td:nth-child(2) {
-    justify-content: center;
-}
 
 
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td:nth-child(6){
-    justify-content: flex-end;
-}
-
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>th {
-    text-align: left;
-    justify-content: flex-start;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-}
-
-
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td>.dvsc_tab,
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td>.dvsc_tab>p {
-    tab-size: 4;
-    margin: 0;
-    text-align: end;
-    white-space: nowrap;
-    word-break: keep-all;
-}
-
-
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td>.dvsc_tab>output.dvsc_category_score_display{
+tr>td>.dvsc_tab>output.dvsc_category_score_display{
     font-weight: bold;
 }
 
