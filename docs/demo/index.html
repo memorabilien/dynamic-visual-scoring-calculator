@@ -7,10 +7,12 @@
 </head>
 
 <body>
-    <a href="https://github.com/memorabilien/dynamic-visual-scoring-calculator"><h1>Dynamic Visual Scoring Calculator</h1></a>
+    <a href="https://github.com/memorabilien/dynamic-visual-scoring-calculator">
+        <h1>Dynamic Visual Scoring Calculator</h1>
+    </a>
     <div class="dvsc_schowcase">
         <h2>Demo 1 - Vanilla JavaScript</h2>
-        <p class="description">This Demo has the minimum amount of CSS and is written in 100% vanilla JS. The Modulues
+        <p class="description">This Demo has the minimum amount of CSS and is written in 100% vanilla JS. The Modules
             written for "Web
             Components", "Vue", "React" or "Angular" my behave different in some cases. But overall the Framework of
             choice makes no difference, the are all the same end result...</p>
@@ -58,50 +60,110 @@
     colors: [<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#ff0000&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#ff7b00&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#ffbb00&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#00dfba&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#127efa&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#8921ff&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#d500e9&quot;</span>], <span style="color:rgb(92, 99, 112); font-weight:400;">// define the circle colors</span>
 };</code>
 </pre>
-       </div>
-       <h2>Demo  2 - Web Component (Vanilla JavaScript)</h2>
-       <p class="description">In this example some imaginary Monitor is being scored. Using The Web Components Method is the easiest way to get this Scoring Calculator onto a Website</p>
-       <script src="./demo.js" defer type="text/javascript"></script>
-       <scoring-calc>
-        <scoring-calc-category number="0" rowName="Resolution" unit="px" value="1080" target="1440" step="1" direction="-1" evaluation="linear" bias="0" weight="39.72519332681899" score="500" color="#FF1D15" grain="100"></scoring-calc-category>
-        <scoring-calc-category number="1" rowName="Size" unit="in" value="24" target="27" step="0.5" direction="-1" evaluation="linear" bias="0" weight="16.693640030592356" score="500" color="#0075FF" grain="1"></scoring-calc-category>
-        <scoring-calc-category number="2" rowName="Refresh Rate" unit="Hz" value="75" target="90" step="1" direction="-1" evaluation="quad" bias="0" weight="13.247233998615995" score="500" color="#61E786" grain="5"></scoring-calc-category>
-        <scoring-calc-category number="3" rowName="Color Accuracy" unit="%" value="96" target="99" step="0.1" direction="-1" evaluation="linear" bias="0" weight="10.1807772250803" score="500" color="#FCC217" grain="1"></scoring-calc-category>
-        <scoring-calc-category number="4" rowName="Cost" unit="$" value="105" target="90" step="0.01" direction="1" evaluation="cube" bias="0" weight="20.153155418892357" score="500" color="#34F6F2" grain="20"></scoring-calc-category>
-    </scoring-calc>
+        </div>
+        <h2>Demo 2 - Web Component (Vanilla JavaScript)</h2>
+        <p class="description">In this example some imaginary Monitor is being scored. Using The Web Components Method
+            is the easiest way to get this Scoring Calculator onto a Website</p>
+        <script src="../../src/web-comp/DVSC.js" defer type="text/javascript"></script>
+        <scoring-calc>
+            <scoring-calc-category number="0" rowName="Resolution" unit="px" value="1080" target="1440" step="1"
+                direction="-1" evaluation="linear" bias="2" weight="39.72519332681899" score="500" color="#FF1D15"
+                grain="100"></scoring-calc-category>
+            <scoring-calc-category number="1" rowName="Size" unit="in" value="24" target="27" step="0.5" direction="-1"
+                evaluation="linear" bias="-1" weight="16.693640030592356" score="500" color="#0075FF"
+                grain="1"></scoring-calc-category>
+            <scoring-calc-category number="2" rowName="Refresh Rate" unit="Hz" value="75" target="90" step="1"
+                direction="-1" evaluation="quad" bias="1" weight="13.247233998615995" score="500" color="#61E786"
+                grain="5"></scoring-calc-category>
+            <scoring-calc-category number="3" rowName="Color Accuracy" unit="%" value="96" target="99" step="0.1"
+                direction="-1" evaluation="linear" bias="0" weight="10.1807772250803" score="500" color="#FCC217"
+                grain="1"></scoring-calc-category>
+            <scoring-calc-category number="4" rowName="Cost" unit="$" value="105" target="90" step="0.01" direction="1"
+                evaluation="cube" bias="-2" weight="20.153155418892357" score="500" color="#34F6F2"
+                grain="20"></scoring-calc-category>
+        </scoring-calc>
 
-    
-    <h2>Guide</h2>
+        <p>For using web components all that needs to be done is this:</p>
+
+        <pre>
+<code id="htmlViewer" style="color:rgb(220, 220, 220); font-weight:400;background-color:rgb(30, 30, 30);background:rgb(30, 30, 30);display:block;padding: 16px; border-radius: 16px; max-width: 50vw"><span style="color:rgb(155, 155, 155); font-weight:400;">&lt;<span style="color:rgb(86, 156, 214); font-weight:400;">script</span> <span style="color:rgb(156, 220, 254); font-weight:400;">src</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;DVSC.js&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">defer</span> &gt;</span><span style="color:rgb(155, 155, 155); font-weight:400;">&lt;/<span style="color:rgb(86, 156, 214); font-weight:400;">script</span>&gt;</span>
+<span style="color:rgb(155, 155, 155); font-weight:400;">&lt;<span style="color:rgb(86, 156, 214); font-weight:400;">scoring-calc</span>&gt;</span>
+    <span style="color:rgb(155, 155, 155); font-weight:400;">&lt;<span style="color:rgb(86, 156, 214); font-weight:400;">scoring-calc-category/></span> <span style="color:rgb(156, 220, 254); font-weight:400;">number</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;0&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">rowName</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;Resolution&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">unit</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;px&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">value</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;1080&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">target</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;1440&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">step</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;1&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">direction</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;-1&quot;</span> 
+            <span style="color:rgb(156, 220, 254); font-weight:400;">evaluation</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;linear&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">bias</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;2&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">weight</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;39.72519332681899&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">score</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;500&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">color</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;#FF1D15&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">grain</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;100&quot;</span>&gt;</span>
+    <span style="color:rgb(155, 155, 155); font-weight:400;">&lt;/<span style="color:rgb(86, 156, 214); font-weight:400;">scoring-calc-category</span>&gt;</span>
+    <span style="color:rgb(155, 155, 155); font-weight:400;">&lt;<span style="color:rgb(86, 156, 214); font-weight:400;">scoring-calc-category</span> <span style="color:rgb(156, 220, 254); font-weight:400;">number</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;1&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">rowName</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;Size&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">unit</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;in&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">value</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;24&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">target</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;27&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">step</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;0.5&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">direction</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;-1&quot;</span> 
+            <span style="color:rgb(156, 220, 254); font-weight:400;">evaluation</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;linear&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">bias</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;-1&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">weight</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;16.693640030592356&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">score</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;500&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">color</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;#0075FF&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">grain</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;1&quot;</span>&gt;</span>
+    <span style="color:rgb(155, 155, 155); font-weight:400;">&lt;/<span style="color:rgb(86, 156, 214); font-weight:400;">scoring-calc-category</span>&gt;</span>
+    <span style="color:rgb(155, 155, 155); font-weight:400;">&lt;<span style="color:rgb(86, 156, 214); font-weight:400;">scoring-calc-category</span> <span style="color:rgb(156, 220, 254); font-weight:400;">number</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;2&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">rowName</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;Refresh Rate&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">unit</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;Hz&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">value</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;75&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">target</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;90&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">step</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;1&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">direction</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;-1&quot;</span> 
+            <span style="color:rgb(156, 220, 254); font-weight:400;">evaluation</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;quad&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">bias</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;1&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">weight</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;13.247233998615995&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">score</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;500&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">color</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;#61E786&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">grain</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;5&quot;</span>&gt;</span>
+    <span style="color:rgb(155, 155, 155); font-weight:400;">&lt;/<span style="color:rgb(86, 156, 214); font-weight:400;">scoring-calc-category</span>&gt;</span>
+    <span style="color:rgb(155, 155, 155); font-weight:400;">&lt;<span style="color:rgb(86, 156, 214); font-weight:400;">scoring-calc-category</span> <span style="color:rgb(156, 220, 254); font-weight:400;">number</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;3&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">rowName</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;Color Accuracy&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">unit</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;%&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">value</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;96&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">target</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;99&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">step</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;0.1&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">direction</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;-1&quot;</span> 
+            <span style="color:rgb(156, 220, 254); font-weight:400;">evaluation</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;linear&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">bias</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;0&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">weight</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;10.1807772250803&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">score</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;500&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">color</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;#FCC217&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">grain</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;1&quot;</span>&gt;</span>
+    <span style="color:rgb(155, 155, 155); font-weight:400;">&lt;/<span style="color:rgb(86, 156, 214); font-weight:400;">scoring-calc-category</span>&gt;</span>
+    <span style="color:rgb(155, 155, 155); font-weight:400;">&lt;<span style="color:rgb(86, 156, 214); font-weight:400;">scoring-calc-category</span> <span style="color:rgb(156, 220, 254); font-weight:400;">number</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;4&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">rowName</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;Cost&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">unit</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;$&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">value</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;105&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">target</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;90&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">step</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;0.01&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">direction</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;1&quot;</span> 
+            <span style="color:rgb(156, 220, 254); font-weight:400;">evaluation</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;cube&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">bias</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;-2&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">weight</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;20.153155418892357&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">score</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;500&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">color</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;#34F6F2&quot;</span> <span style="color:rgb(156, 220, 254); font-weight:400;">grain</span>=<span style="color:rgb(214, 157, 133); font-weight:400;">&quot;20&quot;</span>&gt;</span>
+    <span style="color:rgb(155, 155, 155); font-weight:400;">&lt;/<span style="color:rgb(86, 156, 214); font-weight:400;">scoring-calc-category</span>&gt;</span>
+<span style="color:rgb(155, 155, 155); font-weight:400;">&lt;/<span style="color:rgb(86, 156, 214); font-weight:400;">scoring-calc</span>&gt;</span></code></pre>
+
+        <p>everything is being handled via attributes applied on the scoring-calc-category html element. Even accessing
+            any value via JavaScript is possible</p>
+        <pre>
+<code id="htmlViewer" style="color:rgb(171, 178, 191); font-weight:400;background-color:rgb(40, 44, 52);background:rgb(40, 44, 52);display:block;padding: 16px; border-radius: 16px;"><span style="color:rgb(198, 120, 221); font-weight:400;">let</span> dvsc = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;scoring-calc&quot;</span>);
+
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">elements</span>); 
+<span style="color:#b18eb1; font-style:italic; font-weight:400;">// HTMLCollection(5) [scoring-calc-category, scoring-calc-category, scoring-calc-category, scoring-calc-category, scoring-calc-category]</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryCount</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;">// 5</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryNumbers</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['0', '1', '2', '3', '4']</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryNames</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;">//['Resolution', 'Size', 'Refresh Rate', 'Color Accuracy', 'Cost']</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryUnits</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;">//['px', 'in', 'Hz', '%', '$']</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryValues</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['1080', '24', '75', '96', '105']</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryTargets</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['1440', '27', '90', '99', '90']</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categorySteps</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //[['1', '0.5', '1', '0.1', '0.01']</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryDirections</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['-1', '-1', '-1', '-1', '1']</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryEvaluations</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['linear', 'linear', 'quad', 'linear', 'cube']</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryBiases</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['2', '-1', '1', '0', '-2']</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryWeights</span>); 
+<span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['39.72519332681899', '16.693640030592352', '13.247233998615998', '10.1807772250803', '20.153155418892357']</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryColors</span>);  <span style="color:#b18eb1; font-style:italic; font-weight:400;">//['#FF1D15', '#0075FF', '#61E786', '#FCC217', '#34F6F2']</span>
+<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryGrains</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;">//['100', '1', '5', '1', '20']</span></code></pre>
+
+
+
+
+        <h2>Guide</h2>
         <div data-target="readme-toc.content" class="guide">
-            <article  itemprop="text">
+            <article itemprop="text">
                 <p dir="auto">To calculate a single category Score, the main principle is the difference between the
-                    <code>category_target_value</code> and the acutal <code>data_value</code>. Things to note are as
-                    follows:</p>
+                    <code>category_target_value</code> and the actual <code>data_value</code>. Things to note are as
+                    follows:
+                </p>
                 <ul dir="auto">
                     <li>
                         <p dir="auto">The <code>data_value</code> can not be dynamically adjusted by the front end user,
                             because it is a measured value in open world.</p>
                     </li>
                     <li>
-                        <p dir="auto">The <code>target_value</code> is adjustabe, with the <code>min</code> or
-                            <code>max</code> value automatically beeing set to the <code>data_value</code>.
+                        <p dir="auto">The <code>target_value</code> is adjustable, with the <code>min</code> or
+                            <code>max</code> value automatically being set to the <code>data_value</code>.
                             Should the <code>data_value &gt;= target_value</code> the
-                            <code>category_direction = 1</code> . E.g. the category goal is it to omptimize the measured
+                            <code>category_direction = 1</code> . E.g. the category goal is it to optimize the measured
                             process for as little time as possible). If set correctly the <code>target_value</code>
-                            cannot be set bigger than the <code>data_value</code>. The Result is the ajdustable
+                            cannot be set bigger than the <code>data_value</code>. The Result is the adjustable
                             <code>target_value</code> will automatically stop at <code>max = data_value</code>.
-                            Now The other way arround: Should the <code>data_value &lt;= target_value</code> the
-                            <code>category_direction = -1</code> . E.g. the category goal is it to opptimize the
-                            measured process for the hightest efficientcy possible. If set correctly the
+                            Now The other way around: Should the <code>data_value &lt;= target_value</code> the
+                            <code>category_direction = -1</code> . E.g. the category goal is it to optimize the
+                            measured process for the hightest efficiency possible. If set correctly the
                             <code>target_value</code> cannot be set smaller than the <code>data_value</code>. The Result
-                            is the ajdustable <code>target_value</code> will automatically stop at
-                            <code>min = data_value</code>.</p>
+                            is the adjustable<code>target_value</code> will automatically stop at
+                            <code>min = data_value</code>.
+                        </p>
                     </li>
                     <li>
                         <p dir="auto">The <code>category_weight</code> can be adjusted, which affects the overall score,
                             but <strong>not</strong> the <code>category_score</code>! When adjusting one
                             <code>category_weighting</code> all the other <code>category_weightings</code> will adjust
-                            accordingly, so:</p>
+                            accordingly, so:
+                        </p>
                         <p dir="auto"><math-renderer style="display: inline"
                                 data-static-url="https://github.githubassets.com/static"
                                 data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
@@ -178,8 +240,8 @@
                                         </math></mjx-assistive-mml></mjx-container></math-renderer></p>
                         <p dir="auto">For ease of use the lowest individual <code>category_weight</code> is 0.01 %. This
                             ensures, that no <code>category_weight</code> will be stuck at 0%. <em>Due to the nature of
-                                using linear Alegebra (more specific Matrix calculations) for calculation the weights.
-                                Depending on the number of categorys, if one category reaches 0% it will stay at 0% and
+                                using linear Algebra (more specific Matrix calculations) for calculation the weights.
+                                Depending on the number of categories, if one category reaches 0% it will stay at 0% and
                                 the other weight will compensate, which is an unwanted effect</em></p>
                     </li>
                     <li>
@@ -230,14 +292,15 @@
                                             <mo>∈</mo>
                                             <mi>Z</mi>
                                         </math></mjx-assistive-mml></mjx-container></math-renderer>. If
-                            <code>0 &lt; bias_value &lt; 5 </code> means, you favor the category and therfore giving it
+                            <code>0 &lt; bias_value &lt; 5 </code> means, you favor the category and therefore giving it
                             a better score. If the <code>bias_value == 5</code> the
-                            <code>categegory_score ≅ 1 ≅ 100%</code> .
+                            <code>category_score ≅ 1 ≅ 100%</code> .
                             If you set <code>-5 &lt; bias_value &lt; 0 </code> means, you disfavor the category and
-                            therfore giving it a worse score. If the <code>bias_value == -5</code> the
-                            <code>categegory_score ≅ 0 ≅ 0%</code> . To control how the bias impacts the
-                            <code>category_score</code> there are three differnet option which must be chosen in the
-                            <code>config</code>. There are three evaluation methods:</p>
+                            therefore giving it a worse score. If the <code>bias_value == -5</code> the
+                            <code>category_score ≅ 0 ≅ 0%</code> . To control how the bias impacts the
+                            <code>category_score</code> there are three different option which must be chosen in the
+                            <code>config</code>. There are three evaluation methods:
+                        </p>
                         <ul dir="auto">
                             <li>
                                 <p dir="auto"><strong>linear:</strong>
@@ -298,9 +361,10 @@
                                                     <mi>g</mi>
                                                 </math></mjx-assistive-mml></mjx-container></math-renderer> , which
                                     should be set to relative resolution, which ís dependent on the use case, i.e. when
-                                    running a marathon anything from 10 seconds to 10 minutues would be the grain, on
+                                    running a marathon anything from 10 seconds to 10 minutes would be the grain, on
                                     the other hand when running a 100m dash the grain would be 0.5 Seconds to 0.005
-                                    Seconds.</p>
+                                    Seconds.
+                                </p>
                                 <p dir="auto"><math-renderer class="js-inline-math" style="display: inline"
                                         data-static-url="https://github.githubassets.com/static"
                                         data-run-id="31571715bbaf7733fdad8745a9b28b4d" data-catalyst=""><mjx-container
@@ -805,23 +869,21 @@
                                                 </math></mjx-assistive-mml></mjx-container></math-renderer></p>
                                 <p dir="auto">In this example <code>target_value</code> (the blue line) is set to 200
                                     and <code> data_value</code> (the red line) is set to 700. Because
-                                    <code>data_value </code>&gt;<code>targe_tvalue </code>our
+                                    <code>data_value </code>&gt;<code>targe_value </code>our
                                     <code>category_direction</code> is +1.
                                     <code>bias_value</code> shall be 0 and the <code>category_grain</code> is set to
-                                    500. By design if the <code>data_value == category_grain - traget_value</code> the
+                                    500. By design if the <code>data_value == category_grain - target_value</code> the
                                     <code>category_score</code> shall always be 500(purple line)
                                 </p>
                                 <p dir="auto"><a target="_blank" rel="noopener noreferrer nofollow"><img
-                                            src="../calc/linear.svg"
-                                            alt="linear bias example plot" title="Linear Bias Plot"
-                                            style="max-width: 100%;"></a></p>
+                                            src="../calc/linear.svg" alt="linear bias example plot"
+                                            title="Linear Bias Plot" style="max-width: 100%;"></a></p>
                             </li>
                             <li>
                                 <p dir="auto"><strong>quadratic</strong></p>
                                 <p dir="auto"><a target="_blank" rel="noopener noreferrer nofollow"><img
-                                            src="../calc/quad.svg"
-                                            alt="quadratic bias example plot" title="Quadratic Bias Plot"
-                                            style="max-width: 100%;"></a></p>
+                                            src="../calc/quad.svg" alt="quadratic bias example plot"
+                                            title="Quadratic Bias Plot" style="max-width: 100%;"></a></p>
                             </li>
                             <li>
                                 <p dir="auto"><strong>cubic</strong></p>
@@ -830,7 +892,7 @@
                         </ul>
                     </li>
                 </ul>
-                <p dir="auto">To calculate the overall Score all <code>categeory_scores</code> are used to get the
+                <p dir="auto">To calculate the overall Score all <code>category_scores</code> are used to get the
                     average, which then is being modified to be a score between 0 and 100</p>
             </article>
         </div>
@@ -838,4 +900,5 @@
 <script src="./script.js" defer type="module"></script>
 <link href="./style.css" type="text/css" rel="stylesheet">
 <link href="./demo.css" type="text/css" rel="stylesheet">
+
 </html>
