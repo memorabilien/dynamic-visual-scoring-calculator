@@ -530,6 +530,7 @@ class ScoringCalcCategory extends HTMLElement {
 		this.#init();
 		this.#prep();
 		this.#getTargetLimit();
+        this.#calcScore();
 	}
 
     //execute once the weight attribute experienced changes from the outside(<scoring-calc>)
@@ -573,7 +574,10 @@ class ScoringCalcCategory extends HTMLElement {
 		this.setAttribute("color", this.color);
 		this.setAttribute("grain", this.grain);
 		let targetValueInput = this._root.querySelector(".dvsc_target_value_input");
+        let biasInput = this._root.querySelector(".dvsc_bias_input");
 		targetValueInput.setAttribute("step", this.step);
+        targetValueInput.setAttribute("value", this.target);
+        biasInput.setAttribute("value", this.bias);
 	}
 
     // display all attribute data
