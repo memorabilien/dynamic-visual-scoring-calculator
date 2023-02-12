@@ -438,42 +438,25 @@ class ScoringCalcCategory extends HTMLElement{
 
     constructor(){
         super();
-        const shadow = this.attachShadow({mode: "open"});
-        shadow.append(scoringCategory.content.cloneNode(true));
-        this.number="";this.rowName="";this.unit="";this.value="";this.target="";this.step="";this.direction="";this.evaluation="";this.grain="";this.bias="";this.weight="";this.score="";this.color="";
-        this.categoryName = shadow.querySelector(".category_name");
-        this.categoryUnit = shadow.querySelectorAll(".category_unit");
-        this.categoryValue = shadow.querySelector(".category_value");
-        this.targetValueInput = shadow.querySelector(".dvsc_target_value_input");
-        this.biasInput = shadow.querySelector(".dvsc_bias_input");
-        this.weightingInput = shadow.querySelector(".dvsc_weighting_input");
-        this.targetValueOutput = shadow.querySelector(".dvsc_target_value_input_display");
-        this.biasOutput = shadow.querySelector(".dvsc_bias_input_display");
-        this.weightingOutput = shadow.querySelector(".dvsc_weighting_input_display");
-        this.scoreOutput = shadow.querySelector(".dvsc_category_score_display");
-        this.targetValueInput.addEventListener("input",()=>{
-           this.target = this.targetValueInput.value;
-           this.targetValueOutput.innerHTML = this.targetValueInput.value;
-           this.setAttribute("target", this.targetValueInput.value)
-           this.#calcScore(this.number);
-         
-        });
-        this.biasInput.addEventListener("input",()=>{
-            this.bias = this.biasInput.value;
-            this.biasOutput.innerHTML = this.biasInput.value;
-            this.setAttribute("bias", this.biasInput.value);
-            this.#calcScore(this.number)
-        });
-        this.weightingInput.addEventListener("input",(event)=>{
-            this.weight = this.weightingInput.value < 0.01 ? 0.01 : this.weightingInput.value;
-            this.weightingOutput.innerHTML = this.weightingInput.value < 0.01 ? 0.01 : this.weightingInput.value;
-            this.setAttribute("weight", this.weightingInput.value < 0.01 ? 0.01 : this.weightingInput.value)
-        })
-
-
-
+        this._root = this.attachShadow({mode: "closed"});
+        this._root.append(scoringCategory.content.cloneNode(true));
+        this.number="";
+        this.rowName="";
+        this.unit="";
+        this.value="";
+        this.target="";
+        this.step="";
+        this.direction="";
+        this.evaluation="";
+        this.grain="";
+        this.bias="";
+        this.weight="";
+        this.score="";
+        this.color="";
     }
-    connectedCallback(){
+
+
+    #init(){
         this.number = this.getAttribute("number") ?? "0";
         this.rowName = this.getAttribute("rowName") ?? "default";
         this.unit = this.getAttribute("unit") ?? "bars";
@@ -500,37 +483,87 @@ class ScoringCalcCategory extends HTMLElement{
         this.setAttribute("score", this.score);
         this.setAttribute("color", this.color);
         this.setAttribute("grain", this.grain);
-        this.categoryValue.innerHTML = this.value
-        this.targetValueOutput.innerHTML = this.target;
-        this.biasOutput.innerHTML = this.bias;
-        this.weightingOutput.innerHTML = this.weight;
-        this.scoreOutput.innerHTML = this.score;
-        this.categoryName.innerHTML = this.rowName;
-        this.categoryUnit.forEach((element)=>{element.innerHTML = this.unit;});
-        this.getTargetLimit()
-        this.targetValueInput.setAttribute("step", this.step)
+        let targetValueInput = this._root.querySelector(".dvsc_target_value_input");
+        targetValueInput.setAttribute("step", this.step);
+    }
+
+    #prep(){
+        let categoryName = this._root.querySelector(".category_name");
+        let categoryUnit = this._root.querySelectorAll(".category_unit");
+        let categoryValue = this._root.querySelector(".category_value");
+        let targetValueOutput = this._root.querySelector(".dvsc_target_value_input_display");
+        let biasOutput = this._root.querySelector(".dvsc_bias_input_display");
+        let weightingOutput = this._root.querySelector(".dvsc_weighting_input_display");
+        let scoreOutput = this._root.querySelector(".dvsc_category_score_display");
+        categoryName.innerHTML = this.rowName;
+        categoryUnit.forEach((element)=>{element.innerHTML = this.unit;});
+        categoryValue.innerHTML = this.value
+        targetValueOutput.innerHTML = this.target;
+        biasOutput.innerHTML = this.bias;
+        weightingOutput.innerHTML = this.weight;
+        scoreOutput.innerHTML = this.score;
+    }
+    
+    #addListeners(){
+        let targetValueInput = this._root.querySelector(".dvsc_target_value_input");
+        let targetValueOutput = this._root.querySelector(".dvsc_target_value_input_display");
+        targetValueInput.addEventListener("input",()=>{
+            this.target = targetValueInput.value;
+            targetValueOutput.innerHTML = targetValueInput.value;
+            this.setAttribute("target", targetValueInput.value)
+            this.#calcScore(this.number);
+         });
+
+        let biasInput = this._root.querySelector(".dvsc_bias_input");
+        let biasOutput = this._root.querySelector(".dvsc_bias_input_display");
+         biasInput.addEventListener("input",()=>{
+             this.bias = biasInput.value;
+             biasOutput.innerHTML = biasInput.value;
+             this.setAttribute("bias", biasInput.value);
+             this.#calcScore(this.number)
+         });
+
+         let weightingInput = this._root.querySelector(".dvsc_weighting_input");
+         let weightingOutput = this._root.querySelector(".dvsc_weighting_input_display");
+
+         weightingInput.addEventListener("input",(event)=>{
+             this.weight = weightingInput.value < 0.01 ? 0.01 : weightingInput.value;
+             weightingOutput.innerHTML = weightingInput.value < 0.01 ? 0.01 : weightingInput.value;
+             this.setAttribute("weight", weightingInput.value < 0.01 ? 0.01 : weightingInput.value)
+         });
+    }
+
+    connectedCallback(){
+        this.#addListeners()
+        this.#init()
+        this.#prep()
+        this.#getTargetLimit()
     }   
-    getTargetLimit(){
+    #getTargetLimit(){
+        let targetValueInput = this._root.querySelector(".dvsc_target_value_input");
         if (this.direction == "1"){// set min or max values for target value range input slider
-            this.targetValueInput.setAttribute("max", this.value)
+           targetValueInput.setAttribute("max", this.value)
+
             if(this.getAttribute("unit") !== "%"){
-                this.targetValueInput.setAttribute("min", parseFloat(this.value) - parseFloat(this.getAttribute("grain")) * 5)
+                targetValueInput.setAttribute("min", parseFloat(this.value) - parseFloat(this.getAttribute("grain")) * 5)
                 }
-                else{
-                    this.targetValueInput.setAttribute("min", 0)
-                }
+            else{
+                targetValueInput.setAttribute("min", 0)
+            }
         }
         else if( this.direction == "-1" ){
-            this.targetValueInput.setAttribute("min", this.value);
+            targetValueInput.setAttribute("min", this.value);
+
             if(this.getAttribute("unit") !== "%"){
-            this.targetValueInput.setAttribute("max", parseFloat(this.value) + parseFloat(this.getAttribute("grain")) * 14)
+            targetValueInput.setAttribute("max", parseFloat(this.value) + parseFloat(this.getAttribute("grain")) * 14)
             }
             else{
-                this.targetValueInput.setAttribute("max", 100)
+                targetValueInput.setAttribute("max", 100)
             }
         }
     }
-     getScoreLinear(value,bias,target,direction,grain){
+
+     #getScoreLinear(value,bias,target,direction,grain){
         let g = (100*grain)/5;
         if( g === 0 ){
             throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
@@ -550,7 +583,7 @@ class ScoringCalcCategory extends HTMLElement{
         return factor < 0.0001 ? 0.0001 : factor;
         // https://www.desmos.com/calculator/qp8yb4jbnz
     }
-     getScoreQuadratic(value,bias,target,direction,grain){
+     #getScoreQuadratic(value,bias,target,direction,grain){
         let b = (bias - 5.001) / (bias + 5.001);
         let g = 1 / (1.38648041843 * grain);
         if( g === 0 ){
@@ -574,7 +607,7 @@ class ScoringCalcCategory extends HTMLElement{
         
         //https://www.desmos.com/calculator/a3uakjjpbd
     }
-     getScoreCubic(value,bias,target,direction,grain){
+     #getScoreCubic(value,bias,target,direction,grain){
         let b = (bias - 5.001) / (bias + 5.001);
         let g = 1 / (1.38648041843 * grain);
         if( g === 0 ){
@@ -598,30 +631,37 @@ class ScoringCalcCategory extends HTMLElement{
     
         //https://www.desmos.com/calculator/7mp16fywjh
     }
+
     #calcScore(){
+        
+        let  scoreOutput = this._root.querySelector(".dvsc_category_score_display");
+
             if(this.evaluation == "lin" || this.evaluation == "linear"){
-                this.score = this.getScoreLinear(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain));
-                this.scoreOutput.innerHTML = this.getScoreLinear(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain)).toFixed(2);
+                this.score = this.#getScoreLinear(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain));
+                scoreOutput.innerHTML = this.#getScoreLinear(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain)).toFixed(2);
                 this.setAttribute("score", this.score);
             }
             if(this.evaluation == "quad" || this.evaluation == "quadratic"){
-                this.score = this.getScoreQuadratic(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain));
-                this.scoreOutput.innerHTML = this.getScoreQuadratic(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain)).toFixed(2);
+                this.score = this.#getScoreQuadratic(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain));
+                scoreOutput.innerHTML = this.#getScoreQuadratic(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain)).toFixed(2);
                 this.setAttribute("score", this.score);
             }
             if(this.evaluation == "cube" || this.evaluation == "cubic"){
-                this.score = this.getScoreCubic(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain));
-                this.scoreOutput.innerHTML = this.getScoreCubic(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain)).toFixed(2);
+                this.score = this.#getScoreCubic(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain));
+                scoreOutput.innerHTML = this.#getScoreCubic(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain)).toFixed(2);
                 this.setAttribute("score", this.score);
             }
 
         }
 
     attributeChangedCallback(name, oldValue, newValue){
+        let weightingInput = this._root.querySelector(".dvsc_weighting_input");
+        let weightingOutput = this._root.querySelector(".dvsc_weighting_input_display");
+
         if(name == "weight"){
-            this.weightingInput.value = newValue;
-            this.weightingInput.setAttribute("value", newValue);
-            this.weightingOutput.innerHTML = parseFloat(newValue).toFixed(2);
+            weightingInput.value = newValue;
+            weightingInput.setAttribute("value", newValue);
+            weightingOutput.innerHTML = parseFloat(newValue).toFixed(2);
         }
     }
 
