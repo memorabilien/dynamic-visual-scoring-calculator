@@ -1,3 +1,7 @@
+svg{
+    transition: all 0.5s ease-out;
+}
+
 tr{
     display: grid;
     grid-gap: 32px;

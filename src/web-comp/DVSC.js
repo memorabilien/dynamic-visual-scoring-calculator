@@ -10,10 +10,9 @@ scoringCategory.innerHTML = `<tr><th class="category_name"></th><td><output clas
  * Defines a new custom HtmlElement, a Web Components which acts as the hub and wrapper for the  scoring-calc-category elements
  */
 class ScoringCalc extends HTMLElement {
-	
-    constructor() {
+	constructor() {
 		super();
-		this._root = this.attachShadow({ mode: "closed", slotAssignment: "manual" });
+		this._root = this.attachShadow({ mode: "open", slotAssignment: "manual" });
 		this._root.append(scoringCalculator.content.cloneNode(true));
 		this.elements = this.children;
 		this.categoryCount = null;
@@ -32,15 +31,22 @@ class ScoringCalc extends HTMLElement {
 		this.row = this._root.querySelectorAll("scoring-calc-category");
 	}
 
-    /**
-     * Executes once at the beginning
-     */
+	set setNames(newNames) {
+		this.categoryNames = newNames;
+		for (let i = 0; i < this.categoryCount; i++) {
+			this.row[i].setAttribute("rowname", this.categoryNames[i]);
+		}
+	}
+
+	/**
+	 * Executes once at the beginning
+	 */
 	connectedCallback() {
 		this.#assignSlots();
 		let totalScoreCircle = this._root.querySelector("#dvsc_score_indicator");
 		let svgFractions = this._root.querySelector("#dvsc_fractions");
 		totalScoreCircle.setAttribute("stroke-dasharray", (2 * 40 * Math.PI - 6).toString());
-        // insert svg circles and apply attributes on them
+		// insert svg circles and apply attributes on them
 		for (let i = 0; i < this.categoryCount; i++) {
 			let svgFractionBackground = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 			let svgFractionScore = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -79,26 +85,26 @@ class ScoringCalc extends HTMLElement {
 		this.#svgTexts = Array.from(this._root.querySelectorAll(".category_text"));
 	}
 
-    /**
-     * Finds all children element in the scoring calc. Then dynamically creating a slot in the table body and assigning the children to it.
-     * Also binds a mutation observer to every child element
-     */
+	/**
+	 * Finds all children element in the scoring calc. Then dynamically creating a slot in the table body and assigning the children to it.
+	 * Also binds a mutation observer to every child element
+	 */
 	#assignSlots() {
 		let tableBody = this._root.querySelector(".dvsc_table_body");
 		for (let i = 0; i < this.elements.length; i++) {
-            //create an assign slots
+			//create an assign slots
 			tableBody.appendChild(document.createElement("slot")).assign(this.elements.item(i));
 		}
 
-        // select every element
+		// select every element
 		this.row = this.querySelectorAll("scoring-calc-category");
 		this.row.forEach((element, index) => {
-            // assign mutation observer to every row
+			// assign mutation observer to every row
 			this.#categoryObservers.push(this.#daemons[index]);
 		});
 
-        //  collect starting values 
-		    this.categoryCount = this.childElementCount;
+		//  collect starting values
+		this.categoryCount = this.childElementCount;
 		for (let i = 0; i < this.categoryCount; i++) {
 			this.categoryNumbers.push(this.row[i].getAttribute("number"));
 			this.categoryNames.push(this.row[i].getAttribute("rowname"));
@@ -116,24 +122,24 @@ class ScoringCalc extends HTMLElement {
 		}
 	}
 
-    /**
-     * calculates all weights, if one weight is being adjusted, so the sum of all weight always stays 100%
-     * @param {Object} weightChanges 
-     */
+	/**
+	 * calculates all weights, if one weight is being adjusted, so the sum of all weight always stays 100%
+	 * @param {Object} weightChanges
+	 */
 	#calcWeights(weightChanges) {
-        // calculate only if there is more than one category
+		// calculate only if there is more than one category
 		if (this.categoryCount !== 1 && this.categoryCount !== 0) {
 			this.categoryWeights = [];
 			this.row.forEach((element, index) => {
-                // sanitize the weight values, so no value every reaches below 0.01
+				// sanitize the weight values, so no value every reaches below 0.01
 				if (element.weight >= 0.01 && element.weight !== null && element.weight !== undefined) {
 					this.categoryWeights.push(element.weight);
 				} else if (element.weight < 0.01) {
 					this.categoryWeights.push(0.01);
-                    // disconnect the observer, to prevent getting stuck in an positive feedback loop
+					// disconnect the observer, to prevent getting stuck in an positive feedback loop
 					this.#categoryObservers[index].disconnect();
 					element.setAttribute("weight", 0.01);
-                    // reconnect, after attribute has been changed
+					// reconnect, after attribute has been changed
 					this.#categoryObservers[index].observe(element, this.#observerOptions);
 				}
 			});
@@ -142,7 +148,7 @@ class ScoringCalc extends HTMLElement {
 			let currentAdjustmentIndex = weightChanges.index;
 			let matrix = new Array(this.categoryCount - 1);
 			let vector = new Array(this.categoryCount - 1);
-            // assemble the matrix and the vector to use linear algebra
+			// assemble the matrix and the vector to use linear algebra
 			for (let i = 0; i < this.categoryCount - 1; i++) {
 				if (i == 0) {
 					vector[i] = [100 - userInput];
@@ -172,22 +178,22 @@ class ScoringCalc extends HTMLElement {
 			}
 
 			let newPercentages = this.#matrixCalculations(matrix, vector);
-            // insert the current user input back into the array, to get all new weights in an array
+			// insert the current user input back into the array, to get all new weights in an array
 			newPercentages.splice(currentAdjustmentIndex, 0, userInput);
 			for (let i = 0; i < this.categoryCount; i++) {
 				if (newPercentages[i] < 0.01 && i !== currentAdjustmentIndex) {
-                    // adjust any value below 0.01 to 0.01 by subtracting the amount below 0.01 from the input weight
+					// adjust any value below 0.01 to 0.01 by subtracting the amount below 0.01 from the input weight
 					newPercentages[currentAdjustmentIndex] = newPercentages[currentAdjustmentIndex] - (0.01 - newPercentages[i]);
 					newPercentages[i] = 0.01;
 				}
 			}
-            // apply the new percentages. but only if the input weight is above 0.01. This makes any changes impossible, and the input weight just stays above 0.01
+			// apply the new percentages. but only if the input weight is above 0.01. This makes any changes impossible, and the input weight just stays above 0.01
 			if (newPercentages[currentAdjustmentIndex] > 0.01) {
 				for (let i = 0; i < this.categoryCount; i++) {
-                    // disconnect the observer, to prevent getting stuck in an positive feedback loop
+					// disconnect the observer, to prevent getting stuck in an positive feedback loop
 					this.#categoryObservers[i].disconnect();
 					this.row[i].setAttribute("weight", newPercentages[i]);
-                    // reconnect, after attribute has been changed
+					// reconnect, after attribute has been changed
 					this.#categoryObservers[i].observe(this.row[i], this.#observerOptions);
 				}
 			}
@@ -195,12 +201,12 @@ class ScoringCalc extends HTMLElement {
 		this.#updateCategoryInfo();
 	}
 
-    /**
-     * Utility function for calculating the new weight values for every weight, which is not the current input weight
-     * @param {Array} inputMatrix an array of arrays; every nested array should be a row. the resulting matrix must be square (e.g 3 x 3. this also means the scoring calculator has 4 categories)
-     * @param {Array} inputVector an array of arrays; every nested array should be a row and must have the length of 1
-     * @returns {Array}
-     */
+	/**
+	 * Utility function for calculating the new weight values for every weight, which is not the current input weight
+	 * @param {Array} inputMatrix an array of arrays; every nested array should be a row. the resulting matrix must be square (e.g 3 x 3. this also means the scoring calculator has 4 categories)
+	 * @param {Array} inputVector an array of arrays; every nested array should be a row and must have the length of 1
+	 * @returns {Array}
+	 */
 	#matrixCalculations(inputMatrix, inputVector) {
 		let output;
 		/*
@@ -208,7 +214,164 @@ class ScoringCalc extends HTMLElement {
           MIT License copyright (c) 2016 Raghavendra Ravikumar
           https://github.com/RaghavCodeHub/matrix/blob/master/LICENSE-MIT
         */
-		function rational(t,n){return n=n||1,-1===Math.sign(n)&&(t=-t,n=-n),{num:t,den:n,add:e=>rational(t*e.den+n*e.num,n*e.den),sub:e=>rational(t*e.den-n*e.num,n*e.den),mul:e=>multiply(e,t,n),div:e=>multiply(rational(e.den,e.num),t,n)}}function multiply(t,n,e){let r=Math.sign(n)*Math.sign(t.num),i=Math.sign(e)*Math.sign(t.den);return Math.abs(n)===Math.abs(t.den)&&Math.abs(e)===Math.abs(t.num)?(r=r,i=i):Math.abs(e)===Math.abs(t.num)?(r*=Math.abs(n),i*=Math.abs(t.den)):Math.abs(n)===Math.abs(t.den)?(r*=Math.abs(t.num),i*=Math.abs(e)):(r=n*t.num,i=e*t.den),rational(r,i)}function merge(t){return{top:n=>top(t,n),bottom:n=>bottom(t,n),left:n=>left(t,n),right:n=>right(t,n)}}function top(t,n){if((t[0].length||t.length)!==(n[n.length-1].length||n.length))return t;Array.isArray(t[0])||(t=[t]),Array.isArray(n[n.length-1])||(n=[n]);for(let e=n.length-1;e>=0;e--)t.unshift(n[e].map((t=>t)));return t}function bottom(t,n){if((t[t.length-1].length||t.length)!==(n[0].length||n.length))return t;Array.isArray(t[t.length-1])||(t=[t]),Array.isArray(n[0])||(n=[n]);for(let e=0;e<n.length;e++)t.push(n[e].map((t=>t)));return t}function left(t,n){let e=t.length,r=n.length;if(!Array.isArray(t[0])&&!Array.isArray(n[0]))return t.unshift.apply(t,n),t;if(e!==r)return t;for(let r=0;r<e;r++)t[r].unshift.apply(t[r],n[r].map((t=>t)));return t}function right(t,n){let e=t.length,r=n.length;if(!Array.isArray(t[0])&&!Array.isArray(n[0]))return t.push.apply(t,n),t;if(e!==r)return t;for(let r=0;r<e;r++)t[r].push.apply(t[r],n[r].map((t=>t)));return t}function matrix(t){if(!Array.isArray(t))throw new Error("Input should be of type array");return Object.assign((function(){let n=1===arguments.length?[arguments[0]]:Array.apply(null,arguments);return read(t,n)}),_mat(t))}function _mat(t){return{size:()=>size(t),add:n=>operate(t,n,addition),sub:n=>operate(t,n,subtraction),mul:n=>operate(t,n,multiplication),div:n=>operate(t,n,division),prod:n=>prod(t,n),trans:()=>trans(t),set:function(){let n=1===arguments.length?[arguments[0]]:Array.apply(null,arguments);return{to:e=>replace(t,e,n)}},det:()=>determinant(t),inv:()=>invert(t),merge:merge(t),map:n=>map(t,n),equals:n=>equals(t,n)}}function size(t){let n=[];for(;Array.isArray(t);)n.push(t.length),t=t[0];return n}function dimensions(t){return size(t).length}function read(t,n){return 0===n.length?t:extract(t,n)}function extract(t,n){let e=dimensions(t);for(let r=0;r<e;r++){let e=n[r];if(void 0===e)break;Array.isArray(e)?t=extractRange(t,e,r):Number.isInteger(e)&&(t=dimensions(t)>1&&r>0?t.map((function(t){return[t[e]]})):t[e])}return t}function extractRange(t,n,e){if(!n.length)return t;if(2===n.length){let r=n[0]>n[1],i=r?n[1]:n[0],a=r?n[0]:n[1];return dimensions(t)>1&&e>0?t.map((function(t){return r?t.slice(i,a+1).reverse():t.slice(i,a+1)})):(t=t.slice(i,a+1),r&&t.reverse()||t)}}function replace(t,n,e){let r=clone(t),i=e[0],a=i[0]||0,l=i[1]&&i[1]+1||t.length;if(Array.isArray(i)||1!==e.length){if(1===e.length)for(let t=a;t<l;t++)r[t].fill(n)}else r[i].fill(n);for(let u=1;u<e.length;u++){let o=Array.isArray(e[u])?e[u][0]||0:e[u],f=Array.isArray(e[u])?e[u][1]&&e[u][1]+1||t[0].length:e[u]+1;if(Array.isArray(i))for(let t=a;t<l;t++)r[t].fill(n,o,f);else r[i].fill(n,o,f)}return r}function operate(t,n,e){let r=[],i=n();for(let n=0;n<t.length;n++){let a=t[n],l=i[n];r.push(a.map((function(t,n){return e(t,l[n])})))}return r}function prod(t,n){let e=t,r=n(),i=size(e),a=size(r),l=[];if(i[1]===a[0])for(let t=0;t<i[0];t++){l[t]=[];for(let n=0;n<a[1];n++)for(let a=0;a<i[1];a++)void 0===l[t][n]&&(l[t][n]=0),l[t][n]+=multiplication(e[t][a],r[a][n])}return l}function trans(t){let n=t,e=size(t),r=[];for(let t=0;t<e[0];t++)for(let i=0;i<e[1];i++)Array.isArray(r[i])?r[i].push(n[t][i]):r[i]=[n[t][i]];return r}function clone(t){let n=[];for(let e=0;e<t.length;e++)n.push(t[e].slice(0));return n}function addition(t,n){return t+n}function subtraction(t,n){return t-n}function multiplication(t,n){return t*n}function division(t,n){return t/n}function determinant(t){let n=rationalize(t),e=size(t),r=rational(1),i=1;for(let t=0;t<e[0]-1;t++)for(let r=t+1;r<e[0];r++){if(0===n[r][t].num)continue;if(0===n[t][t].num){interchange(n,t,r),i=-i;continue}let a=n[r][t].div(n[t][t]);a=rational(Math.abs(a.num),a.den),Math.sign(n[r][t].num)===Math.sign(n[t][t].num)&&(a=rational(-a.num,a.den));for(let i=0;i<e[1];i++)n[r][i]=a.mul(n[t][i]).add(n[r][i])}return r=n.reduce(((t,n,e)=>t.mul(n[e])),rational(1)),i*r.num/r.den}function interchange(t,n,e){let r=t[n];t[n]=t[e],t[e]=r}function invert(t){let n=rationalize(t),e=size(t),r=rationalize(identity(e[0])),i=0,a=0;for(;a<e[0];){if(0===n[i][a].num)for(let t=i+1;t<e[0];t++)0!==n[t][a].num&&(interchange(n,i,t),interchange(r,i,t));if(0!==n[i][a].num){if(1!==n[i][a].num||1!==n[i][a].den){let t=rational(n[i][a].num,n[i][a].den);for(let a=0;a<e[1];a++)n[i][a]=n[i][a].div(t),r[i][a]=r[i][a].div(t)}for(let t=i+1;t<e[0];t++){let l=n[t][a];for(let a=0;a<e[1];a++)n[t][a]=n[t][a].sub(l.mul(n[i][a])),r[t][a]=r[t][a].sub(l.mul(r[i][a]))}}i+=1,a+=1}let l=e[0]-1;if(1!==n[l][l].num||1!==n[l][l].den){let t=rational(n[l][l].num,n[l][l].den);for(let i=0;i<e[1];i++)n[l][i]=n[l][i].div(t),r[l][i]=r[l][i].div(t)}for(let t=e[0]-1;t>0;t--)for(let i=t-1;i>=0;i--){let a=rational(-n[i][t].num,n[i][t].den);for(let l=0;l<e[1];l++)n[i][l]=a.mul(n[t][l]).add(n[i][l]),r[i][l]=a.mul(r[t][l]).add(r[i][l])}return derationalize(r)}function map(t,n){const e=size(t),r=[];for(let i=0;i<e[0];i++)if(Array.isArray(t[i])){r[i]=[];for(let a=0;a<e[1];a++)r[i][a]=n(t[i][a],[i,a],t)}else r[i]=n(t[i],[i,0],t);return r}function rationalize(t){let n=[];return t.forEach(((t,e)=>{n.push(t.map((t=>rational(t))))})),n}function derationalize(t){let n=[];return t.forEach(((t,e)=>{n.push(t.map((t=>t.num/t.den)))})),n}function generate(t,n){let e=2;for(;e>0;){for(var r=[],i=0;i<t;i++)Array.isArray(n)?r.push(Object.assign([],n)):r.push(n);n=r,e-=1}return n}function identity(t){let n=generate(t,0);return n.forEach(((t,n)=>{t[n]=1})),n}function equals(t,n){let e=t,r=n(),i=size(e),a=size(r);return!!i.every(((t,n)=>t===a[n]))&&e.every(((t,n)=>t.every(((t,e)=>Math.abs(t-r[n][e])<1e-10))))}
+		function rational(t, n) {
+			return (
+				(n = n || 1),
+				-1 === Math.sign(n) && ((t = -t), (n = -n)),
+				{ num: t, den: n, add: (e) => rational(t * e.den + n * e.num, n * e.den), sub: (e) => rational(t * e.den - n * e.num, n * e.den), mul: (e) => multiply(e, t, n), div: (e) => multiply(rational(e.den, e.num), t, n) }
+			);
+		}
+		function multiply(t, n, e) {
+
+			let r = Math.sign(n) * Math.sign(t.num),
+				i = Math.sign(e) * Math.sign(t.den);
+			return (
+				Math.abs(n) === Math.abs(t.den) && Math.abs(e) === Math.abs(t.num)
+					? ((r = r), (i = i))
+					: Math.abs(e) === Math.abs(t.num)
+					? ((r *= Math.abs(n)), (i *= Math.abs(t.den)))
+					: Math.abs(n) === Math.abs(t.den)
+					? ((r *= Math.abs(t.num)), (i *= Math.abs(e)))
+					: ((r = n * t.num), (i = e * t.den)),
+				rational(r, i)
+			);
+		}
+		function merge(t) {
+
+
+			return { top: (n) => top(t, n), bottom: (n) => bottom(t, n), left: (n) => left(t, n), right: (n) => right(t, n) };
+		}
+		function matrix(t) {
+
+
+			if (!Array.isArray(t)) throw new Error("Input should be of type array");
+			return Object.assign(function () {
+				let n = 1 === arguments.length ? [arguments[0]] : Array.apply(null, arguments);
+				return read(t, n);
+			}, _mat(t));
+		}
+		function _mat(t) {
+
+
+			return {
+				size: () => size(t),
+				add: (n) => operate(t, n, addition),
+				sub: (n) => operate(t, n, subtraction),
+				mul: (n) => operate(t, n, multiplication),
+				div: (n) => operate(t, n, division),
+				prod: (n) => prod(t, n),
+				trans: () => trans(t),
+				set: function () {
+					let n = 1 === arguments.length ? [arguments[0]] : Array.apply(null, arguments);
+					return { to: (e) => replace(t, e, n) };
+				},
+				det: () => determinant(t),
+				inv: () => invert(t),
+				merge: merge(t),
+				map: (n) => map(t, n),
+				equals: (n) => equals(t, n),
+			};
+		}
+		function size(t) {
+			let n = [];
+			for (; Array.isArray(t); ) n.push(t.length), (t = t[0]);
+			return n;
+		}
+		function read(t, n) {
+			return 0 === n.length ? t : extract(t, n);
+		}
+		function prod(t, n) {
+
+			
+			let e = t,
+				r = n(),
+				i = size(e),
+				a = size(r),
+				l = [];
+			if (i[1] === a[0])
+				for (let t = 0; t < i[0]; t++) {
+					l[t] = [];
+					for (let n = 0; n < a[1]; n++) for (let a = 0; a < i[1]; a++) void 0 === l[t][n] && (l[t][n] = 0), (l[t][n] += multiplication(e[t][a], r[a][n]));
+				}
+			return l;
+		}
+		function multiplication(t, n) {
+			return t * n;
+		}
+		function invert(t) {
+
+			let n = rationalize(t),
+				e = size(t),
+				r = rationalize(identity(e[0])),
+				i = 0,
+				a = 0;
+			for (; a < e[0]; ) {
+				if (0 === n[i][a].num) for (let t = i + 1; t < e[0]; t++) 0 !== n[t][a].num && (interchange(n, i, t), interchange(r, i, t));
+				if (0 !== n[i][a].num) {
+					if (1 !== n[i][a].num || 1 !== n[i][a].den) {
+						let t = rational(n[i][a].num, n[i][a].den);
+						for (let a = 0; a < e[1]; a++) (n[i][a] = n[i][a].div(t)), (r[i][a] = r[i][a].div(t));
+					}
+					for (let t = i + 1; t < e[0]; t++) {
+						let l = n[t][a];
+						for (let a = 0; a < e[1]; a++) (n[t][a] = n[t][a].sub(l.mul(n[i][a]))), (r[t][a] = r[t][a].sub(l.mul(r[i][a])));
+					}
+				}
+				(i += 1), (a += 1);
+			}
+			let l = e[0] - 1;
+			if (1 !== n[l][l].num || 1 !== n[l][l].den) {
+				let t = rational(n[l][l].num, n[l][l].den);
+				for (let i = 0; i < e[1]; i++) (n[l][i] = n[l][i].div(t)), (r[l][i] = r[l][i].div(t));
+			}
+			for (let t = e[0] - 1; t > 0; t--)
+				for (let i = t - 1; i >= 0; i--) {
+					let a = rational(-n[i][t].num, n[i][t].den);
+					for (let l = 0; l < e[1]; l++) (n[i][l] = a.mul(n[t][l]).add(n[i][l])), (r[i][l] = a.mul(r[t][l]).add(r[i][l]));
+				}
+			return derationalize(r);
+		}
+		function rationalize(t) {
+
+			let n = [];
+			return (
+				t.forEach((t, e) => {
+					n.push(t.map((t) => rational(t)));
+				}),
+				n
+			);
+		}
+		function derationalize(t) {
+
+
+			let n = [];
+			return (
+				t.forEach((t, e) => {
+					n.push(t.map((t) => t.num / t.den));
+				}),
+				n
+			);
+		}
+		function generate(t, n) {
+
+
+			let e = 2;
+			for (; e > 0; ) {
+				for (var r = [], i = 0; i < t; i++) Array.isArray(n) ? r.push(Object.assign([], n)) : r.push(n);
+				(n = r), (e -= 1);
+			}
+			return n;
+		}
+		function identity(t) {
+
+			let n = generate(t, 0);
+			return (
+				n.forEach((t, n) => {
+					t[n] = 1;
+				}),
+				n
+			);
+		}
 		let A = matrix(inputMatrix);
 		let b = matrix(inputVector);
 		let MatrixInverse = A.inv();
@@ -216,9 +379,9 @@ class ScoringCalc extends HTMLElement {
 		return output.flat();
 	}
 
-    /**
-     * Calculate the average score and the set the stroke-dashoffset of the center svg circle, as well as the color
-     */
+	/**
+	 * Calculate the average score and the set the stroke-dashoffset of the center svg circle, as well as the color
+	 */
 	#calcScore() {
 		let scores = [];
 		let allWeights = [];
@@ -239,9 +402,9 @@ class ScoringCalc extends HTMLElement {
 		totalScoreInd.setAttribute("stroke-dashoffset", 2 * 40 * Math.PI * (1 - totalScore / 100));
 	}
 
-    /**
-     * sets the stroke dash offset for every svg element and rotate them to fit into the scheme
-     */
+	/**
+	 * sets the stroke dash offset for every svg element and rotate them to fit into the scheme
+	 */
 	#setOffset() {
 		let scores = [];
 		let allWeights = [];
@@ -392,46 +555,48 @@ class ScoringCalc extends HTMLElement {
 		});
 	}
 
-    /**
-     * A utility function to apply attributes stored in an object to an element
-     * @param {HTMLElement} element 
-     * @param {Object} attributes 
-     */
+	/**
+	 * A utility function to apply attributes stored in an object to an element
+	 * @param {HTMLElement} element
+	 * @param {Object} attributes
+	 */
 	#applyAttributes(element, attributes) {
 		for (const key in attributes) {
 			element.setAttribute(key, attributes[key]);
 		}
 	}
-    
-    /**
-     * apply mutation observer to wanted element(observable)
-     * @param {HTMLElement} observable 
-     * @param {int} number 
-     * @param {MutationObserver} observer 
-     */
+
+	/**
+	 * apply mutation observer to wanted element(observable)
+	 * @param {HTMLElement} observable
+	 * @param {int} number
+	 * @param {MutationObserver} observer
+	 */
 	#listener = (observable, number, observer) => {
 		observer.observe(observable, this.#observerOptions);
 	};
-    
-    /**
-     *  define what should happen once a observer observers any change
-     * @param {MutationRecordType} entries 
-     * @param {MutationObserver} observer 
-     */
+
+	/**
+	 *  define what should happen once a observer observers any change
+	 * @param {MutationRecordType} entries
+	 * @param {MutationObserver} observer
+	 */
 	#callback = (entries, observer) => {
 		if ((entries.type = "attributes")) {
+			// if(entries.attributeName == "weight"){
 			this.#changingAttributes = { weight: entries[0].target.weight, index: entries[0].target.number, score: entries[0].target.score };
 			this.#calcWeights(this.#changingAttributes);
 			this.#calcScore();
 			this.#setOffset();
+			// }
 		}
 	};
-    
-    /**
-     * collect the info about every category and store them in an accessible Array
-     */
+
+	/**
+	 * collect the info about every category and store them in an accessible Array
+	 */
 	#updateCategoryInfo() {
-        // delete the old data
+		// delete the old data
 		this.categoryNumbers = [];
 		this.categoryNames = [];
 		this.categoryUnits = [];
@@ -444,7 +609,7 @@ class ScoringCalc extends HTMLElement {
 		this.categoryWeights = [];
 		this.categoryColors = [];
 		this.categoryGrains = [];
-        // fill with newly collected data
+		// fill with newly collected data
 		for (let i = 0; i < this.categoryCount; i++) {
 			this.categoryNumbers.push(this.row[i].getAttribute("number"));
 			this.categoryNames.push(this.row[i].getAttribute("rowname"));
@@ -466,7 +631,7 @@ class ScoringCalc extends HTMLElement {
 	#svgTexts = [];
 	#categoryObservers = [];
 	#changingAttributes = { weight: null, index: null, score: null };
-    // only observe the attributes weight and score
+	// only observe the attributes weight and score
 	#observerOptions = {
 		childList: false,
 		attributes: true,
@@ -476,7 +641,7 @@ class ScoringCalc extends HTMLElement {
 		attributeOldValue: false,
 		characterDataOldValue: false,
 	};
-    // these are sort of "event listeners". the number of rows is limited by the length of this array (16)
+	// these are sort of "event listeners". the number of rows is limited by the length of this array (16)
 	#daemons = [
 		new MutationObserver(this.#callback),
 		new MutationObserver(this.#callback),
@@ -501,14 +666,13 @@ class ScoringCalc extends HTMLElement {
  * Defines a new html element which will act as a row in the scoring calculator
  */
 class ScoringCalcCategory extends HTMLElement {
-
 	static get observedAttributes() {
 		return ["number", "rowName", "unit", "value", "target", "step", "direction", "evaluation", "bias", "weight", "score", "color"];
 	}
 
 	constructor() {
 		super();
-		this._root = this.attachShadow({ mode: "closed" });
+		this._root = this.attachShadow({ mode: "open" });
 		this._root.append(scoringCategory.content.cloneNode(true));
 		this.number = "";
 		this.rowName = "";
@@ -524,28 +688,33 @@ class ScoringCalcCategory extends HTMLElement {
 		this.score = "";
 		this.color = "";
 	}
-    //execute once at the beginning
-    connectedCallback() {
+	//execute once at the beginning
+	connectedCallback() {
 		this.#addListeners();
 		this.#init();
 		this.#prep();
 		this.#getTargetLimit();
-        this.#calcScore();
+		this.#calcScore();
 	}
 
-    //execute once the weight attribute experienced changes from the outside(<scoring-calc>)
-    attributeChangedCallback(name, oldValue, newValue) {
-		let weightingInput = this._root.querySelector(".dvsc_weighting_input");
-		let weightingOutput = this._root.querySelector(".dvsc_weighting_input_display");
-
-		if (name == "weight") {
+	//execute once the weight attribute experienced changes from the outside(<scoring-calc>)
+	attributeChangedCallback(name, oldValue, newValue) {
+		if (name == "weight" && name !== "rowname") {
+			let weightingInput = this._root.querySelector(".dvsc_weighting_input");
+			let weightingOutput = this._root.querySelector(".dvsc_weighting_input_display");
 			weightingInput.value = newValue;
 			weightingInput.setAttribute("value", newValue);
 			weightingOutput.innerHTML = parseFloat(newValue).toFixed(2);
 		}
+		// if(name == "rowName" || name == "rowname"){
+		// 	let categoryName = this._root.querySelector(".category_name");
+		// 	categoryName.innerHTML = newValue;
+		// 	this.setAttribute("rowname", newValue );
+		// 	this.rowName = newValue;
+		// }
 	}
 
-    // import all attribute data
+	// import all attribute data
 	#init() {
 		this.number = this.getAttribute("number") ?? "0";
 		this.rowName = this.getAttribute("rowName") ?? "default";
@@ -574,13 +743,13 @@ class ScoringCalcCategory extends HTMLElement {
 		this.setAttribute("color", this.color);
 		this.setAttribute("grain", this.grain);
 		let targetValueInput = this._root.querySelector(".dvsc_target_value_input");
-        let biasInput = this._root.querySelector(".dvsc_bias_input");
+		let biasInput = this._root.querySelector(".dvsc_bias_input");
 		targetValueInput.setAttribute("step", this.step);
-        targetValueInput.setAttribute("value", this.target);
-        biasInput.setAttribute("value", this.bias);
+		targetValueInput.setAttribute("value", this.target);
+		biasInput.setAttribute("value", this.bias);
 	}
 
-    // display all attribute data
+	// display all attribute data
 	#prep() {
 		let categoryName = this._root.querySelector(".category_name");
 		let categoryUnit = this._root.querySelectorAll(".category_unit");
@@ -600,7 +769,7 @@ class ScoringCalcCategory extends HTMLElement {
 		scoreOutput.innerHTML = this.score;
 	}
 
-    // add eventListeners to every input
+	// add eventListeners to every input
 	#addListeners() {
 		let targetValueInput = this._root.querySelector(".dvsc_target_value_input");
 		let targetValueOutput = this._root.querySelector(".dvsc_target_value_input_display");
@@ -623,8 +792,8 @@ class ScoringCalcCategory extends HTMLElement {
 		let weightingInput = this._root.querySelector(".dvsc_weighting_input");
 		let weightingOutput = this._root.querySelector(".dvsc_weighting_input_display");
 		weightingInput.addEventListener("input", () => {
-            //disallow the weight input value to reach 0, because this messes with the matrix calculation.
-            // once a weight reaches 0 it will stay at 0 and can not be passively changed anymore by changing another weight
+			//disallow the weight input value to reach 0, because this messes with the matrix calculation.
+			// once a weight reaches 0 it will stay at 0 and can not be passively changed anymore by changing another weight
 			this.weight = weightingInput.value < 0.01 ? 0.01 : weightingInput.value;
 			weightingOutput.innerHTML = weightingInput.value < 0.01 ? 0.01 : weightingInput.value;
 			this.setAttribute("weight", weightingInput.value < 0.01 ? 0.01 : weightingInput.value);
@@ -637,17 +806,17 @@ class ScoringCalcCategory extends HTMLElement {
 			// set min or max values for target value range input slider
 			targetValueInput.setAttribute("max", this.value);
 			if (this.getAttribute("unit") !== "%") {
-                //estimate a reasonable min input value based on the grain attribute
+				//estimate a reasonable min input value based on the grain attribute
 				targetValueInput.setAttribute("min", parseFloat(this.value) - parseFloat(this.getAttribute("grain")) * 5);
 			} else {
-                // disallow percentages above 100 or below 0
+				// disallow percentages above 100 or below 0
 				targetValueInput.setAttribute("min", 0);
 			}
 		} else if (this.direction == "-1") {
 			targetValueInput.setAttribute("min", this.value);
-            // disallow percentages above 100 or below 0
+			// disallow percentages above 100 or below 0
 			if (this.getAttribute("unit") !== "%") {
-                //estimate a reasonable max input value based on the grain attribute
+				//estimate a reasonable max input value based on the grain attribute
 				targetValueInput.setAttribute("max", parseFloat(this.value) + parseFloat(this.getAttribute("grain")) * 14);
 			} else {
 				targetValueInput.setAttribute("max", 100);
@@ -740,7 +909,6 @@ class ScoringCalcCategory extends HTMLElement {
 			this.setAttribute("score", this.score);
 		}
 	}
-	
 }
 
 // make the custom elements available to use in the HTML doc
