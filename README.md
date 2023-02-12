@@ -42,9 +42,7 @@ To calculate a single category Score, the main principle is the difference betwe
   * **linear:**
     s(v) returns a score with  0 >= `categoryScore` <= 1000 , dependent on the `categoryTarget` $t$, the actual `categoryValue` $v$ , `categoryBias` $b$ , `categoryDirection` $p$ and the `categoryGrain`$g$ , which should be set to relative resolution, which ís dependent on the use case, i.e. when running a marathon anything from 10 seconds to 10 minutes would be the grain, on the other hand when running  a 100m dash the grain would be 0.5 Seconds to 0.005 Seconds.
 
-    $$
-    b \in [-5,5];\ b \in Z;\ \ \ t \le v \vee t \ge v; \ \ \ p \in [-1,1]; \ p \in Z\ \ \ t,v,g \in R
-    $$
+    $$b\in[-5,5];\ b \in Z;\ \ \ t \le v \vee t \ge v; \ \ \ p \in [-1,1]; \ p \in Z\ \ \ t,v,g \in R $$
 
     $$
     s(v)=f(-h(v))+f(h(v))(-b_1h(v)+1)+f(h(v- \frac{1}{pb_1}))(b_1h(v))-1)+500
