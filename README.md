@@ -31,9 +31,7 @@ To calculate a single category Score, the main principle is the difference betwe
   Now The other way around: Should the `categoryValue <= categoryTarget` the `categoryDirection = -1` . E.g. the category goal is it to optimize the measured process for the hightest efficiency possible. If set correctly the `categoryTarget` cannot be set smaller than the `categoryValue`. The Result is the adjustable `categoryTarget` will automatically stop at `min = categoryValue`.
 * The `categoryWeight` can be adjusted, which affects the overall score, but **not** the ``categoryScore``! When adjusting one `categoryWeight` all the other `categoryWeight` will adjust accordingly, so:
 
-  $$
-  \sum_{i=1}^c categoryScore_i = 1 = 100\%
-  $$
+  $$  \sum_{i=1}^c categoryScore_i = 1 = 100\%  $$
 
   For ease of use the lowest individual `categoryWeight` is 0.01 %. This ensures, that no `categoryWeight` will be stuck at 0%. *Due to the nature of using linear Algebra (more specific Matrix calculations) for calculation the weights.  Depending on the number of categories, if one category reaches 0% it will stay at 0% and the other weight will compensate, which is an unwanted effect*
 * The `categoryBias` is adjustable, with the `categoryBias` accepting any value between $bias ∈ [-5 , 5] ,  bias ∈ Z$. If `0 < categoryBias < 5` means, you favor the category and therefore giving it a better score. If the  `categoryBias == 5` the `categoryScore ≅ 1 ≅ 100%` .
@@ -44,21 +42,13 @@ To calculate a single category Score, the main principle is the difference betwe
 
     $$b\in[-5,5];\ b \in Z;\ \ \ t \le v \vee t \ge v; \ \ \ p \in [-1,1]; \ p \in Z\ \ \ t,v,g \in R $$
 
-    $$
-    s(v)=f(-h(v))+f(h(v))(-b_1h(v)+1)+f(h(v- \frac{1}{pb_1}))(b_1h(v))-1)+500
-    $$
+    $$    s(v)=f(-h(v))+f(h(v))(-b_1h(v)+1)+f(h(v- \frac{1}{pb_1}))(b_1h(v))-1)+500    $$
 
-    $$
-    f(v) = \frac{1000}{π} arctan(999999v)
-    $$
+    $$    f(v) = \frac{1000}{π} arctan(999999v)    $$
 
-    $$
-    h(v) = p(v-t)
-    $$
+    $$    h(v) = p(v-t)    $$
 
-    $$
-    b_1 = \frac{b-5.001}{-b-5.001} \frac{1}{g_1}\\ \ \\ g_1 = 2g
-    $$
+    $$    b_1 = \frac{b-5.001}{-b-5.001} \frac{1}{g_1}\\ \ \\ g_1 = 2g    $$
 
     In this example `categoryTarget` (the blue line) is set to 200 and `categoryValue` (the red line) is set to 700. Because  `categoryValue`>`categoryTarget`our `categoryDirection` is +1.
     `categoryBias` shall be 0 and the `categoryGrain` is set to 500. By design if the `categoryValue == categoryGrain - categoryTarget` the `categoryScore` shall always be 500(purple line)
