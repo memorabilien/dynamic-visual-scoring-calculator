@@ -513,11 +513,21 @@ class ScoringCalcCategory extends HTMLElement{
     getTargetLimit(){
         if (this.direction == "1"){// set min or max values for target value range input slider
             this.targetValueInput.setAttribute("max", this.value)
-            // document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("max", inputData[i-1].toString());
+            if(this.getAttribute("unit") !== "%"){
+                this.targetValueInput.setAttribute("min", parseFloat(this.value) - parseFloat(this.getAttribute("grain")) * 5)
+                }
+                else{
+                    this.targetValueInput.setAttribute("min", 0)
+                }
         }
         else if( this.direction == "-1" ){
-            this.targetValueInput.setAttribute("min", this.value)
-            // document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", inputData[i - 1].toString());
+            this.targetValueInput.setAttribute("min", this.value);
+            if(this.getAttribute("unit") !== "%"){
+            this.targetValueInput.setAttribute("max", parseFloat(this.value) + parseFloat(this.getAttribute("grain")) * 14)
+            }
+            else{
+                this.targetValueInput.setAttribute("max", 100)
+            }
         }
     }
      getScoreLinear(value,bias,target,direction,grain){
