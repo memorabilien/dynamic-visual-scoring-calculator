@@ -28,16 +28,10 @@ class ScoringCalc extends HTMLElement {
 		this.categoryWeights = [];
 		this.categoryColors = [];
 		this.categoryGrains = [];
+		this.categoryScores = [];
+		this.score = null;
 		this.row = this._root.querySelectorAll("scoring-calc-category");
 	}
-
-	set setNames(newNames) {
-		this.categoryNames = newNames;
-		for (let i = 0; i < this.categoryCount; i++) {
-			this.row[i].setAttribute("rowname", this.categoryNames[i]);
-		}
-	}
-
 	/**
 	 * Executes once at the beginning
 	 */
@@ -56,12 +50,14 @@ class ScoringCalc extends HTMLElement {
 				stroke: this.categoryColors[i],
 				class: "dvsc_fraction dvsc_fraction_bg",
 				"stroke-dasharray": (2 * 46 * Math.PI - 6).toString(),
+				style:""
 			};
 			let svgFractionProps = {
 				id: "dvsc_fraction_" + i.toString() + "_indicator",
 				stroke: this.categoryColors[i],
 				class: "dvsc_fraction dvsc_fraction_bar",
 				"stroke-dasharray": (2 * 46 * Math.PI - 6).toString(),
+				style:""
 			};
 			let svgTextProps = {
 				id: "dvsc_category_name_" + i.toString(),
@@ -95,30 +91,77 @@ class ScoringCalc extends HTMLElement {
 			//create an assign slots
 			tableBody.appendChild(document.createElement("slot")).assign(this.elements.item(i));
 		}
-
 		// select every element
 		this.row = this.querySelectorAll("scoring-calc-category");
 		this.row.forEach((element, index) => {
 			// assign mutation observer to every row
 			this.#categoryObservers.push(this.#daemons[index]);
 		});
-
 		//  collect starting values
 		this.categoryCount = this.childElementCount;
-		for (let i = 0; i < this.categoryCount; i++) {
-			this.categoryNumbers.push(this.row[i].getAttribute("number"));
-			this.categoryNames.push(this.row[i].getAttribute("rowname"));
-			this.categoryUnits.push(this.row[i].getAttribute("unit"));
-			this.categoryValues.push(this.row[i].getAttribute("value"));
-			this.categoryTargets.push(this.row[i].getAttribute("target"));
-			this.categorySteps.push(this.row[i].getAttribute("step"));
-			this.categoryDirections.push(this.row[i].getAttribute("direction"));
-			this.categoryEvaluations.push(this.row[i].getAttribute("evaluation"));
-			this.categoryBiases.push(this.row[i].getAttribute("bias"));
-			this.categoryWeights.push(this.row[i].getAttribute("weight"));
-			this.categoryColors.push(this.row[i].getAttribute("color"));
-			this.categoryGrains.push(this.row[i].getAttribute("grain"));
+		this.#getState()
+		for(let i = 0; i< this.categoryCount; i++){
 			this.#listener(this.row[i], i, this.#categoryObservers[i]);
+		}
+	}
+
+	dump(){
+		console.log({
+			"elements":this.elements,
+			"categoryCount":this.categoryCount,
+			"categoryNumbers":this.categoryNumbers,
+			"categoryNames":this.categoryNames,
+			"categoryUnits":this.categoryUnits,
+			"categoryValues":this.categoryValues,
+			"categoryTargets":this.categoryTargets,
+			"categorySteps":this.categorySteps,
+			"categoryDirections":this.categoryDirections,
+			"categoryEvaluations":this.categoryEvaluations,
+			"categoryBiases":this.categoryBiases,
+			"categoryWeights":this.categoryWeights,
+			"categoryColors":this.categoryColors,
+			"categoryGrains":this.categoryGrains,
+			"categoryScores":this.categoryScores,
+			"score":this.score,
+		})
+	}
+
+	#getState(){
+		for (let i = 0; i < this.categoryCount; i++) {
+			//numbers
+			this.categoryNumbers[i] = parseFloat(this.row[i].getAttribute("number"));
+			this.categoryValues[i] = parseFloat(this.row[i].getAttribute("value"));
+			this.categoryTargets[i] = parseFloat(this.row[i].getAttribute("target"));
+			this.categorySteps[i] = parseFloat(this.row[i].getAttribute("step"));
+			this.categoryDirections[i] = parseFloat(this.row[i].getAttribute("direction"));
+			this.categoryBiases[i] = parseFloat(this.row[i].getAttribute("bias"));
+			this.categoryWeights[i] = parseFloat(this.row[i].getAttribute("weight"));
+			this.categoryScores[i] = parseFloat(this.row[i].getAttribute("score"));
+			this.categoryGrains[i] = parseFloat(this.row[i].getAttribute("grain"));
+			//strings
+			this.categoryNames[i] = this.row[i].getAttribute("rowname")
+			this.categoryUnits[i] = this.row[i].getAttribute("unit")
+			this.categoryEvaluations[i] = this.row[i].getAttribute("evaluation");
+			this.categoryColors[i] = this.row[i].getAttribute("color");
+		}
+	}
+
+	#setState() {
+		for(let i = 0; i< this.categoryCount; i++){
+			this.#categoryObservers[i].disconnect();
+			this.row[i].setAttribute("number", this.categoryNumbers[i]);
+			this.row[i].setAttribute("rowname", this.categoryNames[i]);
+			this.row[i].setAttribute("unit", this.categoryUnits[i]);
+			this.row[i].setAttribute("value", this.categoryValues[i]);
+			this.row[i].setAttribute("target", this.categoryTargets[i]);
+			this.row[i].setAttribute("step", this.categorySteps[i]);
+			this.row[i].setAttribute("direction", this.categoryDirections[i]);
+			this.row[i].setAttribute("evaluation", this.categoryEvaluations[i]);
+			this.row[i].setAttribute("bias", this.categoryBiases[i]);
+			this.row[i].setAttribute("weight", this.categoryWeights[i]);
+			this.row[i].setAttribute("color", this.categoryBiases[i]);
+			this.row[i].setAttribute("grain", this.categoryGrains[i]);
+			this.#categoryObservers[i].observe(this.row[i], this.#observerOptions);
 		}
 	}
 
@@ -126,32 +169,16 @@ class ScoringCalc extends HTMLElement {
 	 * calculates all weights, if one weight is being adjusted, so the sum of all weight always stays 100%
 	 * @param {Object} weightChanges
 	 */
-	#calcWeights(weightChanges) {
+	#calcWeights(categoryNumber) {
+		let currentAdjustmentIndex = parseInt(categoryNumber);
 		// calculate only if there is more than one category
 		if (this.categoryCount !== 1 && this.categoryCount !== 0) {
-			this.categoryWeights = [];
-			this.row.forEach((element, index) => {
-				// sanitize the weight values, so no value every reaches below 0.01
-				if (element.weight >= 0.01 && element.weight !== null && element.weight !== undefined) {
-					this.categoryWeights.push(element.weight);
-				} else if (element.weight < 0.01) {
-					this.categoryWeights.push(0.01);
-					// disconnect the observer, to prevent getting stuck in an positive feedback loop
-					this.#categoryObservers[index].disconnect();
-					element.setAttribute("weight", 0.01);
-					// reconnect, after attribute has been changed
-					this.#categoryObservers[index].observe(element, this.#observerOptions);
-				}
-			});
-			let inputStatus = this.categoryWeights;
-			let userInput = weightChanges.weight > 0.01 ? weightChanges.weight : 0.01;
-			let currentAdjustmentIndex = weightChanges.index;
 			let matrix = new Array(this.categoryCount - 1);
 			let vector = new Array(this.categoryCount - 1);
 			// assemble the matrix and the vector to use linear algebra
 			for (let i = 0; i < this.categoryCount - 1; i++) {
 				if (i == 0) {
-					vector[i] = [100 - userInput];
+					vector[i] = [100 - parseFloat(this.categoryWeights[currentAdjustmentIndex])];
 				} else {
 					vector[i] = [0];
 				}
@@ -168,18 +195,17 @@ class ScoringCalc extends HTMLElement {
 						matrix[row][column] = 1;
 					} else {
 						if (column == row - 1) {
-							matrix[row][column] = -inputStatus[row + 1];
+							matrix[row][column] = parseFloat(-this.categoryWeights[row + 1]);
 						}
 						if (column == row) {
-							matrix[row][column] = inputStatus[row];
+							matrix[row][column] = parseFloat(this.categoryWeights[row]);
 						}
 					}
 				}
 			}
-
 			let newPercentages = this.#matrixCalculations(matrix, vector);
 			// insert the current user input back into the array, to get all new weights in an array
-			newPercentages.splice(currentAdjustmentIndex, 0, userInput);
+			newPercentages.splice(currentAdjustmentIndex, 0, this.categoryWeights[currentAdjustmentIndex]);
 			for (let i = 0; i < this.categoryCount; i++) {
 				if (newPercentages[i] < 0.01 && i !== currentAdjustmentIndex) {
 					// adjust any value below 0.01 to 0.01 by subtracting the amount below 0.01 from the input weight
@@ -190,15 +216,11 @@ class ScoringCalc extends HTMLElement {
 			// apply the new percentages. but only if the input weight is above 0.01. This makes any changes impossible, and the input weight just stays above 0.01
 			if (newPercentages[currentAdjustmentIndex] > 0.01) {
 				for (let i = 0; i < this.categoryCount; i++) {
-					// disconnect the observer, to prevent getting stuck in an positive feedback loop
-					this.#categoryObservers[i].disconnect();
-					this.row[i].setAttribute("weight", newPercentages[i]);
-					// reconnect, after attribute has been changed
-					this.#categoryObservers[i].observe(this.row[i], this.#observerOptions);
+					this.categoryWeights[i] = newPercentages[i];
 				}
 			}
 		}
-		this.#updateCategoryInfo();
+		this.#setState();
 	}
 
 	/**
@@ -383,35 +405,23 @@ class ScoringCalc extends HTMLElement {
 	 * Calculate the average score and the set the stroke-dashoffset of the center svg circle, as well as the color
 	 */
 	#calcScore() {
-		let scores = [];
-		let allWeights = [];
-		for (let i = 0; i < this.categoryCount; i++) {
-			scores.push(this.row[i].getAttribute("score"));
-			allWeights.push(this.row[i].getAttribute("weight"));
-		}
 		let numerator = 0;
 		for (let i = 0; i < this.categoryCount; i++) {
-			numerator += (scores[i] / 1000) * parseFloat(allWeights[i] / 100);
+			numerator += (parseFloat(this.categoryScores[i]) / 1000) * parseFloat(this.categoryWeights[i] / 100);
 		}
-		let totalScore = numerator * 100;
+		this.score = numerator * 100;
 		let totalScoreElement = this._root.querySelector("#dvsc_score_text");
 		let totalScoreInd = this._root.querySelector("#dvsc_score_indicator");
-		totalScoreElement.innerHTML = totalScore.toFixed(0);
-		totalScoreElement.setAttribute("fill", "hsl(" + ((totalScore / 100) * 115).toString() + ",78%,45%)");
-		totalScoreInd.setAttribute("stroke", "hsl(" + ((totalScore / 100) * 115).toString() + ",78%,45%)");
-		totalScoreInd.setAttribute("stroke-dashoffset", 2 * 40 * Math.PI * (1 - totalScore / 100));
+		totalScoreElement.innerHTML = this.score.toFixed(0);
+		totalScoreElement.setAttribute("fill", "hsl(" + ((this.score / 100) * 115).toString() + ",78%,45%)");
+		totalScoreInd.setAttribute("stroke", "hsl(" + ((this.score / 100) * 115).toString() + ",78%,45%)");
+		totalScoreInd.setAttribute("stroke-dashoffset", 2 * 40 * Math.PI * (1 - this.score / 100));
 	}
 
 	/**
 	 * sets the stroke dash offset for every svg element and rotate them to fit into the scheme
 	 */
-	#setOffset() {
-		let scores = [];
-		let allWeights = [];
-		for (let i = 0; i < this.categoryCount; i++) {
-			scores.push(this.row[i].getAttribute("score"));
-			allWeights.push(this.row[i].getAttribute("weight"));
-		}
+	#setOffset(scores, weights) {
 		/**
 		 * Returns the x distance from the center
 		 * @param {int} currentIndex
@@ -422,19 +432,15 @@ class ScoringCalc extends HTMLElement {
 			let rad;
 			let dx;
 			for (let i = 0; i < currentIndex; i++) {
-				degree += parseFloat(allWeights[i]);
+				degree += parseFloat(weights[i]);
 			}
 			degree = 3.6 * degree;
-
 			rad = (degree / 180) * Math.PI;
-
 			function F(x) {
-				// let offset = 0.25 * Math.PI;
-				let offset = 0.125 * Math.PI;
-				return 65 * Math.cos(x + offset);
+				let offset = ((3.6* parseFloat(weights[currentIndex]))/180)*Math.PI/2;
+				return 50 * Math.cos(x + offset);
 			}
 			dx = F(rad);
-
 			return dx;
 		}
 		/**
@@ -447,65 +453,18 @@ class ScoringCalc extends HTMLElement {
 			let rad;
 			let dy;
 			for (let i = 0; i < currentIndex; i++) {
-				degree += parseFloat(allWeights[i]);
+				degree += parseFloat(weights[i]);
 			}
 			degree = 3.6 * degree;
-
 			rad = (degree / 180) * Math.PI;
-
 			function F(x) {
-				// let offset = 0.25 * Math.PI;
-				let offset = 0.125 * Math.PI;
-				return 65 * Math.sin(x + offset);
+				let offset = ((3.6* parseFloat(weights[currentIndex]))/180)*Math.PI/2;
+				return 50 * Math.sin(x + offset);
 			}
 			dy = F(rad);
-
 			return dy;
 		}
-		/**
-		 * Returns the x distance from the center, for the first category
-		 *
-		 * @returns {number}
-		 */
-		function getDXStart() {
-			// let degree = 3.6  *( parseFloat(weighting_inputs[0].value) + parseFloat(weighting_inputs[1].value)) ;
-			let degree = 3.6 * parseFloat(allWeights[0]);
-			let rad;
-			let dx;
-			rad = (degree / 180) * Math.PI;
-
-			function F(x) {
-				let offset = -rad / 1.5;
-				return 65 * Math.cos(x + offset);
-			}
-			dx = F(rad);
-
-			return dx;
-		}
-
-		/**
-		 * Returns the y distance from the center for the fist category
-		 *
-		 * @returns {number}
-		 */
-		function getDYStart() {
-			// let degree = 3.6  *( parseFloat(weighting_inputs[0].value) + parseFloat(weighting_inputs[1].value)) ;
-			let degree = 3.6 * parseFloat(allWeights[0]);
-
-			let rad;
-			let dy;
-
-			rad = (degree / 180) * Math.PI;
-
-			function F(x) {
-				let offset = -rad / 1.5;
-				return 65 * Math.sin(x + offset);
-			}
-			dy = F(rad);
-
-			return dy;
-		}
-
+		
 		/**
 		 * get the offset in degrees for the current index category circle part
 		 * @param {int} currentIndex
@@ -514,28 +473,27 @@ class ScoringCalc extends HTMLElement {
 		function getDegrees(currentIndex) {
 			let degree = 0;
 			for (let i = 0; i < currentIndex; i++) {
-				degree += parseFloat(allWeights[i]);
+				degree += parseFloat(weights[i]);
 			}
 			return 3.6 * degree;
 		}
 
 		//setting the length and position on the circle for every category background circle arch
 		this.#svgBackgroundCircles.forEach((element, index) => {
-			element.setAttribute("stroke-dashoffset", 2 * 46 * Math.PI * (1 - allWeights[index] / 100.0));
+			element.setAttribute("stroke-dashoffset", 2 * 46 * Math.PI * (1 - weights[index] / 100.0));
 			if (index >= 1) {
 				element.setAttribute("transform", "rotate(" + getDegrees(index).toString() + ")");
 			}
 		});
 		//setting the length and position on the circle for every category scoring circle arch
 		this.#svgScoreCircles.forEach((element, index) => {
-			//console.log(Math.min((2.0 * 46 * Math.PI - 6) * (1.0 - weighting_inputs[index].value * (scores[index] / 1000) * 0.01), 2 * 46 * Math.PI - 12));
 			element.setAttribute(
 				"stroke-dashoffset",
-				2.0 * 46 * Math.PI * (1.0 - allWeights[index] * (scores[index] / 1000) * 0.01) > 278
+				2.0 * 46 * Math.PI * (1.0 - weights[index] * (scores[index] / 1000) * 0.01) > 278
 					? 278
-					: 2.0 * 46 * Math.PI * (1.0 - allWeights[index] * (scores[index] / 1000) * 0.01) < 2 * 46 * Math.PI * (1 - allWeights[index] / 100.0) + 2 * 46 * Math.PI * (1 - allWeights[index] / 100.0) * 0.05
-					? 2 * 46 * Math.PI * (1 - allWeights[index] / 100.0)
-					: 2.0 * 46 * Math.PI * (1.0 - allWeights[index] * (scores[index] / 1000) * 0.01)
+					: 2.0 * 46 * Math.PI * (1.0 - weights[index] * (scores[index] / 1000) * 0.01) < 2 * 46 * Math.PI * (1 - weights[index] / 100.0) + 2 * 46 * Math.PI * (1 - weights[index] / 100.0) * 0.05
+					? 2 * 46 * Math.PI * (1 - weights[index] / 100.0)
+					: 2.0 * 46 * Math.PI * (1.0 - weights[index] * (scores[index] / 1000) * 0.01)
 			);
 			if (index >= 1) {
 				element.setAttribute("transform", "rotate(" + getDegrees(index).toString() + ")");
@@ -544,14 +502,32 @@ class ScoringCalc extends HTMLElement {
 
 		//setting the position for every category text element near to its circle part
 		this.#svgTexts.forEach((element, index) => {
-			if (index >= 1) {
+				let positionX = getDX(index);
+				let positionY  = getDY(index);
+				if(positionX > 12){
+					element.style.transform = "translateX(" + element.getBoundingClientRect().width/4  +"px)";
+				}
+				else if(positionX < -12 ){
+					element.style.transform = "translateX(" + -1*element.getBoundingClientRect().width/4  +"px)";
+				}
+				else if(positionX <= 12 && positionX >= -12 ){
+					element.style.transform = "translateX(0px)";
+					if(positionY > 0){
+						element.style.transform = "translateY(" +  element.getBoundingClientRect().height/4 +"px)";
+					}
+					else{
+						element.style.transform = "translateY(" +  -1*element.getBoundingClientRect().height/4 +"px)";
+					}
+				}
+				if( positionY <= -12 && positionY >= 12){
+					element.style.transform = "translateY(0px)";
+					if(positionX < 0){
+						element.style.transform = "translateX(" + -1*element.getBoundingClientRect().width +"px)";
+					}
+				}
+
 				element.setAttribute("dx", getDX(index));
 				element.setAttribute("dy", getDY(index));
-			}
-			if (index === 0) {
-				element.setAttribute("dx", getDXStart());
-				element.setAttribute("dy", getDYStart());
-			}
 		});
 	}
 
@@ -583,49 +559,26 @@ class ScoringCalc extends HTMLElement {
 	 */
 	#callback = (entries, observer) => {
 		if ((entries.type = "attributes")) {
-			// if(entries.attributeName == "weight"){
-			this.#changingAttributes = { weight: entries[0].target.weight, index: entries[0].target.number, score: entries[0].target.score };
-			this.#calcWeights(this.#changingAttributes);
-			this.#calcScore();
-			this.#setOffset();
-			// }
+				for(let i = 0; i < entries.length; i++){
+					switch(entries[i].attributeName){
+						case "weight":
+							this.#getState()
+							this.#calcWeights(entries[0].target.number);
+							this.#calcScore();
+							this.#setOffset( this.categoryScores, this.categoryWeights);
+							break;
+						case "score":
+							this.#getState()
+							this.#calcScore();
+							this.#setOffset( this.categoryScores, this.categoryWeights);
+					}
+				}
 		}
 	};
 
 	/**
 	 * collect the info about every category and store them in an accessible Array
 	 */
-	#updateCategoryInfo() {
-		// delete the old data
-		this.categoryNumbers = [];
-		this.categoryNames = [];
-		this.categoryUnits = [];
-		this.categoryValues = [];
-		this.categoryTargets = [];
-		this.categorySteps = [];
-		this.categoryDirections = [];
-		this.categoryEvaluations = [];
-		this.categoryBiases = [];
-		this.categoryWeights = [];
-		this.categoryColors = [];
-		this.categoryGrains = [];
-		// fill with newly collected data
-		for (let i = 0; i < this.categoryCount; i++) {
-			this.categoryNumbers.push(this.row[i].getAttribute("number"));
-			this.categoryNames.push(this.row[i].getAttribute("rowname"));
-			this.categoryUnits.push(this.row[i].getAttribute("unit"));
-			this.categoryValues.push(this.row[i].getAttribute("value"));
-			this.categoryTargets.push(this.row[i].getAttribute("target"));
-			this.categorySteps.push(this.row[i].getAttribute("step"));
-			this.categoryDirections.push(this.row[i].getAttribute("direction"));
-			this.categoryEvaluations.push(this.row[i].getAttribute("evaluation"));
-			this.categoryBiases.push(this.row[i].getAttribute("bias"));
-			this.categoryWeights.push(this.row[i].getAttribute("weight"));
-			this.categoryColors.push(this.row[i].getAttribute("color"));
-			this.categoryGrains.push(this.row[i].getAttribute("grain"));
-		}
-	}
-
 	#svgBackgroundCircles = [];
 	#svgScoreCircles = [];
 	#svgTexts = [];

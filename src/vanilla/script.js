@@ -234,101 +234,45 @@ function categoryCompiler(categoryNumber, categoryEvaluation, categoryValue, cat
  * Sets the stroke-dashoffset for every category arch including background and filling
  */
 function setOffset(){
-    /**
-     * Returns the x distance from the center 
-     * @param {int} currentIndex 
-     * @returns {number} 
-     */
-    function getDX(currentIndex){
+    
+    function getDX(currentIndex) {
         let degree = 0;
         let rad;
         let dx;
         for (let i = 0; i < currentIndex; i++) {
             degree += parseFloat(categoryWeights[i].value);
-         } 
-         degree = 3.6 * degree;
-
-         rad = (degree/180)*Math.PI 
-
-         function F(x){
-            // let offset = 0.25 * Math.PI;
-            let offset = 0.125 * Math.PI
-            return 65* Math.cos(x + offset);
-         }
-         dx = F(rad);
-
-         return dx;
+        }
+        degree = 3.6 * degree;
+        rad = (degree / 180) * Math.PI;
+        function F(x) {
+            let offset = ((3.6* parseFloat(categoryWeights[currentIndex].value))/180)*Math.PI/2;
+            return 50 * Math.cos(x + offset);
+        }
+        dx = F(rad);
+        return dx;
     }
+
     /**
-     * Returns the y distance from the center 
-     * @param {int} currentIndex 
-     * @returns {number} 
+     * Returns the y distance from the center
+     * @param {int} currentIndex
+     * @returns {number}
      */
-    function getDY(currentIndex){
+    function getDY(currentIndex) {
         let degree = 0;
         let rad;
         let dy;
         for (let i = 0; i < currentIndex; i++) {
             degree += parseFloat(categoryWeights[i].value);
-         } 
-         degree = 3.6 * degree;
-
-         rad = (degree/180)*Math.PI 
-
-         function F(x){
-            // let offset = 0.25 * Math.PI;
-            let offset = 0.125 * Math.PI
-            return 65* Math.sin(x + offset);
-         }
-         dy = F(rad);
-
-         return dy;
+        }
+        degree = 3.6 * degree;
+        rad = (degree / 180) * Math.PI;
+        function F(x) {
+            let offset = ((3.6* parseFloat(categoryWeights[currentIndex].value))/180)*Math.PI/2;
+            return 50 * Math.sin(x + offset);
+        }
+        dy = F(rad);
+        return dy;
     }
-    /**
-     * Returns the x distance from the center, for the first category 
-     * 
-     * @returns {number} 
-     */
-    function getDXStart(){
-        // let degree = 3.6  *( parseFloat(categoryWeights[0].value) + parseFloat(categoryWeights[1].value)) ;
-        let degree = 3.6  *( parseFloat(categoryWeights[0].value));
-        let rad;
-        let dx;
-         rad = (degree/180)*Math.PI 
-
-         function F(x){
-            let offset = -rad/1.5
-            return 65* Math.cos(x + offset);
-         }
-         dx = F(rad);
-
-         return dx;
-    }
-
-
-    /**
-     * Returns the y distance from the center for the fist category
-     * 
-     * @returns {number} 
-     */
-    function getDYStart(){
-        // let degree = 3.6  *( parseFloat(categoryWeights[0].value) + parseFloat(categoryWeights[1].value)) ;
-        let degree = 3.6  *( parseFloat(categoryWeights[0].value) );
-
-        let rad;
-        let dy;
-
-         rad = (degree/180)*Math.PI 
-
-         function F(x){
-            let offset = -rad/1.5
-            return 65* Math.sin(x + offset);
-         }
-         dy = F(rad);
-
-         return dy;
-    }
-
 
     /**
      * get the offset in degrees for the current index category circle part
@@ -361,17 +305,32 @@ function setOffset(){
 
     //setting the position for every category text element near to its circle part
     svgTexts.forEach((element,index)=>{
-        if(index >= 1){
+        let positionX = getDX(index);
+        let positionY  = getDY(index);
+        if(positionX > 12){
+            element.style.transform = "translateX(" + element.getBoundingClientRect().width/4  +"px)";
+        }
+        else if(positionX < -12 ){
+            element.style.transform = "translateX(" + -1*element.getBoundingClientRect().width/4  +"px)";
+        }
+        else if(positionX <= 12 && positionX >= -12 ){
+            element.style.transform = "translateX(0px)";
+            if(positionY > 0){
+                element.style.transform = "translateY(" +  element.getBoundingClientRect().height/4 +"px)";
+            }
+            else{
+                element.style.transform = "translateY(" +  -1*element.getBoundingClientRect().height/4 +"px)";
+            }
+        }
+        if( positionY <= -12 && positionY >= 12){
+            element.style.transform = "translateY(0px)";
+            if(positionX < 0){
+                element.style.transform = "translateX(" + -1*element.getBoundingClientRect().width +"px)";
+            }
+        }
             element.setAttribute("dx", getDX(index));
             element.setAttribute("dy", getDY(index));
-        }
-        if(index === 0){
-            element.setAttribute("dx", getDXStart());
-            element.setAttribute("dy", getDYStart())
-        }
         })
-
-
 }
 
 /**
