@@ -103,3 +103,8 @@ div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#
     font-weight: 600;
     opacity: 0.5;
 }
+
+.dvsc_output{
+    padding: 32px 100px;
+    overflow: hidden;
+}
