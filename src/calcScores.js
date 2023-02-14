@@ -99,14 +99,6 @@ export function getScoreCubic(value,bias,target,direction,grain){
 }
 
 
-export function
-
-
-
-
-
-
-
 // TODO: Add more rating methods
 // https://www.desmos.com/calculator/lsx20sjxag
 // https://www.desmos.com/calculator/oqlvmezbze
