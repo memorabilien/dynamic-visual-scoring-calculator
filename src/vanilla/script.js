@@ -12,8 +12,8 @@ const config = {
 	categoryTargets: [10, 20, 100, 0],// target value to which a data Point in the data set should converge
 	categorySteps: [1, 0.01, 0.01, 1],//how big on step on the slider should be
 	categoryDirections: [1, 1, -1, 1],// 1: data point > target value; -1: data point < target value 
-	categoryGrains: [1, 1, 1, 0.25],// fine tune to the acceptable difference between data point and target value ( IMPORTANT: g !== 0 always)!
-	categoryEvaluations: ["linear", "linear", "linear", "linear"], // how should the score of a category be calculated
+	categoryGrains: [10, 5, 10, 1],// fine tune to the acceptable difference between data point and target value ( IMPORTANT: g !== 0 always)!
+	categoryEvaluations: ["cube", "linear", "quad", "linear"], // how should the score of a category be calculated
 	categoryWeightPresets: [25, 25, 25, 25], // presets
 	categoryColors: ["#FF1D15", "#0075FF", "#61E786", "#ffbb00",  "#FCC217", "#AA3E98", "#34F6F2"], // define the circle colors
 };
@@ -109,7 +109,7 @@ for (let i = 0; i < config.categoryCount; i++) {
         categoryCompiler(i, config.categoryEvaluations[i], inputData[i], parseFloat(categoryBias[i].value), parseFloat(event.target.value), config.categoryDirections[i], config.categoryGrains[i]);
         getTotalScore();
         setOffset();
-
+        console.log("log")
 	});
 	categoryBias[i].addEventListener("input", (event) => {
 		categoryBiasDisplays[i].innerHTML = event.target.value;

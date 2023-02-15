@@ -25,7 +25,6 @@ export function getScoreLinear(value,bias,target,direction,grain){
 		return (1000 / Math.PI) * Math.atan(1000 * x);
 	}
 	let factor = f(-h(value)) + f(h(value)) * (b * g * h(value) + 1) + f(h(value + (1 / (direction * b * g)))) * ( -1*b *g * h(value) - 1) + 500;
-
 	return factor < 0.0001 ? 0.0001 : factor;
 	//https://www.desmos.com/calculator/bocxsfvlnl
 }
@@ -57,10 +56,8 @@ export function getScoreLinear(value,bias,target,direction,grain){
 	function j(x) {
 		return direction * (x - target);
 	}
-
 	let factor = 1000 * f(1000 * j(value)) * h(g * b * j(value)) + 1000;
 	return factor < 0.0001 ? 0.0001 : factor;
-	
 	//https://www.desmos.com/calculator/kdltyorfb4
 }
 /**
@@ -94,7 +91,6 @@ export function getScoreCubic(value,bias,target,direction,grain){
 
 	let factor = 1000 * f(1000 * j(value)) * h(g * b * j(value)) + 1000;
 	return factor < 0.0001 ? 0.0001 : factor;
-
 	//https://www.desmos.com/calculator/cw4vydx5rb
 }
 
@@ -116,15 +112,21 @@ export function getScoreDefault(value,bias,target,direction,grain){
    function j(x) {
 	   return direction * (x - target);
    }
-
    let factor = 1000 * f(1000 * j(value)) * h(g * b * j(value)) + 1000;
    return factor < 0.0001 ? 0.0001 : factor;
-   
    //https://www.desmos.com/calculator/hbmma6qt6s
 }
 
 export function getScoreERF(value,bias,target,direction,grain){
-	
+	if( grain === 0 ){
+		throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
+	}
+	else if(direction === 0){
+		throw console.error("Invalid direction value found in config!\nThe direction value can not be 0.\nAllowed values are either '-1' or '1')");
+	}
+	else if(target === 0){
+		
+	}
 }
 
 
@@ -133,3 +135,4 @@ export function getScoreERF(value,bias,target,direction,grain){
 // https://www.desmos.com/calculator/oqlvmezbze
 // https://www.desmos.com/calculator/dufar5rf4g
 // https://www.desmos.com/calculator/2t1ugwykrl
+// https://www.desmos.com/calculator/unwvv66djp
