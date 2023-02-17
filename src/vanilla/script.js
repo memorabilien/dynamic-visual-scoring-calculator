@@ -53,12 +53,18 @@ scores = []; // init category scores
             "stroke": config.categoryColors[i],
             "class": "dvsc_fraction dvsc_fraction_bg",
             "stroke-dasharray": ((2 * 46 * Math.PI) - 6).toString(),
+            "cx": "50",
+            "cy": "50",
+            "r": "46"
         }
         let svgFractionProps = {
             "id": "dvsc_fraction_" + i.toString()+"_indicator",
             "stroke": config.categoryColors[i],
             "class": "dvsc_fraction dvsc_fraction_bar",
             "stroke-dasharray": ((2 * 46 * Math.PI) - 6).toString(),
+            "cx": "50",
+            "cy": "50",
+            "r": "46"
         }
         let svgTextProps = {
             "id": "dvsc_category_name_" + i.toString(),

@@ -22,6 +22,30 @@ body {
         color: white;
 }
 
+::-webkit-scrollbar{
+        width: 5px;
+        height: 8px;
+}
+
+ ::-webkit-scrollbar-thumb, scrollbar{
+        background-color: #528BFF;
+        color:rgb(86, 156, 214);
+        background: #528BFF;
+        border-radius: 12px;
+}
+
+::-webkit-scrollbar-track{
+        opacity: 0;
+}
+
+
+*{
+        scrollbar-color: #528BFF;
+        scrollbar-width: thin;
+        scrollbar-color: #528BFF transparent;
+}
+
+
 .dvsc_showcase {
         display: -webkit-box;
         display: -webkit-flex;

@@ -3,7 +3,7 @@ const scoringCalculator = document.createElement("template");
 const scoringCategory = document.createElement("template");
 
 // fill the templates with HTML
-scoringCalculator.innerHTML = `<div class="dynamic_visual_scoring_calculator" id="no1"><div class="dvsc_settings"><table><thead><th>Category</th><th>Value</th><th>Target Value</th><th>Bias</th><th>Weighting</th><th>Score</th></thead><tbody class="dvsc_table_body"></tbody></table></div><div class="dvsc_output"><svg xmlns="http://www.w3.org/2000/svg" class="dvsc_output_svg" viewBox="0 0 100 100"><g id="dvsc_fractions"></g><g id="dvsc_total_score"><circle id="dvsc_score_indicator"></circle><text id="dvsc_score_text" x="50" y="50">100</text></g></svg></div></div><style>@import "./scoring-calc.css"</style>`;
+scoringCalculator.innerHTML = `<div class="dynamic_visual_scoring_calculator" id="no1"><div class="dvsc_settings"><table><thead><th>Category</th><th>Value</th><th>Target Value</th><th>Bias</th><th>Weighting</th><th>Score</th></thead><tbody class="dvsc_table_body"></tbody></table></div><div class="dvsc_output"><svg xmlns="http://www.w3.org/2000/svg" class="dvsc_output_svg" viewBox="0 0 100 100"><g id="dvsc_fractions"></g><g id="dvsc_total_score"><circle cx="50"  cy="50" r="40"  id="dvsc_score_indicator"></circle><text id="dvsc_score_text" x="50" y="50">100</text></g></svg></div></div><style>@import "./scoring-calc.css"</style>`;
 scoringCategory.innerHTML = `<tr><th class="category_name"></th><td><output class="category_value"> </output><span class="category_unit"></span></td><td><input class="dvsc_target_value_input" type="range" value="" step=""><p class="dvsc_tab"><output class="dvsc_target_value_input_display"></output><span class="category_unit"> </span></p></td><td><input class="dvsc_bias_input" min="-5" max="5" type="range" step="1" value="0"><p class="dvsc_tab"><output class="dvsc_bias_input_display" >0</output></p></td><td><input class="dvsc_weighting_input" type="range" step="0.01" value=""><p class="dvsc_tab"><output class="dvsc_weighting_input_display" ></output><span> %</span></p></td><td><p class="dvsc_tab"><output class="dvsc_category_score_display">-</output><span><sub>/1000</sub></span></p></td><style>@import "./scoring-calc-category.css"</style><tr>`;
 
 /**
@@ -50,14 +50,20 @@ class ScoringCalc extends HTMLElement {
 				stroke: this.categoryColors[i],
 				class: "dvsc_fraction dvsc_fraction_bg",
 				"stroke-dasharray": (2 * 46 * Math.PI - 6).toString(),
-				style:""
+				style:"",
+				cx:"50",
+				cy:"50",
+				r:"46" 
 			};
 			let svgFractionProps = {
 				id: "dvsc_fraction_" + i.toString() + "_indicator",
 				stroke: this.categoryColors[i],
 				class: "dvsc_fraction dvsc_fraction_bar",
 				"stroke-dasharray": (2 * 46 * Math.PI - 6).toString(),
-				style:""
+				style:"",
+				cx:"50",
+				cy:"50",
+				r:"46" 
 			};
 			let svgTextProps = {
 				id: "dvsc_category_name_" + i.toString(),
