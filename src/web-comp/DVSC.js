@@ -159,7 +159,7 @@ class ScoringCalc extends HTMLElement {
 			this.row[i].setAttribute("evaluation", this.categoryEvaluations[i]);
 			this.row[i].setAttribute("bias", this.categoryBiases[i]);
 			this.row[i].setAttribute("weight", this.categoryWeights[i]);
-			this.row[i].setAttribute("color", this.categoryBiases[i]);
+			this.row[i].setAttribute("color", this.categoryColors[i]);
 			this.row[i].setAttribute("grain", this.categoryGrains[i]);
 			this.#categoryObservers[i].observe(this.row[i], this.#observerOptions);
 		}

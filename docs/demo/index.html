@@ -12,11 +12,9 @@
     </a>
     <div class="dvsc_showcase">
         <h2>Demo 1 - Vanilla JavaScript</h2>
-        <p class="description">This Demo has the minimum amount of CSS and is written in 100% vanilla JS. The Modules
-            written for "Web
-            Components", "Vue", "React" or "Angular" my behave different in some cases. But overall the Framework of
-            choice makes no difference, they have all the same end result...</p>
-
+        <p class="description">
+            This Demo has the minimum amount of CSS and is written in 100% vanilla JS. The Modules written for "Web Components", "Vue", "React" or "Angular" may behave different in some cases. But overall the Framework of choice makes no difference, they have all the same end result...
+        </p>
         <div style="background: white; color: black ;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; padding: 64px; border-radius: 16px;"
             class="dynamic_visual_scoring_calculator" id="no1">
             <div class="dvsc_settings">
@@ -30,7 +28,6 @@
                         <th>Score</th>
                     </thead>
                     <tbody class="dvsc_table_body">
-
                     </tbody>
                 </table>
             </div>
@@ -47,20 +44,20 @@
         </div>
         <p>This is the config for this example</p>
         <div class="config">
-            <pre>
-<code id="htmlViewer" style= " box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; border-radius: 16px; color:rgb(171, 178, 191); font-weight:400;background-color:rgb(40, 44, 52);background:rgb(40, 44, 52);display:block;padding: 16px;"><span style="color:rgb(198, 120, 221); font-weight:400;">let</span> config = {
-    category_count: <span style="color:rgb(209, 154, 102); font-weight:400;">4</span>,<span style="color:rgb(92, 99, 112); font-weight:400;">// number of category</span>
-    category_names: [<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;Time&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;Cost&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;Efficiency&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;Personell&quot;</span>],<span style="color:rgb(92, 99, 112); font-weight:400;">//category title to display</span>
-    category_value_unit: [<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;s&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;€&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;%&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;P&quot;</span>],<span style="color:rgb(92, 99, 112); font-weight:400;">// category unit to display</span>
-    category_target_values: [<span style="color:rgb(209, 154, 102); font-weight:400;">10</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">20</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">100</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">0</span>],<span style="color:rgb(92, 99, 112); font-weight:400;">// target value to which a data Point in the data set should converge</span>
-    category_target_value_step: [<span style="color:rgb(209, 154, 102); font-weight:400;">1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">0.01</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">0.01</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">1</span>],<span style="color:rgb(92, 99, 112); font-weight:400;">//how big on step on the slider should be</span>
-    category_direction: [<span style="color:rgb(209, 154, 102); font-weight:400;">1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">-1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">1</span>],<span style="color:rgb(92, 99, 112); font-weight:400;">// 1: data point &gt; target value; -1: data point &lt; target value </span>
-    category_grain: [<span style="color:rgb(209, 154, 102); font-weight:400;">1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">1</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">1</span>],<span style="color:rgb(92, 99, 112); font-weight:400;">// fine tune to the acceptable difference between data point and target value ( IMPORTANT: g !== 0 always)!</span>
-    category_evaluation: [<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;linear&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;linear&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;linear&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;linear&quot;</span>], <span style="color:rgb(92, 99, 112); font-weight:400;">// how should the score of a category be calculated</span>
-    category_weighting_preset: [<span style="color:rgb(209, 154, 102); font-weight:400;">25</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">25</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">25</span>, <span style="color:rgb(209, 154, 102); font-weight:400;">25</span>], <span style="color:rgb(92, 99, 112); font-weight:400;">// presets</span>
-    colors: [<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#ff0000&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#ff7b00&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#ffbb00&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#00dfba&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#127efa&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#8921ff&quot;</span>, <span style="color:rgb(152, 195, 121); font-weight:400;">&quot;#d500e9&quot;</span>], <span style="color:rgb(92, 99, 112); font-weight:400;">// define the circle colors</span>
-};</code>
-</pre>
+            <code class="code_box">
+                <span class="js_var">let</span>
+                 config = {<br>
+                    &emsp;&emsp;category_count: <span class="js_number">4</span>, <wbr><span class="js_comment">// number of category</span><br>
+                    &emsp;&emsp;category_names: [<span class="js_string">&quot;Time&quot;</span>, <span class="js_string">&quot;Cost&quot;</span>, <span class="js_string">&quot;Efficiency&quot;</span>, <span class="js_string">&quot;Personell&quot;</span>], <wbr><span class="js_comment">//category title to display</span><br>
+                    &emsp;&emsp;category_value_unit: [<span class="js_string">&quot;s&quot;</span>, <span class="js_string">&quot;€&quot;</span>, <span class="js_string">&quot;%&quot;</span>, <span class="js_string">&quot;P&quot;</span>], <wbr><span class="js_comment">// category unit to display</span><br>
+                    &emsp;&emsp;category_target_values: [<span class="js_number">10</span>, <span class="js_number">20</span>, <span class="js_number">100</span>, <span class="js_number">0</span>], <wbr><span class="js_comment">// target value to which a data Point in the data set should converge</span><br>
+                    &emsp;&emsp;category_target_value_step: [<span class="js_number">1</span>, <span class="js_number">0.01</span>, <span class="js_number">0.01</span>, <span class="js_number">1</span>], <wbr><span class="js_comment">//how big on step on the slider should be</span><br>
+                    &emsp;&emsp;category_direction: [<span class="js_number">1</span>, <span class="js_number">1</span>, <span class="js_number">-1</span>, <span class="js_number">1</span>], <wbr><span class="js_comment">// 1: data point &gt; target value; -1: data point &lt; target value </span><br>
+                    &emsp;&emsp;category_grain: [<span class="js_number">1</span>, <span class="js_number">1</span>, <span class="js_number">1</span>, <span class="js_number">1</span>], <wbr><span class="js_comment">//(g > 0) && (if categoryValue == targetValue + categoryGrain  => categoryScore = 500</span><br>
+                    &emsp;&emsp;category_evaluation: [<span class="js_string">&quot;linear&quot;</span>, <span class="js_string">&quot;linear&quot;</span>, <span class="js_string">&quot;linear&quot;</span>, <span class="js_string">&quot;linear&quot;</span>], <wbr><span class="js_comment">// how should the score of a category be calculated</span><br>
+                    &emsp;&emsp;category_weighting_preset: [<span class="js_number">25</span>, <span class="js_number">25</span>, <span class="js_number">25</span>, <span class="js_number">25</span>], <wbr><span class="js_comment">// presets</span><br>
+                    &emsp;&emsp;colors: [<span class="js_string">&quot;#ff0000&quot;</span>, <span class="js_string">&quot;#ff7b00&quot;</span>, <span class="js_string">&quot;#ffbb00&quot;</span>, <span class="js_string">&quot;#00dfba&quot;</span>, <span class="js_string">&quot;#127efa&quot;</span>, <span class="js_string">&quot;#8921ff&quot;</span>, <span class="js_string">&quot;#d500e9&quot;</span>], <wbr><span class="js_comment">// define the circle colors</span><br>};
+            </code>
         </div>
         <h2>Demo 2 - Web Component (Vanilla JavaScript)</h2>
         <p class="description">In this example some imaginary Monitor is being scored. Using The Web Components Method
@@ -68,17 +65,17 @@
         <script src="../../src/web-comp/DVSC.js" defer type="text/javascript"></script>
         <scoring-calc
             style="background: white; color: black ;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; padding: 64px; border-radius: 16px;">
-            <scoring-calc-category number="0" rowName="Resolution" unit="px" value="1080" target="1440" step="1" direction="-1" evaluation="cube" bias="0" weight="39.72519332681899" score="500" color="#FF1D15" grain="400"></scoring-calc-category>
-            <scoring-calc-category number="1" rowName="Size" unit="in" value="24" target="27" step="3" direction="-1"  evaluation="cube" bias="0" weight="16.693640030592356" score="500" color="#0075FF"  grain="3"></scoring-calc-category>
-            <scoring-calc-category number="2" rowName="Refresh Rate" unit="Hz" value="75" target="90" step="5"  direction="-1" evaluation="quad" bias="1" weight="13.247233998615995" score="500" color="#61E786" grain="7.5"></scoring-calc-category>
-            <scoring-calc-category number="3" rowName="Color Accuracy" unit="%" value="96" target="99" step="0.1" direction="-1" evaluation="linear" bias="0" weight="10.1807772250803" score="500" color="#FCC217" grain="1"></scoring-calc-category>
-            <scoring-calc-category number="4" rowName="Cost" unit="$" value="105" target="90" step="0.01" direction="1" evaluation="cube" bias="-2" weight="20.153155418892357" score="500" color="#34F6F2" grain="20"></scoring-calc-category>
+            <scoring-calc-category number="0" rowName="Resolution" unit="px" value="1080" target="1440" step="1" direction="-1" evaluation="default" bias="0" weight="39.72519332681899" score="500" color="#FF1D15" grain="400"></scoring-calc-category>
+            <scoring-calc-category number="1" rowName="Size" unit="in" value="24" target="27" step="3" direction="-1"  evaluation="linear" bias="0" weight="16.693640030592356" score="500" color="#0075FF"  grain="3"></scoring-calc-category>
+            <scoring-calc-category number="2" rowName="Refresh Rate" unit="Hz" value="75" target="90" step="5"  direction="-1" evaluation="quadratic" bias="1" weight="13.247233998615995" score="500" color="#61E786" grain="7.5"></scoring-calc-category>
+            <scoring-calc-category number="3" rowName="Color Accuracy" unit="%" value="96" target="99" step="0.1" direction="-1" evaluation="cube" bias="0" weight="10.1807772250803" score="500" color="#FCC217" grain="1"></scoring-calc-category>
+            <scoring-calc-category number="4" rowName="Cost" unit="$" value="105" target="90" step="0.01" direction="1" evaluation="linear" bias="-2" weight="20.153155418892357" score="500" color="#34F6F2" grain="20"></scoring-calc-category>
         </scoring-calc>
 
         <p>For using web components all that needs to be done is shown in the next example. The configuration is directly passed on via the HTML properties</p>
 
   
-        <code class="web_comp">
+        <code class="code_box">
             <span class="xml_syntax">&lt;<span class="html_tag">script </span><span class="property">src</span>=<span class="property_value">&quot;DVSC.js&quot; </span><span class="property">defer</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">script</span>&gt;</span><br>
                 <span class="xml_syntax">&lt;<span class="html_tag">scoring-calc</span>&gt;</span><br>
                 &emsp;&emsp;<span style="text-indent: 50px;" class="xml_syntax">&lt;<span class="html_tag">scoring-calc-category</span>
@@ -158,51 +155,145 @@
 
         <p>everything is being handled via attributes applied on the scoring-calc-category html element. Even accessing
             any value via JavaScript is possible</p>
-    <pre>
-<code id="htmlViewer" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;color:rgb(171, 178, 191); font-weight:400;background-color:rgb(40, 44, 52);background:rgb(40, 44, 52);display:block;padding: 16px; border-radius: 16px;"><span style="color:rgb(198, 120, 221); font-weight:400;">let</span> dvsc = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span style="color:rgb(152, 195, 121); font-weight:400;">&quot;scoring-calc&quot;</span>);
-
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">elements</span>); 
-<span style="color:#b18eb1; font-style:italic; font-weight:400;">// HTMLCollection(5) [scoring-calc-category, scoring-calc-category, scoring-calc-category, scoring-calc-category, scoring-calc-category]</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryCount</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;">// 5</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryNumbers</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['0', '1', '2', '3', '4']</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryNames</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;">//['Resolution', 'Size', 'Refresh Rate', 'Color Accuracy', 'Cost']</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryUnits</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;">//['px', 'in', 'Hz', '%', '$']</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryValues</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['1080', '24', '75', '96', '105']</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryTargets</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['1440', '27', '90', '99', '90']</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categorySteps</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //[['1', '0.5', '1', '0.1', '0.01']</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryDirections</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['-1', '-1', '-1', '-1', '1']</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryEvaluations</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['linear', 'linear', 'quad', 'linear', 'cube']</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryBiases</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['2', '-1', '1', '0', '-2']</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryWeights</span>); 
-<span style="color:#b18eb1; font-style:italic; font-weight:400;"> //['39.72519332681899', '16.693640030592352', '13.247233998615998', '10.1807772250803', '20.153155418892357']</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryColors</span>);  <span style="color:#b18eb1; font-style:italic; font-weight:400;">//['#FF1D15', '#0075FF', '#61E786', '#FCC217', '#34F6F2']</span>
-<span style="color: #d19a66">console</span>.<span style="color: #61aeee">log</span>(dvsc.<span style="color:rgb(171, 178, 191); font-weight:400;">categoryGrains</span>); <span style="color:#b18eb1; font-style:italic; font-weight:400;">//['100', '1', '5', '1', '20']</span></code></pre>
-
-
-
+        <code class="code_box">
+            <span class="js_var">let</span> dvsc = <span class="hljs-variable language_">document</span>.<span class="js_function">querySelector</span>(<span class="js_string">&quot;scoring-calc&quot;</span>);
+        </code>
+        <table class="web_comp_access_table">
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Usage</th>
+                    <th>Example Output</th>
+                    <th>Definition</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="web_comp_access_table_prop">categoryBiases</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryBiases</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_number">0</span>, <span class="js_number">0</span>, <span class="js_number">1</span>, <span class="js_number">0</span>, <span class="js_number">-2</span>]</code></td>
+                    <td class="web_comp_access_table_definition">Returns an Array of the current bias slider input values</td>
+                </tr>
+            <tr>
+                <td class="web_comp_access_table_prop">categoryColors</td>
+                <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryColors</code></td>
+                <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_string">'#FF1D15'</span>, <span class="js_string">'#0075FF'</span>, <span class="js_string">'#61E786'</span>, <span class="js_string">'#FCC217'</span>, <span class="js_string">'#34F6F2'</span>]</code></td>
+                <td class="web_comp_access_table_definition">Returns an array filled with every scoring-calc-category color property</td>
+            </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">categoryCount</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryCount</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box"><span class="js_number">5</span></code></td>
+                    <td class="web_comp_access_table_definition">Returns an the total number of categories</td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">categoryDirections</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryDirections</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_number">-1</span>, <span class="js_number">-1</span>, <span class="js_number">-1</span>, <span class="js_number">-1</span>, <span class="js_number">1</span>]</code></td>
+                    <td class="web_comp_access_table_definition">Returns an array filled with all scoring-calc-category direction properties</td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">categoryEvaluations</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryEvaluations</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_string">'default'</span>, <span class="js_string">'linear'</span>, <span class="js_string">'quadratic'</span>, <span class="js_string">'cube'</span>, <span class="js_string">'ERF'</span>]</code></td>
+                    <td class="web_comp_access_table_definition">Returns an array filled with all scoring-calc-category evaluation properties</td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">categoryGrains</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryGrains</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_number">400</span>,<span class="js_number">3</span>, <span class="js_number">7.5</span>, <span class="js_number">1</span>, <span class="js_number">20</span>]</code></td>
+                    <td class="web_comp_access_table_definition">Returns an array filled with all scoring-calc-category color properties</td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">categoryNames</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryNames</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_string">'Resolution'</span>,<span class="js_string">'Size'</span>, <span class="js_string">'Refresh Rate'</span>, <span class="js_string">'Color Accuracy'</span>, <span class="js_string">'Cost'</span>]</code></td>
+                    <td class="web_comp_access_table_definition">Returns an array filled with all scoring-calc-category rowname properties</td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">categoryNumbers</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryNumbers</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_number">0</span>, <span class="js_number">1</span>, <span class="js_number">2</span>, <span class="js_number">3</span>, <span class="js_number">4</span>]</code></td>
+                    <td class="web_comp_access_table_definition">Returns an array filled with all scoring-calc-category number properties</td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">categoryScores</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryScores</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_number">500</span>,<span class="js_number">949.99</span>, <span class="js_number">315.5</span>, <span class="js_number">31.49</span>, <span class="js_number">912.51</span>]</code></td>
+                    <td class="web_comp_access_table_definition">Returns an array filled with all scoring-calc-category score properties</td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">categorySteps</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categorySteps</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_number">1</span>, <span class="js_number">3</span>, <span class="js_number">5</span>, <span class="js_number">0.1</span>, <span class="js_number">0.01</span>]</code></td>
+                    <td class="web_comp_access_table_definition">Returns an array filled with all scoring-calc-category step properties</td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">categoryTargets</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryTargets</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_number">1440</span>, <span class="js_number">27</span>, <span class="js_number">90</span>, <span class="js_number">99</span>, <span class="js_number">90</span>]</code></td>
+                    <td class="web_comp_access_table_definition">Returns an array filled with all current scoring-calc-category target properties</td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">categoryUnits</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryUnits</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_string">'px'</span>, <span class="js_string">'in'</span>, <span class="js_string">'Hz'</span>, <span class="js_string">'%'</span>, <span class="js_string">'$'</span>]</code></td>
+                    <td class="web_comp_access_table_definition">Returns an array filled with all scoring-calc-category unit properties</td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">categoryValues</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryValues</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_number">1080</span>, <span class="js_number">24</span>, <span class="js_number">75</span>, <span class="js_number">96</span>, <span class="js_number">105</span>]</code></td>
+                    <td class="web_comp_access_table_definition">Returns an array filled with all scoring-calc-category value properties</td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">categoryWeights</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryWeights</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="js_number">39.725</span>, <span class="js_number">16.693</span>, <span class="js_number">13.247</span>, <span class="js_number">10.180</span>, <span class="js_number">20.153</span>]</code></td>
+                    <td class="web_comp_access_table_definition">Returns an array filled with all current scoring-calc-category weight properties</td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">elements</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.elements</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">[<span class="html_tag">scoring-calc-category</span>, <span class="html_tag">scoring-calc-category</span>, ...]</code></td>
+                    <td class="web_comp_access_table_definition">Returns a HTMLCollection of all children html elements of the parent scoring-calc html element<td>
+                </tr>
+                <tr>
+                    <td class="web_comp_access_table_prop">score</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.score</code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">
+                        <span class="js_number">58.61188808308917</span></code></td>
+                    <td class="web_comp_access_table_definition">Returns the total current score</td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Usage</th>
+                    <th>Example Output</th>
+                    <th>Definition</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="web_comp_access_table_method">dump</td>
+                    <td class="web_comp_access_table_example"><code class="code_box">dvsc.<span class="js_function">dump()</span></code></td>
+                    <td class="web_comp_access_table_output"><code class="code_box">{<span style="color:rgb(171, 178, 191); font-weight:400;">elements:</span> HTMLCollection(5), <span style="color:rgb(171, 178, 191); font-weight:400;">categoryCount:</span> <span class="js_number">5</span>, <span style="color:rgb(171, 178, 191); font-weight:400;">categoryNumbers:</span> Array(5), …}</code></td>
+                    <td class="web_comp_access_table_definition">Returns a Object with every property and its values</td>
+                </tr>
+            </tbody>
+        </table>
 
         <h2>Guide</h2>
-        <p>To calculate a single category Score, the main principle is the
-            difference between the <code>categoryTarget</code> and the actual
-            <code>categoryValue</code>. Things to note are as follows:
-        </p>
+        <p>To calculate a single category Score, the main principle is the  difference between the <code>categoryTarget</code> and the actual <code>categoryValue</code>. Things to note are as follows: </p>
         <ul>
             <li>
-                <p>The <code>categoryValue</code> can not be dynamically adjusted by
-                    the front end user, because it is a measured value in open
-                    world.</p>
+                <p>The <code>categoryValue</code> can not be dynamically adjusted by  the front end user, because it is a measured value in open  world.</p>
             </li>
             <li>
-                <p>The <code>categoryTarget</code> is adjustable, with the
-                    <code>min</code> or <code>max</code> value automatically being set to
-                    the <code>categoryValue</code>. Should the
-                    <code>categoryValue &gt;= categoryTarget</code> the
-                    <code>categoryDirection = 1</code> . E.g. the category goal is it to
-                    optimize the measured process for as little time as possible). If set
-                    correctly the <code>categoryTarget</code> cannot be set bigger than the
-                    <code>categoryValue</code>. The Result is the adjustable
-                    <code>categoryTarget</code> will automatically stop at
-                    <code>max = categoryValue</code>. Now The other way around: Should the
+                <p>The <code>categoryTarget</code> is adjustable, with the  <code>min</code> or <code>max</code> value automatically being set to the <code>categoryValue</code>. 
+                    Should the <code>categoryValue &gt;= categoryTarget</code> the <code>categoryDirection = 1</code> . E.g. the category goal is it to  optimize the measured process for as little time as possible).
+                    If set correctly the <code>categoryTarget</code> cannot be set bigger than the <code>categoryValue</code>. The Result is the adjustable  <code>categoryTarget</code> will automatically stop at                    <code>max = categoryValue</code>. Now The other way around: Should the
                     <code>categoryValue &lt;= categoryTarget</code> the
                     <code>categoryDirection = -1</code> . E.g. the category goal is it to
                     optimize the measured process for the hightest efficiency possible. If
@@ -219,8 +310,51 @@
                     <code>categoryWeight</code> all the other <code>categoryWeight</code>
                     will adjust accordingly, so:
                 </p>
-                <p><span class="math display">$$\sum_{i=1}^c categoryScore_i = 1 =
-                        100\%$$</span></p>
+                <p>
+                    <mjx-container class="MathJax CtxtMenu_Attached_0" jax="SVG" display="true" tabindex="0" ctxtmenu_counter="0" style="position: relative;">
+                        <mjx-assistive-mml unselectable="on" display="block">
+                            <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                                <mstyle displaystyle="true" scriptlevel="0">
+                                    <mrow data-mjx-texclass="ORD">
+                                        <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                                            <mtr>
+                                                <mtd>
+                                                    <munderover>
+                                                        <mo data-mjx-texclass="OP">∑</mo>
+                                                        <mrow data-mjx-texclass="ORD">
+                                                            <mi>i</mi>
+                                                            <mo>=</mo>
+                                                            <mn>1</mn>
+                                                        </mrow>
+                                                        <mi>c</mi>
+                                                    </munderover>
+                                                    <mi>c</mi>
+                                                    <mi>a</mi>
+                                                    <mi>t</mi>
+                                                    <mi>e</mi>
+                                                    <mi>g</mi>
+                                                    <mi>o</mi>
+                                                    <mi>r</mi>
+                                                    <mi>y</mi>
+                                                    <mi>S</mi>
+                                                    <mi>c</mi>
+                                                    <mi>o</mi>
+                                                    <mi>r</mi>
+                                                    <msub><mi>e</mi><mi>i</mi></msub>
+                                                    <mo>=</mo>
+                                                    <mn>1</mn>
+                                                    <mo>=</mo>
+                                                    <mn>100</mn>
+                                                    <mi mathvariant="normal">%</mi>
+                                                </mtd>
+                                            </mtr>
+                                        </mtable>
+                                    </mrow>
+                                </mstyle>
+                            </math>
+                        </mjx-assistive-mml>
+                    </mjx-container>
+                </p>
                 <p>For ease of use the lowest individual <code>categoryWeight</code> is
                     0.01 %. This ensures, that no <code>categoryWeight</code> will be stuck
                     at 0%. <em>Due to the nature of using linear Algebra (more specific
@@ -258,59 +392,120 @@
                             minutes would be the grain, on the other hand when running a 100m dash
                             the grain would be 0.5 Seconds to 0.005 Seconds.
                         </p>
-                        <p><span
-                                class="math display"><em>b</em> ∈ [−5,5];&nbsp;<em>b</em> ∈ <em>Z</em>;&nbsp;&nbsp;&nbsp;<em>t</em> ≤ <em>v</em> ∨ <em>t</em> ≥ <em>v</em>;&nbsp;&nbsp;&nbsp;<em>p</em> ∈ [−1,1];&nbsp;<em>p</em> ∈ <em>Z</em>&nbsp;&nbsp;&nbsp;<em>t</em>, <em>v</em>, <em>g</em> ∈ <em>R</em></span>
-                        </p>
-                        <p></p><mjx-container class="MathJax CtxtMenu_Attached_0" jax="SVG" display="true" tabindex="0"
-                            ctxtmenu_counter="5" style="position: relative;">
-                            <mjx-assistive-mml unselectable="on" display="block"><math
-                                    xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-                                    <mstyle displaystyle="true" scriptlevel="0">
-                                        <mrow data-mjx-texclass="ORD">
-                                            <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
-                                                <mtr>
-                                                    <mtd>
-                                                        <munderover>
-                                                            <mo data-mjx-texclass="OP">∑</mo>
-                                                            <mrow data-mjx-texclass="ORD">
-                                                                <mi>i</mi>
-                                                                <mo>=</mo>
-                                                                <mn>1</mn>
-                                                            </mrow>
-                                                            <mi>c</mi>
-                                                        </munderover>
-                                                        <mi>c</mi>
-                                                        <mi>a</mi>
-                                                        <mi>t</mi>
-                                                        <mi>e</mi>
-                                                        <mi>g</mi>
-                                                        <mi>o</mi>
-                                                        <mi>r</mi>
-                                                        <mi>y</mi>
-                                                        <mi>S</mi>
-                                                        <mi>c</mi>
-                                                        <mi>o</mi>
-                                                        <mi>r</mi>
-                                                        <msub>
-                                                            <mi>e</mi>
-                                                            <mi>i</mi>
-                                                        </msub>
-                                                        <mo>=</mo>
-                                                        <mn>1</mn>
-                                                        <mo>=</mo>
-                                                        <mn>100</mn>
-                                                        <mi mathvariant="normal">%</mi>
-                                                    </mtd>
-                                                </mtr>
-                                            </mtable>
-                                        </mrow>
-                                    </mstyle>
-                                </math></mjx-assistive-mml></mjx-container>
                         <p>
-                            <mjx-container class="MathJax CtxtMenu_Attached_0" jax="SVG" display="true" tabindex="0"
-                                ctxtmenu_counter="5" style="position: relative;">
-                                <mjx-assistive-mml unselectable="on" display="block"><math
-                                        xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                            <mjx-container class="MathJax CtxtMenu_Attached_0" jax="SVG" display="true" tabindex="0" ctxtmenu_counter="399" style="position: relative;">
+                                <mjx-assistive-mml unselectable="on" display="block">
+                                    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                                        <mstyle displaystyle="true" scriptlevel="0">
+                                            <mrow data-mjx-texclass="ORD">
+                                                <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                                                    <mtr>
+                                                        <mtd>
+                                                            <mo fence="false" stretchy="false">{</mo>
+                                                                <mi>b</mi>
+                                                                <mo>∈</mo>
+                                                                <mo stretchy="false">[</mo>
+                                                                    <mo>−</mo>
+                                                                    <mn>5</mn>
+                                                                    <mo>,</mo>
+                                                                    <mn>5</mn>
+                                                                <mo stretchy="false">]</mo>
+                                                                <mo>:</mo>
+                                                                <mi>b</mi>
+                                                                <mo>∈</mo>
+                                                                <mrow data-mjx-texclass="ORD">
+                                                                    <mi mathvariant="double-struck">Z</mi>
+                                                                </mrow>
+                                                                <mo fence="false" stretchy="false">}</mo>
+                                                        </mtd>
+                                                    </mtr>
+                                                    <mtr>
+                                                        <mtd>
+                                                            <mi>p</mi>
+                                                            <mo>∈</mo>
+                                                            <mo fence="false" stretchy="false">{</mo>
+                                                                <mo>−</mo>
+                                                                <mn>1</mn>
+                                                                <mo>,</mo>
+                                                                <mn>1</mn>
+                                                            <mo fence="false" stretchy="false">}</mo>
+                                                        </mtd>
+                                                    </mtr>
+                                                    <mtr>
+                                                        <mtd>
+                                                            <mo fence="false" stretchy="false">{</mo>
+                                                                <mi>g</mi>
+                                                                <mo>∈</mo>
+                                                                <mrow data-mjx-texclass="ORD">
+                                                                    <mi mathvariant="double-struck">R</mi>
+                                                                </mrow>
+                                                                <mo>:</mo>
+                                                                <mi>g</mi>
+                                                                <mo>&gt;</mo>
+                                                                <mn>0</mn>
+                                                            <mo fence="false" stretchy="false">}</mo>
+                                                        </mtd>
+                                                    </mtr>
+                                                    <mtr>
+                                                        <mtd>
+                                                            <mi>t</mi>
+                                                            <mrow data-mjx-texclass="ORD">
+                                                                <mo> </mo>
+                                                            </mrow>
+                                                            <mo>≤</mo>
+                                                            <mrow data-mjx-texclass="ORD">
+                                                                <mo> </mo>
+                                                            </mrow>
+                                                            <mi>v</mi>
+                                                            <mrow data-mjx-texclass="ORD">
+                                                                <mo> </mo>
+                                                            </mrow>
+                                                            <mo>∨</mo>
+                                                            <mrow data-mjx-texclass="ORD">
+                                                                <mo> </mo>
+                                                            </mrow>
+                                                            <mi>t</mi>
+                                                            <mrow data-mjx-texclass="ORD">
+                                                                <mo> </mo>
+                                                            </mrow>
+                                                            <mo>≥</mo>
+                                                            <mrow data-mjx-texclass="ORD">
+                                                                <mo> </mo>
+                                                            </mrow>
+                                                            <mi>v</mi>
+                                                        </mtd>
+                                                    </mtr>
+                                                    <mtr>
+                                                        <mtd>
+                                                            <mi>t</mi>
+                                                            <mo>,</mo>
+                                                            <mrow data-mjx-texclass="ORD">
+                                                                <mo> </mo>
+                                                            </mrow>
+                                                            <mi>v</mi>
+                                                            <mrow data-mjx-texclass="ORD">
+                                                                <mo> </mo>
+                                                            </mrow>
+                                                            <mo>∈</mo>
+                                                            <mrow data-mjx-texclass="ORD">
+                                                                <mo> </mo>
+                                                            </mrow>
+                                                            <mrow data-mjx-texclass="ORD">
+                                                                <mi mathvariant="double-struck">R</mi>
+                                                            </mrow>
+                                                        </mtd>
+                                                    </mtr>
+                                                </mtable>
+                                            </mrow>
+                                        </mstyle>
+                                    </math>
+                                </mjx-assistive-mml>
+                            </mjx-container>
+                        </p>
+                        <p>
+                            <mjx-container class="MathJax CtxtMenu_Attached_0" jax="SVG" display="true" tabindex="0" ctxtmenu_counter="5" style="position: relative;">
+                                <mjx-assistive-mml unselectable="on" display="block">
+                                    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
                                         <mstyle displaystyle="true" scriptlevel="0">
                                             <mrow data-mjx-texclass="ORD">
                                                 <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
@@ -340,10 +535,39 @@
                                                 </mtable>
                                             </mrow>
                                         </mstyle>
-                                    </math></mjx-assistive-mml>
+                                    </math>
+                                </mjx-assistive-mml>
                             </mjx-container>
                         </p>
-                        <p><span class="math display"><em>h</em>(<em>v</em>) = <em>p</em>(<em>v</em>−<em>t</em>)</span>
+                        <p>
+                            <mjx-container class="MathJax CtxtMenu_Attached_0" jax="SVG" display="true" tabindex="0" ctxtmenu_counter="77" style="position: relative;">
+                                <mjx-assistive-mml unselectable="on" display="block">
+                                    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                                        <mstyle displaystyle="true" scriptlevel="0">
+                                            <mrow data-mjx-texclass="ORD">
+                                                <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                                                    <mtr>
+                                                        <mtd>
+                                                            <mi>h</mi>
+                                                            <mo stretchy="false">(</mo>
+                                                            <mi>v</mi>
+                                                            <mo stretchy="false">)</mo>
+                                                            <mo>=</mo>
+                                                            <mi>p</mi>
+                                                            <mo>⋅</mo>
+                                                            <mo stretchy="false">(</mo>
+                                                            <mi>v</mi>
+                                                            <mo>−</mo>
+                                                            <mi>t</mi>
+                                                            <mo stretchy="false">)</mo>
+                                                        </mtd>
+                                                    </mtr>
+                                                </mtable>
+                                            </mrow>
+                                        </mstyle>
+                                    </math>
+                                </mjx-assistive-mml>
+                            </mjx-container>
                         </p>
                         <p>
                             <mjx-container class="MathJax CtxtMenu_Attached_0" jax="SVG" display="true" tabindex="0"
@@ -412,9 +636,10 @@
                             <code>categoryValue == categoryGrain - categoryTarget</code> the
                             <code>categoryScore</code> shall always be 500(purple line)
                         </p>
-                        <p style="display: flex; justify-content: center;">
+                        <figure style="display: flex; justify-content: center; flex-direction: column; text-align: center; gap: 12px;">
                             <img style="justify-content: center;align-items: stretch;padding: 0;margin: 0;border-radius: 16px;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;flex-wrap: nowrap;align-content: space-around;"src="../score/scores.svg">
-                        </p>
+                            <figcaption>Fig.1 - The different evaluation graphs</figcaption>
+                        </figure>
                         <p>
                             The Scoring functions work fairly similar
                         </p>

@@ -54,7 +54,7 @@ body {
         max-width: 70vw;
 }
 
-.web_comp {
+.code_box {
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
         color: rgb(220, 220, 220);
         font-weight: 400;
@@ -77,4 +77,31 @@ body {
 }
 .html_tag{
         color:rgb(86, 156, 214); font-weight:400;
+}
+.js_number{
+        color:rgb(209, 154, 102); font-weight:400;
+}
+
+.js_comment{
+        color:rgb(92, 99, 112); font-weight:400;
+}
+
+.js_string{
+        color:rgb(152, 195, 121); font-weight:400;
+}
+
+.js_var{
+        color:rgb(198, 120, 221); font-weight:400;
+}
+
+.js_function{
+        color: #528BFF; font-weight: 400;
+}
+.web_comp_access_table_definition, .web_comp_access_table_prop{
+        padding: 0 16px;
+}
+
+
+td{
+        padding-bottom: 12px ;
 }

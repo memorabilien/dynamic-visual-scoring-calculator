@@ -117,17 +117,7 @@ export function getScoreDefault(value,bias,target,direction,grain){
    //https://www.desmos.com/calculator/hbmma6qt6s
 }
 
-export function getScoreERF(value,bias,target,direction,grain){
-	if( grain === 0 ){
-		throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
-	}
-	else if(direction === 0){
-		throw console.error("Invalid direction value found in config!\nThe direction value can not be 0.\nAllowed values are either '-1' or '1')");
-	}
-	else if(target === 0){
-		
-	}
-}
+
 
 
 // TODO: Add more rating methods
@@ -136,3 +126,6 @@ export function getScoreERF(value,bias,target,direction,grain){
 // https://www.desmos.com/calculator/dufar5rf4g
 // https://www.desmos.com/calculator/2t1ugwykrl
 // https://www.desmos.com/calculator/unwvv66djp
+// https://www.desmos.com/calculator/qhhziff2tx
+//https://www.desmos.com/calculator/p3qch5vx0u
+//https://www.desmos.com/calculator/gumri3yrwf

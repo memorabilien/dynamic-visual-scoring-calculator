@@ -203,3 +203,8 @@ div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>.dvsc_output{
     padding: 32px 100px!important;
     overflow: hidden!important;
 }
+
+.dvsc_output{
+    padding: 32px 100px;
+    overflow: hidden;
+}
