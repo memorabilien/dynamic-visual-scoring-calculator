@@ -4,16 +4,16 @@ svg{
     transition: all 0.5s ease-out;
 }
 
-tr{
-    display: -ms-grid;
-    display: grid;
-    grid-gap: 32px;
-    grid-auto-flow: column;
-    -ms-grid-columns: 75px 32px 62px 32px 197px 32px 164px 32px 190px 32px 110px;
-    grid-template-columns: 75px 62px 197px 164px 190px 110px;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-            justify-content: space-between;
+tr {
+        display: -ms-grid;
+        display: grid;
+        grid-gap: 32px;
+        grid-auto-flow: column;
+        -ms-grid-columns: 75px 32px 62px 32px 197px 32px 164px 32px 197px 32px 110px;
+        grid-template-columns: 75px 62px 197px 164px 197px 110px;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+                justify-content: space-between;
 }
 
 tr>td {

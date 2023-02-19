@@ -49,8 +49,9 @@ div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody{
 }
 
 div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr>th{
-    font-weight: 500;
-    opacity: 0.5;
+    font-weight: 400;
+    color: #999999;
+    position: relative;
 }
 
 div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr>th:nth-child(1) {
@@ -58,7 +59,7 @@ div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr>th:nt
 }
 
 div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr {
-    border-bottom: 1px solid #64646480;
+    border-bottom: 1px solid#999999;;
     padding: 8px 0;
 }
 
@@ -68,11 +69,94 @@ div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr {
     display: grid;
     grid-gap: 32px;
     grid-auto-flow: column;
-    -ms-grid-columns: 75px 32px 62px 32px 197px 32px 164px 32px 190px 32px 110px;
-    grid-template-columns: 75px 62px 197px 164px 190px 110px;
+    -ms-grid-columns: 75px 32px 62px 32px 197px 32px 164px 32px 197px 32px 110px;
+    grid-template-columns: 75px 62px 197px 164px 197px 110px;
     -webkit-box-pack: justify;
     -webkit-justify-content: space-between;
             justify-content: space-between;
+}
+
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td>input[type="range"]{
+    max-width: 129px;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting{
+    position: relative;
+}
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>div.manual_input_modal{
+    flex-direction: column;
+    gap:17px;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 0px;
+    opacity: 1!important;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>div.manual_input_modal>input.manual_weight_input{
+    padding: 0;
+    border: 0;
+    box-shadow: inset 0 0px 6px 0 #999999;
+    border-radius: 3px;
+    /* border: 1px solid #999999; */
+    opacity: 1;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-align: center;
+    width: 80px;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>div.manual_input_modal>input.manual_weight_input:focus{
+    outline: 1px solid  #999999;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>div.manual_input_modal>input.manual_weight_input::-webkit-textfield-decoration--webkit-inner-spin-button{
+    cursor: pointer;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>div.manual_input_modal>span.manual_input_sum{
+    border-top:  3px double #999999;
+    width: 80px;
+    text-align: center;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.set_weights_btn , div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.discard_btn{
+    border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 0;
+    position: absolute;
+    margin: 0;
+    top: 0;
+    bottom: 0;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.3s ease-out;
+    border: 1px solid #00000000;
+    border-radius: 8px;
+    height: 26px;
+    width: 26px;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.set_weights_btn{
+right: -28px;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.discard_btn{
+    left: -28px;
+    }
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.set_weights_btn:hover, div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.discard_btn:hover{
+    border: 1px solid #00000080;
+    box-shadow: 0 2px 4px 0 #2e0946a2;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.set_weights_btn > *, div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.discard_btn > *{
+    pointer-events: none;
 }
 
 

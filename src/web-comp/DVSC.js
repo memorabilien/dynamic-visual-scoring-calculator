@@ -3,13 +3,42 @@ const scoringCalculator = document.createElement("template");
 const scoringCategory = document.createElement("template");
 
 // fill the templates with HTML
-scoringCalculator.innerHTML = `<div class="dynamic_visual_scoring_calculator" id="no1"><div class="dvsc_settings"><table><thead><th>Category</th><th>Value</th><th>Target Value</th><th>Bias</th><th>Weighting</th><th>Score</th></thead><tbody class="dvsc_table_body"></tbody></table></div><div class="dvsc_output"><svg xmlns="http://www.w3.org/2000/svg" class="dvsc_output_svg" viewBox="0 0 100 100"><g id="dvsc_fractions"></g><g id="dvsc_total_score"><circle cx="50"  cy="50" r="40"  id="dvsc_score_indicator"></circle><text id="dvsc_score_text" x="50" y="50">100</text></g></svg></div></div><style>@import "./scoring-calc.css"</style>`;
+scoringCalculator.innerHTML = `<div class="dynamic_visual_scoring_calculator" id="no1"><div class="dvsc_settings"><table><thead><th>Category</th><th>Value</th><th>Target Value</th><th>Bias</th><th><span class="dvsc_table_head_weighting">Weighting <button class="set_weights_btn" title="set the weights manually"><svg height="26" viewBox="0 0 26 26" width="26" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="#999999" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M12.285 3.619c.434 0 .863.032 1.28.094l.629 1.906a6.784 6.784 0 0 1 1.56.664l1.808-.872a8.683 8.683 0 0 1 1.69 1.719l-.904 1.791a6.79 6.79 0 0 1 .636 1.572l1.895.66a8.748 8.748 0 0 1-.021 2.412l-1.906.629a6.893 6.893 0 0 1-.664 1.56l.872 1.808a8.718 8.718 0 0 1-1.719 1.69l-1.791-.904a6.818 6.818 0 0 1-1.572.636l-.66 1.895a8.748 8.748 0 0 1-2.412-.021l-.629-1.906a6.893 6.893 0 0 1-1.56-.664l-1.808.872a8.718 8.718 0 0 1-1.69-1.719l.904-1.791a6.89 6.89 0 0 1-.636-1.572l-1.895-.661a8.748 8.748 0 0 1 .021-2.41l1.906-.629a6.784 6.784 0 0 1 .664-1.56L5.411 7.01A8.718 8.718 0 0 1 7.13 5.32l1.791.904a6.818 6.818 0 0 1 1.572-.636l.661-1.895a8.741 8.741 0 0 1 1.131-.074z"/><path d="M16 12.285A3.715 3.715 0 0 1 12.285 16a3.715 3.715 0 0 1-3.713-3.715 3.715 3.715 0 0 1 7.428 0z"/></g></svg></button></span></th><th>Score</th></thead><tbody class="dvsc_table_body"></tbody></table></div><div class="dvsc_output"><svg xmlns="http://www.w3.org/2000/svg" class="dvsc_output_svg" viewBox="0 0 100 100"><g id="dvsc_fractions"></g><g id="dvsc_total_score"><circle cx="50"  cy="50" r="40"  id="dvsc_score_indicator"></circle><text id="dvsc_score_text" x="50" y="50">100</text></g></svg></div></div><style>@import "./scoring-calc.css"</style>`;
 scoringCategory.innerHTML = `<tr><th class="category_name"></th><td><output class="category_value"> </output><span class="category_unit"></span></td><td><input class="dvsc_target_value_input" type="range" value="" step=""><p class="dvsc_tab"><output class="dvsc_target_value_input_display"></output><span class="category_unit"> </span></p></td><td><input class="dvsc_bias_input" min="-5" max="5" type="range" step="1" value="0"><p class="dvsc_tab"><output class="dvsc_bias_input_display" >0</output></p></td><td><input class="dvsc_weighting_input" type="range" step="0.01" value=""><p class="dvsc_tab"><output class="dvsc_weighting_input_display" ></output><span> %</span></p></td><td><p class="dvsc_tab"><output class="dvsc_category_score_display">-</output><span><sub>/1000</sub></span></p></td><style>@import "./scoring-calc-category.css"</style><tr>`;
 
 /**
  * Defines a new custom HtmlElement, a Web Components which acts as the hub and wrapper for the  scoring-calc-category elements
  */
 class ScoringCalc extends HTMLElement {
+
+	/**
+	 * collect the info about every category and store them in an accessible Array
+	 */
+	#svgBackgroundCircles = [];
+	#svgScoreCircles = [];
+	#svgTexts = [];
+	#categoryObservers = [];
+	// only observe the attributes weight and score
+	#observerOptions = {
+		childList: false,
+		attributes: true,
+		characterData: false,
+		subtree: false,
+		attributeFilter: ["weight", "score"],
+		attributeOldValue: false,
+		characterDataOldValue: false,
+	};
+	// these are sort of "event listeners". the number of rows is limited by the length of this array (16)
+	
+	#weightSettingsBtn = null;
+	#tableHeadingRow = null;
+	#tableHeadingWeighting = null;
+	#tableHeadingWeightingSpan = null;
+	#discardIcon = `<svg height="26" viewBox="0 0 26 26" width="26" xmlns="http://www.w3.org/2000/svg"><path d="M22.429 12.524a9.905 9.905 0 0 1-9.905 9.905 9.905 9.905 0 0 1-9.905-9.905 9.905 9.905 0 0 1 19.81 0zM8.81 8.81l7.429 7.429m0-7.429L8.81 16.239" fill="none" stroke="#ff1d15" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+	#approveIcon = `<svg height="26" viewBox="0 0 26 26" width="26" xmlns="http://www.w3.org/2000/svg"><path d="m5.619 12.81 3.714 3.714 9.939-9.905" fill="none" stroke="#61E786" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/></svg>`;
+	#settingsIcon = `<svg height="26" viewBox="0 0 26 26" width="26" xmlns="http://www.w3.org/2000/svg"> <g fill="none" fill-rule="evenodd" stroke="#999999" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M12.285 3.619c.434 0 .863.032 1.28.094l.629 1.906a6.784 6.784 0 0 1 1.56.664l1.808-.872a8.683 8.683 0 0 1 1.69 1.719l-.904 1.791a6.79 6.79 0 0 1 .636 1.572l1.895.66a8.748 8.748 0 0 1-.021 2.412l-1.906.629a6.893 6.893 0 0 1-.664 1.56l.872 1.808a8.718 8.718 0 0 1-1.719 1.69l-1.791-.904a6.818 6.818 0 0 1-1.572.636l-.66 1.895a8.748 8.748 0 0 1-2.412-.021l-.629-1.906a6.893 6.893 0 0 1-1.56-.664l-1.808.872a8.718 8.718 0 0 1-1.69-1.719l.904-1.791a6.89 6.89 0 0 1-.636-1.572l-1.895-.661a8.748 8.748 0 0 1 .021-2.41l1.906-.629a6.784 6.784 0 0 1 .664-1.56L5.411 7.01A8.718 8.718 0 0 1 7.13 5.32l1.791.904a6.818 6.818 0 0 1 1.572-.636l.661-1.895a8.741 8.741 0 0 1 1.131-.074z"/><path d="M16 12.285A3.715 3.715 0 0 1 12.285 16a3.715 3.715 0 0 1-3.713-3.715 3.715 3.715 0 0 1 7.428 0z"/></g></svg>`;
+
+
 	constructor() {
 		super();
 		this._root = this.attachShadow({ mode: "open", slotAssignment: "manual" });
@@ -37,6 +66,12 @@ class ScoringCalc extends HTMLElement {
 	 */
 	connectedCallback() {
 		this.#assignSlots();
+		this.#tableHeadingRow = this._root.querySelector("div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr");
+		this.#tableHeadingWeightingSpan = this._root.querySelector("div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting")
+		this.#tableHeadingWeighting = this._root.querySelector("div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr>th:nth-child(5)");
+		this.#weightSettingsBtn = this._root.querySelector("div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.set_weights_btn");	
+
+
 		let totalScoreCircle = this._root.querySelector("#dvsc_score_indicator");
 		let svgFractions = this._root.querySelector("#dvsc_fractions");
 		totalScoreCircle.setAttribute("stroke-dasharray", (2 * 40 * Math.PI - 6).toString());
@@ -85,6 +120,79 @@ class ScoringCalc extends HTMLElement {
 		this.#svgBackgroundCircles = Array.from(this._root.querySelectorAll(".dvsc_fraction_bg"));
 		this.#svgScoreCircles = Array.from(this._root.querySelectorAll(".dvsc_fraction_bar"));
 		this.#svgTexts = Array.from(this._root.querySelectorAll(".category_text"));
+		this.#weightSettingsBtn.addEventListener("click",()=>{
+			// create Elements, if it is the fist interaction
+			if(this._root.querySelector(".manual_input_modal") == undefined || this._root.querySelector(".manual_input_modal") == null){
+				// manual input modal
+				let manualInputModal = document.createElement("div");
+					manualInputModal.style.width = this.#tableHeadingWeighting.clientWidth + 4  +"px"; 
+					manualInputModal.style.top =  this.#tableHeadingRow.clientHeight  + "px";
+					manualInputModal.style.display = "flex";
+					manualInputModal.setAttribute("class", "manual_input_modal");
+						// create input elements
+						for( let i = 0; i < this.categoryCount ; i++){
+							let manualInput = document.createElement("input");
+							let manualInputAttr ={
+								type: "number",
+								class:"manual_weight_input",
+								min: "0.01",
+								max: (100 - (0.01 * (this.categoryCount - 1))).toString(),
+								step: "0.01",
+								value: ( 100 / this.categoryCount).toString()
+							}
+		
+							this.#applyAttributes(manualInput, manualInputAttr);
+							manualInput.style.height = this.elements[0].clientHeight +"px";
+							manualInputModal.appendChild(manualInput);
+						}
+						
+						//create sum element
+						let sum = document.createElement("span");
+						sum.setAttribute("class", "manual_input_sum");
+						sum.innerHTML = "100";
+						manualInputModal.appendChild(sum);
+				this.#tableHeadingWeighting.appendChild(manualInputModal);
+		
+				//handle button situation
+				let discard = document.createElement("button");
+				let discardAttr = {
+					class: "discard_btn",
+					style: "display: flex",
+					title: "discard changes"
+				}
+				this.#applyAttributes(discard, discardAttr);
+				this.#weightSettingsBtn.title = "save";
+				this.#weightSettingsBtn.innerHTML = this.#approveIcon;
+				discard.innerHTML = this.#discardIcon;
+				this.#tableHeadingWeightingSpan.appendChild(discard);
+				
+				// add event listeners
+				let manualInputs = this._root.querySelectorAll(".manual_weight_input");
+				manualInputs.forEach((element)=>{    element.addEventListener("input", ()=>{    this.#calcManualWeightsSum()  }) });
+				discard.addEventListener("click",()=>{ this.#toggleManualWeightsSettings("close")})
+		
+			
+			}
+			else{
+			
+				let modal = this._root.querySelector(".manual_input_modal");
+				let sumElement = this._root.querySelector(".manual_input_sum");
+				if(modal.style.display == "flex"){
+				//check if modal is visible
+					if(sumElement.innerText !== "100" && sumElement.innerText !== "100.00"){
+						// stop, if the sum of the manually input weights is not 100
+						window.alert("\nCould not verify changes.\nAll weights added together must be 100!");
+						throw new Error("\nCould not verify changes.\nAll weights added together must be 100!")
+					}
+		
+					this.#toggleManualWeightsSettings("close");
+					this.#setWeightsManually();
+				}
+				else{
+					this.#toggleManualWeightsSettings("open");
+				}
+			}
+		});
 	}
 
 	/**
@@ -410,7 +518,7 @@ class ScoringCalc extends HTMLElement {
 	/**
 	 * Calculate the average score and the set the stroke-dashoffset of the center svg circle, as well as the color
 	 */
-	#calcScore() {
+	#calcTotalScore() {
 		let numerator = 0;
 		for (let i = 0; i < this.categoryCount; i++) {
 			numerator += (parseFloat(this.categoryScores[i]) / 1000) * parseFloat(this.categoryWeights[i] / 100);
@@ -570,37 +678,85 @@ class ScoringCalc extends HTMLElement {
 						case "weight":
 							this.#getState()
 							this.#calcWeights(entries[0].target.number);
-							this.#calcScore();
+							this.#calcTotalScore();
 							this.#setOffset( this.categoryScores, this.categoryWeights);
 							break;
 						case "score":
 							this.#getState()
-							this.#calcScore();
+							this.#calcTotalScore();
 							this.#setOffset( this.categoryScores, this.categoryWeights);
 					}
 				}
 		}
 	};
 
+	
 	/**
-	 * collect the info about every category and store them in an accessible Array
+	 * Applies the manually adjusted weights to the main module and calculates the new main score and adjusts the stroke dash offset
 	 */
-	#svgBackgroundCircles = [];
-	#svgScoreCircles = [];
-	#svgTexts = [];
-	#categoryObservers = [];
-	#changingAttributes = { weight: null, index: null, score: null };
-	// only observe the attributes weight and score
-	#observerOptions = {
-		childList: false,
-		attributes: true,
-		characterData: false,
-		subtree: false,
-		attributeFilter: ["weight", "score"],
-		attributeOldValue: false,
-		characterDataOldValue: false,
-	};
-	// these are sort of "event listeners". the number of rows is limited by the length of this array (16)
+	#setWeightsManually(){
+		let manualInputs = Array.from(this._root.querySelectorAll(".manual_weight_input"));
+		manualInputs.forEach((element, index)=>{
+			this.categoryWeights[index] = parseFloat(element.value);
+			this.#setOffset(this.categoryScores, this.categoryWeights);
+			this.#calcTotalScore();
+			this.#setState()
+		})
+	}
+	
+	/**
+	 * Calculates the sum of all manual input weights and and displays them.
+	 * ALso Changes the color of the sum red, if the sum is not 100, and green if the sum is 100
+	 */
+	#calcManualWeightsSum(){
+		let inputs =  this._root.querySelectorAll(".manual_weight_input");
+		let sumElement = this._root.querySelector(".manual_input_sum");
+		let sum = 0;
+	
+		inputs.forEach((element)=>{
+			sum += parseFloat(element.value);
+		})
+		
+		sumElement.innerHTML = sum.toFixed(2);
+	
+		if( sum > 100 || sum < 100){
+			sumElement.style.color = "#ff1d15";
+		}
+		else if(sum == 100){
+			sumElement.style.color = "#61E786";
+		}
+	
+	}
+	
+	
+	/**
+	 * Takes the input, which is an instruction, of either "open" or "close", and then opens or closes the manual weighting adjustment panel.
+	 * ALso the button titles and icons adjust accordingly
+	 * @param {String} state 
+	 */
+	#toggleManualWeightsSettings(state){
+		let modal = this._root.querySelector(".manual_input_modal");
+		let rightBtn = this._root.querySelector(".set_weights_btn");
+		let leftBtn = this._root.querySelector(".discard_btn");
+	
+		if(state == "close"){
+			leftBtn.style.display = "none";
+			rightBtn.title = "set the weights manually";
+			rightBtn.innerHTML = this.#settingsIcon;
+			modal.style.display = "none";
+		}
+		else if(state == "open"){
+			leftBtn.style.display = "flex";
+			rightBtn.title = "save";
+			rightBtn.innerHTML = this.#approveIcon;
+			modal.style.display = "flex";
+		}
+	
+	}
+
+	
+
+	
 	#daemons = [
 		new MutationObserver(this.#callback),
 		new MutationObserver(this.#callback),
@@ -619,6 +775,8 @@ class ScoringCalc extends HTMLElement {
 		new MutationObserver(this.#callback),
 		new MutationObserver(this.#callback),
 	];
+
+	
 }
 
 /**
@@ -826,13 +984,13 @@ class ScoringCalcCategory extends HTMLElement {
 		//https://www.desmos.com/calculator/a3uakjjpbd
 	}
 	#getScoreCubic(value, bias, target, direction, grain) {
-		let b = (bias - 5.001) / (bias + 5.001);
-		let g = 1 / (1.38648041843 * grain);
-		if (g === 0) {
+		if (grain === 0) {
 			throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
 		} else if (direction === 0) {
 			throw console.error("Invalid direction value found in config!\nThe direction value can not be 0.\nAllowed values are either '-1' or '1')");
 		}
+		let b = (bias - 5.001) / (bias + 5.001);
+		let g = 1 / (1.38648041843 * grain);
 		function f(x) {
 			return (1 / Math.PI) * Math.atan(x) + 0.5;
 		}
@@ -848,6 +1006,29 @@ class ScoringCalcCategory extends HTMLElement {
 
 		//https://www.desmos.com/calculator/7mp16fywjh
 	}
+	#getScoreDefault(value, bias, target, direction, grain){
+		if( grain === 0 ){
+			throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
+		}
+		else if(direction === 0){
+			throw console.error("Invalid direction value found in config!\nThe direction value can not be 0.\nAllowed values are either '-1' or '1')");
+		}
+	   let b = (bias - 5.001) / (bias + 5.001);
+	   let g = 1 / (2 * grain);
+	   function f(x) {
+		   return (1 / Math.PI) * Math.atan(x) + 0.5;
+	   }
+	   function h(x) {
+		   return 2 * f(2 * x) - 1;
+	   }
+	   function j(x) {
+		   return direction * (x - target);
+	   }
+	   let factor = 1000 * f(1000 * j(value)) * h(g * b * j(value)) + 1000;
+	   return factor < 0.0001 ? 0.0001 : factor;
+	   //https://www.desmos.com/calculator/hbmma6qt6s
+	}
+
 
 	#calcScore() {
 		let scoreOutput = this._root.querySelector(".dvsc_category_score_display");
@@ -865,6 +1046,11 @@ class ScoringCalcCategory extends HTMLElement {
 		if (this.evaluation == "cube" || this.evaluation == "cubic") {
 			this.score = this.#getScoreCubic(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain));
 			scoreOutput.innerHTML = this.#getScoreCubic(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain)).toFixed(2);
+			this.setAttribute("score", this.score);
+		}
+		if(this.evaluation == "default" || this.evaluation == "def"){
+			this.score = this.#getScoreDefault(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain));
+			scoreOutput.innerHTML = this.#getScoreDefault(parseFloat(this.value), parseInt(this.bias), parseFloat(this.target), parseInt(this.direction), parseFloat(this.grain)).toFixed(2);
 			this.setAttribute("score", this.score);
 		}
 	}

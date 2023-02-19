@@ -20,6 +20,7 @@ body {
         background: #1e1e1e;
         background-color: #1e1e1e;
         color: white;
+        line-height: 1.5;
 }
 
 ::-webkit-scrollbar{
@@ -45,6 +46,15 @@ body {
         scrollbar-color: #528BFF transparent;
 }
 
+h2:not(:nth-child(1)){
+        margin-top: 120px;
+      
+}
+
+h2{
+        text-decoration: underline;
+        text-align: center;
+}
 
 .dvsc_showcase {
         display: -webkit-box;
@@ -90,6 +100,10 @@ body {
         max-width: 50vw
 }
 
+
+.web_comp_access_table{
+        max-width: 70vw;
+}
 .property{
         color:rgb(156, 220, 254); font-weight:400;
 }
@@ -124,8 +138,19 @@ body {
 .web_comp_access_table_definition, .web_comp_access_table_prop{
         padding: 0 16px;
 }
-
-
 td{
         padding-bottom: 12px ;
+}
+
+var{
+        background-color: #2f2f2f;
+	padding: .15em .5em;
+	border-radius: 4px;
+	color: #aac8e4;
+	transition: color .5s,background-color .5s;
+}
+
+
+.guide{
+        max-width: 80vw;
 }
