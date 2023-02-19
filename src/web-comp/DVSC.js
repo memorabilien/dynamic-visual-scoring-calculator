@@ -125,7 +125,7 @@ class ScoringCalc extends HTMLElement {
 			if(this._root.querySelector(".manual_input_modal") == undefined || this._root.querySelector(".manual_input_modal") == null){
 				// manual input modal
 				let manualInputModal = document.createElement("div");
-					manualInputModal.style.width = this.#tableHeadingWeighting.clientWidth + 4  +"px"; 
+					manualInputModal.style.width = this.#tableHeadingWeighting.clientWidth + 5  +"px"; 
 					manualInputModal.style.top =  this.#tableHeadingRow.clientHeight  + "px";
 					manualInputModal.style.display = "flex";
 					manualInputModal.setAttribute("class", "manual_input_modal");
@@ -142,6 +142,7 @@ class ScoringCalc extends HTMLElement {
 							}
 		
 							this.#applyAttributes(manualInput, manualInputAttr);
+							console.log(this.elements[0].clientHeight);
 							manualInput.style.height = this.elements[0].clientHeight +"px";
 							manualInputModal.appendChild(manualInput);
 						}

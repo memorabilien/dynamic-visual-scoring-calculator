@@ -69,8 +69,8 @@ div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr {
     display: grid;
     grid-gap: 32px;
     grid-auto-flow: column;
-    -ms-grid-columns: 75px 32px 62px 32px 197px 32px 164px 32px 197px 32px 110px;
-    grid-template-columns: 75px 62px 197px 164px 197px 110px;
+    -ms-grid-columns: 120px 32px 62px 32px 197px 32px 164px 32px 197px 32px 110px;
+    grid-template-columns: 120px 62px 197px 164px 197px 110px;
     -webkit-box-pack: justify;
     -webkit-justify-content: space-between;
             justify-content: space-between;

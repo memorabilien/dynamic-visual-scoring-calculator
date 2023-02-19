@@ -135,11 +135,9 @@ h2{
 .js_function{
         color: #528BFF; font-weight: 400;
 }
-.web_comp_access_table_definition, .web_comp_access_table_prop{
-        padding: 0 16px;
-}
-td{
-        padding-bottom: 12px ;
+
+td.web_comp_access_table_example, td.web_comp_access_table_output, td.web_comp_access_table_definition td.web_comp_access_table_prop{
+        padding: 12px 16px;
 }
 
 var{
