@@ -1,0 +1,298 @@
+
+svg{
+    -webkit-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+}
+
+div.dynamic_visual_scoring_calculator#no1 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+            justify-content: center;
+    justify-items: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+            align-items: center;
+    -webkit-align-content: center;
+            align-content: center;
+    gap: 100px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+            flex-direction: column;
+    -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+    -webkit-align-content: flex-start;
+            align-content: flex-start;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+            justify-content: flex-start;
+    gap: 17px;
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+            align-items: stretch;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr {
+    border-bottom: 1px solid#999999;;
+    padding: 8px 0;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr,
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr {
+    display: -ms-grid;
+    display: grid;
+    grid-gap: 32px;
+    grid-auto-flow: column;
+    -ms-grid-columns: 120px 32px 62px 32px 197px 32px 164px 32px 197px 32px 110px;
+    grid-template-columns: 120px 62px 197px 164px 197px 110px;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+            justify-content: space-between;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+            justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+            align-items: center;
+    gap: 12px;
+    -webkit-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    text-align: end;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr>th{
+    font-weight: 400;
+    color: #999999;
+    position: relative;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>thead>tr>th:nth-child(1) {
+    text-align: left;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td:nth-child(2) {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+            justify-content: center;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td>input[type="range"]{
+    max-width: 129px;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting{
+    position: relative;
+}
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>div.manual_input_modal{
+    flex-direction: column;
+    gap:17px;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 0px;
+    opacity: 1!important;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>div.manual_input_modal>input.manual_weight_input{
+    padding: 0;
+    border: 0;
+    box-shadow: inset 0 0px 6px 0 #999999;
+    border-radius: 3px;
+    /* border: 1px solid #999999; */
+    opacity: 1;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    text-align: center;
+    width: 80px;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>div.manual_input_modal>input.manual_weight_input:focus{
+    outline: 1px solid  #999999;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>div.manual_input_modal>input.manual_weight_input::-webkit-textfield-decoration--webkit-inner-spin-button{
+    cursor: pointer;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>div.manual_input_modal>span.manual_input_sum{
+    border-top:  3px double #999999;
+    width: 80px;
+    text-align: center;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.set_weights_btn , div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.discard_btn{
+    border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 0;
+    position: absolute;
+    margin: 0;
+    top: 0;
+    bottom: 0;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.3s ease-out;
+    border: 1px solid #00000000;
+    border-radius: 8px;
+    height: 26px;
+    width: 26px;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.set_weights_btn{
+right: -28px;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.discard_btn{
+    left: -28px;
+    }
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.set_weights_btn:hover, div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.discard_btn:hover{
+    border: 1px solid #00000080;
+    box-shadow: 0 2px 4px 0 #2e0946a2;
+}
+
+div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.set_weights_btn > *, div.dynamic_visual_scoring_calculator#no1 >div.dvsc_settings>table>thead>tr>th:nth-child(5)>span.dvsc_table_head_weighting>button.discard_btn > *{
+    pointer-events: none;
+}
+
+
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td:nth-child(6){
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+            justify-content: flex-end;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>th {
+    text-align: left;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+            align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-align-content: center;
+            align-content: center;
+}
+
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td>.dvsc_tab,
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td>.dvsc_tab>p {
+    -moz-tab-size: 4;
+      -o-tab-size: 4;
+         tab-size: 4;
+    margin: 0;
+    text-align: end;
+    white-space: nowrap;
+    word-break: keep-all;
+}
+
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td>.dvsc_tab>output.dvsc_category_score_display{
+    font-weight: bold;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>.dvsc_output_svg {
+    height: 200px;
+    width: 200px;
+    position: relative;
+    overflow: visible;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg * {
+    -webkit-transition: all 0.4s ease-out;
+    -o-transition: all 0.4s ease-out;
+    transition: all 0.4s ease-out;
+} div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_total_score>circle#dvsc_score_indicator {
+    cx: 50;
+    cy: 50;
+    r: 40;
+    stroke-width: 4px;
+    stroke-linecap: round;
+    fill: none;
+}
+
+ div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_total_score>text#dvsc_score_text {
+    text-anchor: middle;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 32px;
+    font-weight: bold;
+    dominant-baseline: middle;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions>g>circle.dvsc_fraction {
+    cx: 50;
+    cy: 50;
+    r: 46;
+    stroke-width: 3px;
+    stroke-linecap: round;
+    fill: none;
+    -webkit-transform-origin: center;
+         -o-transform-origin: center;
+            transform-origin: center;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions>g>circle.dvsc_fraction_bg {
+    opacity: 0;
+}
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions>g>circle.dvsc_fraction_bar {
+    opacity: 1;
+}
+
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions>g>text.category_text{
+    font-size: 8px;
+    font-weight: 600;
+    opacity: 0.5;
+    text-anchor: "middle";
+	dominant-baseline: "middle";
+	transform-origin: "center";
+}
+
+
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>.dvsc_output{
+    padding: 32px 100px!important;
+    overflow: hidden!important;
+}
+
+.dvsc_output{
+    padding: 32px 100px;
+    overflow: hidden;
+}
+
