@@ -532,29 +532,333 @@
                                 <img src="../score/scores.svg">
                                 <figcaption>Figure 1. - All evaluation methods plotted for an example with <var>categoryBias</var> being 0, <var>categoryGrain</var> being 500 and the <var>categoryDirection</var> being 1</figcaption>
                             </figure>
+                            <p>
+                                These are functions, which act as the base for all the evaluation methods.
+                            </p>
+                            <mjx-container  jax="SVG" display="true" tabindex="0" ctxtmenu_counter="347" style="position: relative;">
+                                <mjx-assistive-mml unselectable="on" display="block">
+                                    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                                        <mstyle displaystyle="true" scriptlevel="0">
+                                            <mrow data-mjx-texclass="ORD">
+                                                <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                                                    <mtr>
+                                                        <mtd>
+                                                            <mi>b</mi>
+                                                            <mo>=</mo>
+                                                            <mfrac>
+                                                                <mrow>
+                                                                    <mtext>caregoryBias</mtext>
+                                                                    <mo>−</mo>
+                                                                    <mn>5.01</mn>
+                                                                </mrow>
+                                                                <mrow>
+                                                                    <mtext>categoryBias</mtext>
+                                                                    <mo>+</mo>
+                                                                    <mn>5.01</mn>
+                                                                </mrow>
+                                                            </mfrac>
+                                                        </mtd>
+                                                    </mtr>
+                                                    <mtr>
+                                                        <mtd>
+                                                            <mi>j</mi>
+                                                            <mo stretchy="false">(</mo>
+                                                            <mi>x</mi>
+                                                            <mo stretchy="false">)</mo>
+                                                            <mo>=</mo>
+                                                            <mtext>categoryDirection</mtext>
+                                                            <mo>⋅</mo>
+                                                            <mo stretchy="false">(</mo>
+                                                            <mi>x</mi>
+                                                            <mo>−</mo>
+                                                            <mtext>categoryTarget</mtext>
+                                                            <mo stretchy="false">)</mo>
+                                                        </mtd>
+                                                    </mtr>
+                                                    <mtr>
+                                                        <mtd>
+                                                            <mi>f</mi>
+                                                            <mo stretchy="false">(</mo>
+                                                            <mi>x</mi>
+                                                            <mo stretchy="false">)</mo>
+                                                            <mo>=</mo>
+                                                            <mfrac>
+                                                                <mn>1</mn>
+                                                                <mi>π</mi>
+                                                            </mfrac>
+                                                            <mo>⋅</mo>
+                                                            <mi>arctan</mi>
+                                                            <mo data-mjx-texclass="NONE">⁡</mo>
+                                                            <mrow>
+                                                                <mo data-mjx-texclass="OPEN">(</mo>
+                                                                <mi>x</mi>
+                                                                <mo data-mjx-texclass="CLOSE">)</mo>
+                                                            </mrow>
+                                                            <mo>+</mo>
+                                                            <mfrac>
+                                                                <mn>1</mn>
+                                                                <mn>2</mn>
+                                                            </mfrac>
+                                                        </mtd>
+                                                    </mtr>
+                                                </mtable>
+                                            </mrow>
+                                        </mstyle>
+                                    </math>
+                                </mjx-assistive-mml>
+                            </mjx-container>
                             <ol>
                                 <li>
                                     <p>Default Evaluation:</p>
                                     valid values are "def" or "default"
+                                    <mjx-container  jax="SVG" display="true" tabindex="0" ctxtmenu_counter="347" style="position: relative;">
+                                        <mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mstyle displaystyle="true" scriptlevel="0"><mrow data-mjx-texclass="ORD"><mtable rowspacing=".5em" columnspacing="1em" displaystyle="true"><mtr><mtd><msub><mi>g</mi><mi>d</mi></msub><mo>=</mo><mfrac><mn>1</mn><mrow><msup><mn>2</mn><mn>1</mn></msup><mo>⋅</mo><mtext>categoryGrain</mtext></mrow></mfrac></mtd></mtr><mtr><mtd><msub><mi>h</mi><mi>d</mi></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn><mo>⋅</mo><mi>f</mi><mo stretchy="false">(</mo><mn>2</mn><mo>⋅</mo><mi>x</mi><mo stretchy="false">)</mo><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd><msub><mi>S</mi><mi>d</mi></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mn>1000</mn><mo>⋅</mo><mi>f</mi><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">(</mo></mrow><mn>1000</mn><mo>⋅</mo><mi>j</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">)</mo></mrow><mo>⋅</mo><msub><mi>h</mi><mi>d</mi></msub><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">(</mo></mrow><msub><mi>g</mi><mi>l</mi></msub><mo>⋅</mo><mi>b</mi><mo>⋅</mo><mi>j</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">)</mo></mrow></mtd></mtr></mtable></mrow></mstyle></math></mjx-assistive-mml>
+                                    </mjx-container>
                                 </li>
                                 <li>
                                     <p>Linear Evaluation:</p>
                                     valid values are "lin" or "linear"
+                                    <mjx-container  jax="SVG" display="true" tabindex="0" ctxtmenu_counter="347" style="position: relative;">
+                                     <mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mstyle displaystyle="true" scriptlevel="0"><mrow data-mjx-texclass="ORD"><mtable rowspacing=".5em" columnspacing="1em" displaystyle="true"><mtr><mtd><msub><mi>g</mi><mi>l</mi></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><mrow><msup><mn>2</mn><mrow data-mjx-texclass="ORD"><mn>1</mn></mrow></msup><mo>⋅</mo><mtext>categoryGrain</mtext></mrow></mfrac></mtd></mtr><mtr><mtd></mtd></mtr><mtr><mtd><msub><mi>S</mi><mi>l</mi></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mn>1000</mn><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo minsize="1.623em" maxsize="1.623em">(</mo></mrow><mi>f</mi><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">(</mo></mrow><mo>−</mo><mn>1000</mn><mo>⋅</mo><mi>j</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">)</mo></mrow><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow data-mjx-texclass="ORD"><mo minsize="1.623em" maxsize="1.623em">)</mo></mrow><mo>+</mo><mn>1000</mn><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo minsize="1.623em" maxsize="1.623em">(</mo></mrow><mi>f</mi><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">(</mo></mrow><mn>1000</mn><mo>⋅</mo><mi>j</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">)</mo></mrow><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow data-mjx-texclass="ORD"><mo minsize="1.623em" maxsize="1.623em">)</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">(</mo></mrow><mi>b</mi><mo>⋅</mo><msub><mi>g</mi><mi>l</mi></msub><mo>⋅</mo><mi>j</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>+</mo><mn>1</mn><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">)</mo></mrow></mtd></mtr><mtr><mtd><mo>+</mo><mn>1000</mn><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo minsize="2.047em" maxsize="2.047em">(</mo></mrow><mi>f</mi><mrow data-mjx-texclass="ORD"><mo minsize="1.623em" maxsize="1.623em">(</mo></mrow><mn>1000</mn><mo>⋅</mo><mi>j</mi><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">(</mo></mrow><mi>x</mi><mo>+</mo><mfrac><mn>1</mn><mrow><mtext>categoryDirection</mtext><mo>⋅</mo><mi>b</mi><mo>⋅</mo><msub><mi>g</mi><mi>l</mi></msub></mrow></mfrac><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">)</mo></mrow><mrow data-mjx-texclass="ORD"><mo minsize="1.623em" maxsize="1.623em">)</mo></mrow><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mrow data-mjx-texclass="ORD"><mo minsize="2.047em" maxsize="2.047em">)</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">(</mo></mrow><mo>−</mo><mi>b</mi><mo>⋅</mo><msub><mi>g</mi><mi>l</mi></msub><mo>∗</mo><mi>j</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>−</mo><mn>1</mn><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">)</mo></mrow><mo>+</mo><mn>500</mn></mtd></mtr></mtable></mrow></mstyle></math></mjx-assistive-mml>
+                                    </mjx-container>
                                 </li>
                                 <li>
                                     <p>Quadratic Evaluation:</p>
                                     valid values are "quad" or "quadratic"
+                                    <mjx-container  jax="SVG" display="true" tabindex="0" ctxtmenu_counter="347" style="position: relative;">
+                                        <mjx-assistive-mml unselectable="on" display="block">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                                                <mstyle displaystyle="true" scriptlevel="0">
+                                                    <mrow data-mjx-texclass="ORD">
+                                                        <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                                                            <mtr>
+                                                                <mtd>
+                                                                    <msub>
+                                                                        <mi>g</mi>
+                                                                        <mi>q</mi>
+                                                                    </msub>
+                                                                    <mo>=</mo>
+                                                                    <mfrac>
+                                                                        <mn>1</mn>
+                                                                        <mrow>
+                                                                            <msup>
+                                                                                <mn>2</mn>
+                                                                                <mrow data-mjx-texclass="ORD">
+                                                                                    <mfrac>
+                                                                                        <mn>1</mn>
+                                                                                        <mn>2</mn>
+                                                                                    </mfrac>
+                                                                                </mrow>
+                                                                            </msup>
+                                                                            <mo>⋅</mo>
+                                                                            <mtext>categoryGrain</mtext>
+                                                                        </mrow>
+                                                                    </mfrac>
+                                                                </mtd>
+                                                            </mtr>
+                                                            <mtr>
+                                                                <mtd></mtd>
+                                                            </mtr>
+                                                            <mtr>
+                                                                <mtd>
+                                                                    <msub>
+                                                                        <mi>h</mi>
+                                                                        <mi>q</mi>
+                                                                    </msub>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <mi>x</mi>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo>=</mo>
+                                                                    <mn>2</mn>
+                                                                    <mo>⋅</mo>
+                                                                    <mi>f</mi>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <mo>−</mo>
+                                                                    <mn>2</mn>
+                                                                    <mo>⋅</mo>
+                                                                    <msup>
+                                                                        <mi>x</mi>
+                                                                        <mn>2</mn>
+                                                                    </msup>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo>−</mo>
+                                                                    <mn>1</mn>
+                                                                </mtd>
+                                                            </mtr>
+                                                            <mtr>
+                                                                <mtd></mtd>
+                                                            </mtr>
+                                                            <mtr>
+                                                                <mtd>
+                                                                    <msub>
+                                                                        <mi>S</mi>
+                                                                        <mi>q</mi>
+                                                                    </msub>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <mi>x</mi>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo>=</mo>
+                                                                    <mn>1000</mn>
+                                                                    <mo>⋅</mo>
+                                                                    <mi>f</mi>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <mn>1000</mn>
+                                                                    <mo>⋅</mo>
+                                                                    <mi>j</mi>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <mi>x</mi>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo>⋅</mo>
+                                                                    <msub>
+                                                                        <mi>h</mi>
+                                                                        <mi>q</mi>
+                                                                    </msub>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <msub>
+                                                                        <mi>g</mi>
+                                                                        <mi>q</mi>
+                                                                    </msub>
+                                                                    <mo>⋅</mo>
+                                                                    <mi>b</mi>
+                                                                    <mo>⋅</mo>
+                                                                    <mi>j</mi>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <mi>x</mi>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo>+</mo>
+                                                                    <mn>1000</mn>
+                                                                </mtd>
+                                                            </mtr>
+                                                        </mtable>
+                                                    </mrow>
+                                                </mstyle>
+                                            </math>
+                                        </mjx-assistive-mml>
+                                    </mjx-container>
                                 </li>
                                 <li>
                                     <p>Cubic Evaluation:</p>
                                     valid values are "cube" or "cubic"
+                                    <mjx-container  jax="SVG" display="true" tabindex="0" ctxtmenu_counter="347" style="position: relative;">
+                                        <mjx-assistive-mml unselectable="on" display="block">
+                                            <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                                                <mstyle displaystyle="true" scriptlevel="0">
+                                                    <mrow data-mjx-texclass="ORD">
+                                                        <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                                                            <mtr>
+                                                                <mtd>
+                                                                    <msub>
+                                                                        <mi>g</mi>
+                                                                        <mi>c</mi>
+                                                                    </msub>
+                                                                    <mo>=</mo>
+                                                                    <mfrac>
+                                                                        <mn>1</mn>
+                                                                        <mrow>
+                                                                            <msup>
+                                                                                <mn>2</mn>
+                                                                                <mrow data-mjx-texclass="ORD">
+                                                                                    <mfrac>
+                                                                                        <mn>1</mn>
+                                                                                        <mn>3</mn>
+                                                                                    </mfrac>
+                                                                                </mrow>
+                                                                            </msup>
+                                                                            <mo>⋅</mo>
+                                                                            <mtext>categoryGrain</mtext>
+                                                                        </mrow>
+                                                                    </mfrac>
+                                                                </mtd>
+                                                            </mtr>
+                                                            <mtr>
+                                                                <mtd></mtd>
+                                                            </mtr>
+                                                            <mtr>
+                                                                <mtd>
+                                                                    <msub>
+                                                                        <mi>h</mi>
+                                                                        <mi>c</mi>
+                                                                    </msub>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <mi>x</mi>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo>=</mo>
+                                                                    <mn>2</mn>
+                                                                    <mo>⋅</mo>
+                                                                    <mi>f</mi>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <mn>2</mn>
+                                                                    <mo>⋅</mo>
+                                                                    <msup>
+                                                                        <mi>x</mi>
+                                                                        <mn>3</mn>
+                                                                    </msup>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo>−</mo>
+                                                                    <mn>1</mn>
+                                                                </mtd>
+                                                            </mtr>
+                                                            <mtr>
+                                                                <mtd></mtd>
+                                                            </mtr>
+                                                            <mtr>
+                                                                <mtd>
+                                                                    <msub>
+                                                                        <mi>S</mi>
+                                                                        <mi>c</mi>
+                                                                    </msub>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <mi>x</mi>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo>=</mo>
+                                                                    <mn>1000</mn>
+                                                                    <mo>⋅</mo>
+                                                                    <mi>f</mi>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <mn>1000</mn>
+                                                                    <mo>⋅</mo>
+                                                                    <mi>j</mi>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <mi>x</mi>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo>⋅</mo>
+                                                                    <msub>
+                                                                        <mi>h</mi>
+                                                                        <mi>c</mi>
+                                                                    </msub>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <msub>
+                                                                        <mi>g</mi>
+                                                                        <mi>c</mi>
+                                                                    </msub>
+                                                                    <mo>⋅</mo>
+                                                                    <mi>b</mi>
+                                                                    <mo>⋅</mo>
+                                                                    <mi>j</mi>
+                                                                    <mo stretchy="false">(</mo>
+                                                                    <mi>x</mi>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo stretchy="false">)</mo>
+                                                                    <mo>+</mo>
+                                                                    <mn>1000</mn>
+                                                                </mtd>
+                                                            </mtr>
+                                                        </mtable>
+                                                    </mrow>
+                                                </mstyle>
+                                            </math>
+                                        </mjx-assistive-mml>
+                                    </mjx-container>
                                 </li>
                             </ol>
                         <br><br>
                     </li>
                     <li  class="static_value">
                         <var>categoryColors</var>:<br>
-                           
+                           Sets the circle Colors.
                         <br><br>
                     </li>
                 </ul>

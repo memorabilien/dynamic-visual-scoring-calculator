@@ -6,7 +6,7 @@ import { getScoreDefault, getScoreLinear, getScoreQuadratic, getScoreCubic } fro
 // config
 let DVSC = {
     categoryBias : [],
-    categoryColors: [],
+    categoryColors: ["#FF1D15", "#0075FF", "#61E786", "#ffbb00",  "#FCC217", "#AA3E98", "#34F6F2"], // define the circle colors
 	categoryCount: 4,// number of category
 	categoryDirections: [1, 1, -1, 1],// 1: data point > target value; -1: data point < target value 
 	categoryEvaluations: ["cube", "linear", "quad", "linear"], // how should the score of a category be calculated
@@ -19,7 +19,6 @@ let DVSC = {
 	categoryUnits: ["s", "€", "%", "P"],// category unit to display
     categoryValues: [20,23,80,2],
 	categoryWeights: [25.00, 25.00, 25.00, 25.00], // presets
-	categoryColors: ["#FF1D15", "#0075FF", "#61E786", "#ffbb00",  "#FCC217", "#AA3E98", "#34F6F2"], // define the circle colors
 };
 
 let categoryTargets,
@@ -85,10 +84,88 @@ totalScoreCircle.setAttribute("stroke-dasharray", ((2*40*Math.PI)-6).toString())
         tableBody.appendChild(categoryRow);// put row into html document
         if (DVSC.categoryDirections[i] == 1){// set min or max values for target value range input slider
             document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("max", DVSC.categoryValues[i].toString());
+            switch(DVSC.categoryUnits[i]){
+				case "%":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "Percent":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "percent":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "s":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "S":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case  "Seconds":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "seconds":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "min":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "minutes":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "Minutes":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "h":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "hours":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "Hours":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "€":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "Euro":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "euro":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "$":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "Dollar":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				case "dollar":
+					  document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", 0);
+                      break;
+				default:
+                    document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", parseFloat(DVSC.categoryValues[i]) - parseFloat(DVSC.categoryGrains[i]) * 5);
+
+			}
+            
         }
         else if( DVSC.categoryDirections[i] == -1 ){
             document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("min", DVSC.categoryValues[i].toString());
+            switch(DVSC.categoryUnits[i]){
+				case "%":
+                    document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("max", 100);
+                    break;
+				case "Percent":
+                    document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("max", 100);
+                    break;
+				case "percent":
+                    document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("max", 100);
+                    break;
+				default:
+                    document.querySelector("#dvsc_target_value_input_" + i.toString()).setAttribute("max", parseFloat(DVSC.categoryValues[i]) + parseFloat(DVSC.categoryGrains[i]) * 14);
+			}
+
         }
+
 
         applyAttributes(svgFractionBackground, svgBackgroundProps);
         applyAttributes(svgFractionScore, svgFractionProps);
@@ -136,7 +213,6 @@ for (let i = 0; i < DVSC.categoryCount; i++) {
 		getAdjustments( event.target.value , DVSC.categoryCount, i);
         setOffset();
         calcTotalScore();
-
 	});
 }
 
@@ -149,7 +225,7 @@ for (let i = 0; i < DVSC.categoryCount; i++) {
  */
 function getAdjustments(userInput, categoryCount, currentAdjustmentIndex){
 	
-    
+
     if(categoryCount !== 1 && categoryCount !== 0) {
         let inputStatus = [];
         categoryWeights.forEach((element) => {
@@ -171,7 +247,6 @@ function getAdjustments(userInput, categoryCount, currentAdjustmentIndex){
                 temp[k] = 0;
             }
             matrix[i] = temp;
-        
         } 
         
         for(let row = 0; row < categoryCount - 1; row++ ){

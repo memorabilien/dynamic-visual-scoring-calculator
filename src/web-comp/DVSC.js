@@ -923,21 +923,84 @@ class ScoringCalcCategory extends HTMLElement {
 		if (this.direction == "1") {
 			// set min or max values for target value range input slider
 			targetValueInput.setAttribute("max", this.value);
-			if (this.getAttribute("unit") !== "%") {
-				//estimate a reasonable min input value based on the grain attribute
-				targetValueInput.setAttribute("min", parseFloat(this.value) - parseFloat(this.getAttribute("grain")) * 5);
-			} else {
-				// disallow percentages above 100 or below 0
-				targetValueInput.setAttribute("min", 0);
+			switch(this.getAttribute("unit")){
+				case "%":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "Percent":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "percent":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "s":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "S":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case  "Seconds":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "seconds":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "min":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "minutes":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "Minutes":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "h":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "hours":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "Hours":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "€":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "Euro":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "euro":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "$":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "Dollar":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				case "dollar":
+					targetValueInput.setAttribute("min", 0);
+					break;
+				default:
+					targetValueInput.setAttribute("min", parseFloat(this.value) - parseFloat(this.getAttribute("grain")) * 5);
+
 			}
+
 		} else if (this.direction == "-1") {
 			targetValueInput.setAttribute("min", this.value);
 			// disallow percentages above 100 or below 0
-			if (this.getAttribute("unit") !== "%") {
-				//estimate a reasonable max input value based on the grain attribute
-				targetValueInput.setAttribute("max", parseFloat(this.value) + parseFloat(this.getAttribute("grain")) * 14);
-			} else {
-				targetValueInput.setAttribute("max", 100);
+			switch(this.getAttribute("unit")){
+				case "%":
+					targetValueInput.setAttribute("max", 100);
+                    break;
+				case "Percent":
+					targetValueInput.setAttribute("max", 100);
+                    break;
+				case "percent":
+					targetValueInput.setAttribute("max", 100);
+                    break;
+				default:
+					targetValueInput.setAttribute("max", parseFloat(this.value) + parseFloat(this.getAttribute("grain")) * 14);
 			}
 		}
 	}
