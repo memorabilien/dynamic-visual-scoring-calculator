@@ -104,13 +104,13 @@ h2{
 .web_comp_access_table{
         max-width: 70vw;
 }
-.property{
+.html_prop, .property{
         color:rgb(156, 220, 254); font-weight:400;
 }
-.property_value{
+.html_value, .property_value{
         color:rgb(214, 157, 133); font-weight:400;
 }
-.xml_syntax{
+.html_syntax, .xml_syntax{
         color:rgb(155, 155, 155); font-weight:400;
 }
 .html_tag{
