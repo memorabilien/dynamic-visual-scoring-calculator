@@ -1,21 +1,3 @@
-/**
- * Import this file (the one you're are reading right now) into a file, where the Dynamic Visual Scoring Calculator should be located and feed the component with its config Object (DVSC)
- * example usage:
- * import React from "react";
- * import DynamicVisualScoringCalculator from "./DynamicVisualScoringCalculator";
- *  function MyReactComponent(){
- *   
- *  let DVSC = { ...}
- * 	
- * 	return (
- *  	<>
- *  		<div className='my_parent_element'>
- *  				<DynamicVisualScoringCalculator config={DVSC} />
- *  		</div>
- *  	</>
- *  );
- */
-
 import React, { useEffect, useState, useCallback , useRef} from "react";
 import "./style.css";
 import { getScoreLinear, getScoreQuadratic, getScoreCubic, getScoreDefault } from "../calcScores";
@@ -68,9 +50,17 @@ function DynamicVisualScoringCalculator(props) {
 	const [svgTextsDY, setSvgTextsDY] = useState(["", "", "", "", "", "", "", "","", "", "", "", "", "", "", ""]);
 	const [targetMins, setTargetMins] = useState(["", "", "", "", "", "", "", "","", "", "", "", "", "", "", ""]);
 	const [targetMaxs, setTargetMaxs] = useState(["", "", "", "", "", "", "", "","", "", "", "", "", "", "", ""]);
+	const [manualInputSum, setManualInputSum] = useState(100.00);
+	const [manualInputSumColor, setManualInputSumColor] = useState(({color: "inherit"}))
+	const [manualWeightsBtnTitle, setManualWeightsBtnTitle] = useState("set the weights manually");
+	const [discardBtnVis, setDiscardBtnVis] = useState(({display: "none"}));
+	const [manualInputModalVis, setManualInputModalVis] = useState(({display: "none", width: "197px"}));
 	const [svgTextTransform, setSvgTextTransform] = useState([{fontWeight: 100}, {fontWeight: 100}, {fontWeight: 100}, {fontWeight: 100}, {fontWeight: 100}, {fontWeight: 100}, {fontWeight: 100}, {fontWeight: 100}, {fontWeight: 100}, {fontWeight: 100},{fontWeight: 100}, {fontWeight: 100}, {fontWeight: 100}, {fontWeight: 100}, {fontWeight: 100},{fontWeight:100}]);	
 	const svgTexts = [useRef(), useRef(), useRef(), useRef() , useRef(),useRef(),useRef(),useRef(),useRef(),useRef(),useRef(),useRef(),useRef(),useRef(),useRef(),useRef()];
-	
+	const tableRows = [useRef(), useRef(), useRef(), useRef() , useRef(),useRef(),useRef(),useRef(),useRef(),useRef(),useRef(),useRef(),useRef(),useRef(),useRef(),useRef()];
+	const [tableRowHeights, setTableRowHeights] = useState([{height: "auto"}, {height: "auto"}, {height: "auto"}, {height: "auto"}, {height: "auto"}, {height: "auto"}, {height: "auto"}, {height: "auto"},{height: "auto"}, {height: "auto"}, {height: "auto"}, {height: "auto"}, {height: "auto"}, {height: "auto"}, {height: "auto"}, {height: "auto"}]);
+	const weightingsTableHead = useRef(null);
+	const [manualWeightInputValues, setManualWeightInputValues] = useState([( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount),( 100 / categoryCount)])
 
 	const targetChangeHandler = (event, index) => {
 		let newTargets = categoryTargets;
@@ -406,6 +396,91 @@ function DynamicVisualScoringCalculator(props) {
 		}
 	}
 
+	const manualWeightsBtnHandler = (event) =>{
+		if( manualInputModalVis.display === "none"){
+			setManualInputModalVis(({
+				display:"flex",
+				width: (weightingsTableHead.current.getBoundingClientRect().width +6).toString() + "px",
+				top: (weightingsTableHead.current.getBoundingClientRect().height  + 16).toString() +"px"
+			}));
+			setDiscardBtnVis(({display: "flex"}));
+			setManualWeightsBtnTitle("save");
+		}
+		else{
+			setManualInputModalVis(({
+				display:"none",
+				width: (weightingsTableHead.current.getBoundingClientRect().width +6).toString() +"px",
+				top: (weightingsTableHead.current.getBoundingClientRect().height  + 16).toString() + "px"
+			}));
+			setDiscardBtnVis(({display: "none"}));
+			setManualWeightsBtnTitle("set the weights manually");
+			console.log(manualWeightInputValues.slice(0,categoryCount));
+			let sum = 0;
+			manualWeightInputValues.slice(0,categoryCount).forEach((element)=>{
+				sum += element;
+			})
+			if(sum !== 100 || sum !== 100.00){
+				window.alert("\nCould not verify changes.\nAll weights added together must be 100!");
+                throw new Error("\nCould not verify changes.\nAll weights added together must be 100!");
+			}
+		
+			setCategoryWeights(manualWeightInputValues.slice(0,categoryCount));
+			setLastChange(categoryWeights);
+			update();
+		}
+
+		let newTableRowHeights = [];
+		for(let index = 0; index < categoryCount ; index++){
+			newTableRowHeights[index] = {height:  (tableRows[index].current.getBoundingClientRect().height).toString() + "px"}
+		}
+		setTableRowHeights(newTableRowHeights);
+
+		
+
+	}
+
+	const discardManualWeights = (event)=>{
+		setManualInputModalVis(({display:"none"}));
+		setDiscardBtnVis(({display: "none"}));
+		setManualWeightsBtnTitle("set the weights manually");
+	}
+
+	function SetManualWeightsInnerHTML(props){
+		if(manualInputModalVis.display === "none"){
+			return (<svg height="26" viewBox="0 0 26 26" width="26" xmlns="http://www.w3.org/2000/svg"> <g fill="none" fillRule="evenodd" stroke="#999999" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2"><path d="M12.285 3.619c.434 0 .863.032 1.28.094l.629 1.906a6.784 6.784 0 0 1 1.56.664l1.808-.872a8.683 8.683 0 0 1 1.69 1.719l-.904 1.791a6.79 6.79 0 0 1 .636 1.572l1.895.66a8.748 8.748 0 0 1-.021 2.412l-1.906.629a6.893 6.893 0 0 1-.664 1.56l.872 1.808a8.718 8.718 0 0 1-1.719 1.69l-1.791-.904a6.818 6.818 0 0 1-1.572.636l-.66 1.895a8.748 8.748 0 0 1-2.412-.021l-.629-1.906a6.893 6.893 0 0 1-1.56-.664l-1.808.872a8.718 8.718 0 0 1-1.69-1.719l.904-1.791a6.89 6.89 0 0 1-.636-1.572l-1.895-.661a8.748 8.748 0 0 1 .021-2.41l1.906-.629a6.784 6.784 0 0 1 .664-1.56L5.411 7.01A8.718 8.718 0 0 1 7.13 5.32l1.791.904a6.818 6.818 0 0 1 1.572-.636l.661-1.895a8.741 8.741 0 0 1 1.131-.074z"/><path d="M16 12.285A3.715 3.715 0 0 1 12.285 16a3.715 3.715 0 0 1-3.713-3.715 3.715 3.715 0 0 1 7.428 0z"/></g></svg>);
+		}
+		else{
+			return(<svg height="26" viewBox="0 0 26 26" width="26" xmlns="http://www.w3.org/2000/svg"><path d="m5.619 12.81 3.714 3.714 9.939-9.905" fill="none" stroke="#61E786" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2"/></svg>);
+		}
+	}
+
+	const manualWeightInputChangeHandler = (event,index) => {
+		let newManualWeightInputs = manualWeightInputValues;
+		newManualWeightInputs.splice(index,1,parseFloat(event.target.value));
+		setManualWeightInputValues(newManualWeightInputs);
+		setLastChange(event.target.value);
+
+		let sum = 0;
+		for(let i= 0; i< categoryCount; i++){
+			sum  += manualWeightInputValues[i]; 
+		}
+		if (sum === 100 || sum === 100.00){
+			setManualInputSumColor(({color: "#61E786"}));
+		}
+		else{
+			setManualInputSumColor(({color: "#ff1d15"}));
+		}
+		setManualInputSum(sum);
+
+
+	
+	}
+
+	const update = useEffect(()=>{
+		calcTotalScore();
+		setOffset();
+	},[categoryWeights])
+
 	useEffect(()=>{
 		let newTargetMins = [];
 		let newTargetMaxs = [];
@@ -428,25 +503,41 @@ function DynamicVisualScoringCalculator(props) {
 								<th>Value</th>
 								<th>Target Value</th>
 								<th>Bias</th>
-								<th>
+								<th ref={weightingsTableHead}>
 									<span className='dvsc_table_head_weighting'>
-										Weighting
-										<button className='set_weights_btn' title='set the weights manually'>
-											<svg height='26' viewBox='0 0 26 26' width='26' xmlns='http://www.w3.org/2000/svg'>
-												<g fill='none' fillRule='evenodd' stroke='#999999' strokeLinecap='round' strokeLinejoin='round' strokeWidth='1.2'>
-													<path d='M12.285 3.619c.434 0 .863.032 1.28.094l.629 1.906a6.784 6.784 0 0 1 1.56.664l1.808-.872a8.683 8.683 0 0 1 1.69 1.719l-.904 1.791a6.79 6.79 0 0 1 .636 1.572l1.895.66a8.748 8.748 0 0 1-.021 2.412l-1.906.629a6.893 6.893 0 0 1-.664 1.56l.872 1.808a8.718 8.718 0 0 1-1.719 1.69l-1.791-.904a6.818 6.818 0 0 1-1.572.636l-.66 1.895a8.748 8.748 0 0 1-2.412-.021l-.629-1.906a6.893 6.893 0 0 1-1.56-.664l-1.808.872a8.718 8.718 0 0 1-1.69-1.719l.904-1.791a6.89 6.89 0 0 1-.636-1.572l-1.895-.661a8.748 8.748 0 0 1 .021-2.41l1.906-.629a6.784 6.784 0 0 1 .664-1.56L5.411 7.01A8.718 8.718 0 0 1 7.13 5.32l1.791.904a6.818 6.818 0 0 1 1.572-.636l.661-1.895a8.741 8.741 0 0 1 1.131-.074z' />
-													<path d='M16 12.285A3.715 3.715 0 0 1 12.285 16a3.715 3.715 0 0 1-3.713-3.715 3.715 3.715 0 0 1 7.428 0z' />
-												</g>
+										<button className="discard_btn" title="discard changes" style={discardBtnVis} onClick={(event)=>{discardManualWeights(event)}}>
+											<svg height="26" viewBox="0 0 26 26" width="26" xmlns="http://www.w3.org/2000/svg">
+												<path d="M22.429 12.524a9.905 9.905 0 0 1-9.905 9.905 9.905 9.905 0 0 1-9.905-9.905 9.905 9.905 0 0 1 19.81 0zM8.81 8.81l7.429 7.429m0-7.429L8.81 16.239" fill="none" stroke="#ff1d15" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
 											</svg>
 										</button>
+										Weighting
+										<button className='set_weights_btn' title={manualWeightsBtnTitle} onClick={(event)=>{manualWeightsBtnHandler(event)}}>
+											<SetManualWeightsInnerHTML />
+										</button>
 									</span>
+									<div className="manual_input_modal" style={manualInputModalVis}>
+											{categoryNumbers.map((number,index)=>(
+												<input 
+													key={`manual_${index}`}
+													className="manual_weight_input" 
+													type="number"
+													min="0.01"
+													max={(100 - (0.01 * (categoryCount - 1))).toString()}
+													step="0.01"
+													value={manualWeightInputValues[index].toString()}
+													style={tableRowHeights[index]}
+													onChange={(event) => {manualWeightInputChangeHandler(event,index)}}
+													/>
+											))}
+											<span className="manual_input_sum" style={manualInputSumColor}>{manualInputSum.toFixed(2)}</span>
+									</div>
 								</th>
 								<th>Score</th>
 							</tr>
 						</thead>
 						<tbody>
 							{categoryNames.map((name, index) => (
-								<tr key={index}>
+								<tr key={index} ref={tableRows[index]}>
 									<th>{name}</th>
 									<td>
 										<output className='dvsc_data_input_display'>{categoryValues[index]}</output>

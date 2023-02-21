@@ -117,7 +117,15 @@ export function getScoreDefault(value,bias,target,direction,grain){
    //https://www.desmos.com/calculator/hbmma6qt6s
 }
 
+const calcScores = {
+	getScoreLinear: getScoreLinear(),
+	getScoreQuadratic: getScoreQuadratic(),
+	getScoreCubic: getScoreCubic(),
+	getScoreDefault: getScoreDefault(),
+}
 
+
+export default calcScores;
 
 
 // TODO: Add more rating methods
