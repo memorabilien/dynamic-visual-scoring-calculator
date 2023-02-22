@@ -163,3 +163,15 @@ figure > img{
         border-radius: 16px;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
+
+.calculator{
+        background: white; color: black ;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; padding: 64px; border-radius: 16px;
+}
+
+summary{
+        text-align: center;
+        padding-bottom: 16px;
+}
+details{
+        margin-bottom: 64px;
+}

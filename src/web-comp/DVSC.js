@@ -347,10 +347,10 @@ class ScoringCalc extends HTMLElement {
 	#matrixCalculations(inputMatrix, inputVector) {
 		let output;
 		/*
-          Made with matrix.js from Raghavendra Ravikumar
-          MIT License copyright (c) 2016 Raghavendra Ravikumar
-          https://github.com/RaghavCodeHub/matrix/blob/master/LICENSE-MIT
-        */
+			Made with matrix.js from Raghavendra Ravikumar
+			MIT License copyright (c) 2016 Raghavendra Ravikumar
+			https://github.com/RaghavCodeHub/matrix/blob/master/LICENSE-MIT
+		*/
 		function rational(t, n) {
 			return (
 				(n = n || 1),
@@ -359,7 +359,6 @@ class ScoringCalc extends HTMLElement {
 			);
 		}
 		function multiply(t, n, e) {
-
 			let r = Math.sign(n) * Math.sign(t.num),
 				i = Math.sign(e) * Math.sign(t.den);
 			return (
@@ -373,40 +372,20 @@ class ScoringCalc extends HTMLElement {
 				rational(r, i)
 			);
 		}
-		function merge(t) {
-
-
-			return { top: (n) => top(t, n), bottom: (n) => bottom(t, n), left: (n) => left(t, n), right: (n) => right(t, n) };
-		}
 		function matrix(t) {
-
-
 			if (!Array.isArray(t)) throw new Error("Input should be of type array");
 			return Object.assign(function () {
 				let n = 1 === arguments.length ? [arguments[0]] : Array.apply(null, arguments);
-				return read(t, n);
+				if(0 === n.length ){
+					return t;
+				}
 			}, _mat(t));
 		}
 		function _mat(t) {
-
-
 			return {
 				size: () => size(t),
-				add: (n) => operate(t, n, addition),
-				sub: (n) => operate(t, n, subtraction),
-				mul: (n) => operate(t, n, multiplication),
-				div: (n) => operate(t, n, division),
 				prod: (n) => prod(t, n),
-				trans: () => trans(t),
-				set: function () {
-					let n = 1 === arguments.length ? [arguments[0]] : Array.apply(null, arguments);
-					return { to: (e) => replace(t, e, n) };
-				},
-				det: () => determinant(t),
 				inv: () => invert(t),
-				merge: merge(t),
-				map: (n) => map(t, n),
-				equals: (n) => equals(t, n),
 			};
 		}
 		function size(t) {
@@ -414,12 +393,7 @@ class ScoringCalc extends HTMLElement {
 			for (; Array.isArray(t); ) n.push(t.length), (t = t[0]);
 			return n;
 		}
-		function read(t, n) {
-			return 0 === n.length ? t : extract(t, n);
-		}
 		function prod(t, n) {
-
-			
 			let e = t,
 				r = n(),
 				i = size(e),
@@ -428,15 +402,11 @@ class ScoringCalc extends HTMLElement {
 			if (i[1] === a[0])
 				for (let t = 0; t < i[0]; t++) {
 					l[t] = [];
-					for (let n = 0; n < a[1]; n++) for (let a = 0; a < i[1]; a++) void 0 === l[t][n] && (l[t][n] = 0), (l[t][n] += multiplication(e[t][a], r[a][n]));
+					for (let n = 0; n < a[1]; n++) for (let a = 0; a < i[1]; a++) void 0 === l[t][n] && (l[t][n] = 0), (l[t][n] += (e[t][a]* r[a][n]));
 				}
 			return l;
 		}
-		function multiplication(t, n) {
-			return t * n;
-		}
 		function invert(t) {
-
 			let n = rationalize(t),
 				e = size(t),
 				r = rationalize(identity(e[0])),
@@ -469,7 +439,6 @@ class ScoringCalc extends HTMLElement {
 			return derationalize(r);
 		}
 		function rationalize(t) {
-
 			let n = [];
 			return (
 				t.forEach((t, e) => {
@@ -479,8 +448,6 @@ class ScoringCalc extends HTMLElement {
 			);
 		}
 		function derationalize(t) {
-
-
 			let n = [];
 			return (
 				t.forEach((t, e) => {
@@ -490,8 +457,6 @@ class ScoringCalc extends HTMLElement {
 			);
 		}
 		function generate(t, n) {
-
-
 			let e = 2;
 			for (; e > 0; ) {
 				for (var r = [], i = 0; i < t; i++) Array.isArray(n) ? r.push(Object.assign([], n)) : r.push(n);
@@ -500,7 +465,6 @@ class ScoringCalc extends HTMLElement {
 			return n;
 		}
 		function identity(t) {
-
 			let n = generate(t, 0);
 			return (
 				n.forEach((t, n) => {
@@ -509,6 +473,7 @@ class ScoringCalc extends HTMLElement {
 				n
 			);
 		}
+
 		let A = matrix(inputMatrix);
 		let b = matrix(inputVector);
 		let MatrixInverse = A.inv();
