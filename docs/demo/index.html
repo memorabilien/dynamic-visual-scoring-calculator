@@ -2,31 +2,47 @@
 <html lang="en">
 
 <head>
-
+    <script src="../../src/web-comp/DVSC.js" defer type="text/javascript"></script>
+    <script src="../../src/vanilla/script.js" defer type="module"></script>
+    <link href="../../src/vanilla/style.css" type="text/css" rel="stylesheet">
+    <link href="./demo.css" type="text/css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"
+    integrity="sha512-8Q6Y9XnTbOE+JNvjBQwJ2H8S+UV4uA6hiRykhdtIyDYZ2TprdNmWOUaKdGzOhyr4dCyk287OejbPvwl7lrfqrQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"
+        integrity="sha512-MOCpqoRoisCTwJ8vQQiciZv0qcpROCidek3GTFS6KTk2+y7munJIlKCVkFCYY+p3ErYFXCjmFjnfTTRSC1OHWQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.21.1/babel.min.js"
+        integrity="sha512-z0rp+2sMVuQ6y3OEU9pb4eVTdf4bZ8LXrEx58aUZn3BBkVxJmeTGqBbSwrnNqbHDMdxrgW9b2PPGerobCB3dWQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="../../src/react/style.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
     <a href="https://github.com/memorabilien/dynamic-visual-scoring-calculator">
         <h1>Dynamic Visual Scoring Calculator</h1>
     </a>
-    <section>
-        <div class="dvsc_showcase">
+    <p class="description">
+        A dynamically adjustable scoring calculator with a <abbr title="Lighthouse is a tool to indicate the performance of a Website">lighthouse</abbr> style data visualization.
+        Get a score between 0 to 100 from data, with dynamically adjustable target value, a from -5 to +5 adjustable bias , and a self adjusting weighting system.
+        Optionally the weights can be entered manually to the wished percentages, by clicking on the gear icon in the weighting column.
+        This Scoring Calculator basically scores a point in time, of which static data points are available, with the option for the front end user to adjust the scoring based on preference and current situation.
+        Further more every category can be assigned a different scoring method, which allows for even grater accuracy.<br>
+        The flexibility carries on even when integrating this scoring calculator on the front end with support for all major JavaScript frameworks plus <abbr title="Another way of saying basic, regular, unflavored Javascript">Vanilla Javascript</abbr>
+        Including a universal <abbr title="Web Components is a suite of different technologies allowing you to create reusable custom elements — with their functionality encapsulated away from the rest of your code — and utilize them in your web apps.">Web Components</abbr> Version.
+        The Modules written  for <abbr title="Web Components is a suite of different technologies allowing you to create reusable custom elements — with their functionality encapsulated away from the rest of your code — and utilize them in your web apps.">Web Components</abbr>,
+        <abbr title="React (also known as React.js or ReactJS) is a free and open-source front-end JavaScript library for building user interfaces based on components.">React</abbr>, 
+        <abbr title="Vue.js is an open-source model–view–viewmodel front end JavaScript framework for building user interfaces and single-page applications.">Vue</abbr> or
+        <abbr title="Angular (also referred to as 'Angular 2+') is a TypeScript-based, free and open-source web application framework led by the Angular Team at Google and by a community of individuals and corporations.">Angular</abbr>
+        may behave different in some cases. But overall the Framework of choice makes no difference, they have all the same end result...
+    </p>
+    <section name="demos">
+        <div name="vanilla" class="dvsc_showcase">
             <h2>Demo 1 - Vanilla JavaScript</h2>
             <p class="description">
-                This Demo has the minimum amount of CSS and is written in 100% vanilla JavaScript. The Modules written
-                for <abbr
-                    title="Web Components is a suite of different technologies allowing you to create reusable custom elements — with their functionality encapsulated away from the rest of your code — and utilize them in your web apps.">Web
-                    Components</abbr>, <abbr
-                    title="Vue.js is an open-source model–view–viewmodel front end JavaScript framework for building user interfaces and single-page applications.">Vue</abbr>,
-                <abbr
-                    title="React (also known as React.js or ReactJS) is a free and open-source front-end JavaScript library for building user interfaces based on components.">React</abbr>
-                or <abbr
-                    title="Angular (also referred to as 'Angular 2+') is a TypeScript-based, free and open-source web application framework led by the Angular Team at Google and by a community of individuals and corporations.">Angular</abbr>
-                may behave different in some cases. But overall the Framework of choice makes no difference, they have
-                all the same end result...
+                This Demo has the minimum amount of CSS and is written in 100% vanilla JavaScript. <br>
             </p>
-            <div style="background: white; color: black ;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; padding: 64px; border-radius: 16px;"
-                class="dynamic_visual_scoring_calculator" id="no1">
+            <div  class="dynamic_visual_scoring_calculator calculator" id="no1">
                 <div class="dvsc_settings">
                     <table>
                         <thead>
@@ -35,7 +51,8 @@
                             <th>Target Value</th>
                             <th>Bias</th>
                             <th>
-                                <span class="dvsc_table_head_weighting">Weighting
+                                <span class="dvsc_table_head_weighting">
+                                    Weighting
                                     <button class="set_weights_btn" title="set the weights manually">
                                         <svg height="26" viewBox="0 0 26 26" width="26"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -67,32 +84,35 @@
                         </g>
                     </svg>
                 </div>
-            </div>
-            <p>This is the config for this example</p>
-            <div class="config">
-                <code class="code_box">
-                    <span class="js_var">let</span> data = [<span class="js_number">20</span>, <span class="js_number">23</span>, <span class="js_number">80</span>, <span class="js_number">2</span>];<br>
-                    <span class="js_var">let</span>
-                    config = {<br>
-                        &emsp;&emsp;categoryCount: <span class="js_number">4</span>, <wbr><span class="js_comment">// number of category</span><br>
-                        &emsp;&emsp;categoryNames: [<span class="js_string">&quot;Time&quot;</span>, <span class="js_string">&quot;Cost&quot;</span>, <span class="js_string">&quot;Efficiency&quot;</span>, <span class="js_string">&quot;Personell&quot;</span>], <wbr><span class="js_comment">//category title to display</span><br>
-                        &emsp;&emsp;categoryUnits: [<span class="js_string">&quot;s&quot;</span>, <span class="js_string">&quot;€&quot;</span>, <span class="js_string">&quot;%&quot;</span>, <span class="js_string">&quot;P&quot;</span>], <wbr><span class="js_comment">// category unit to display</span><br>
-                        &emsp;&emsp;categoryTargets: [<span class="js_number">10</span>, <span class="js_number">20</span>, <span class="js_number">100</span>, <span class="js_number">0</span>], <wbr><span class="js_comment">// target value to which a data Point in the data set should converge</span><br>
-                        &emsp;&emsp;categorySteps: [<span class="js_number">1</span>, <span class="js_number">0.01</span>, <span class="js_number">0.01</span>, <span class="js_number">1</span>], <wbr><span class="js_comment">//how big on step on the slider should be</span><br>
-                        &emsp;&emsp;categoryDirections: [<span class="js_number">1</span>, <span class="js_number">1</span>, <span class="js_number">-1</span>, <span class="js_number">1</span>], <wbr><span class="js_comment">// 1: data point &gt; target value; -1: data point &lt; target value </span><br>
-                        &emsp;&emsp;categoryGrains: [<span class="js_number">1</span>, <span class="js_number">1</span>, <span class="js_number">1</span>, <span class="js_number">1</span>], <wbr><span class="js_comment">//(g > 0) && (if categoryValue == targetValue + categoryGrain  => categoryScore = 500</span><br>
-                        &emsp;&emsp;categoryEvaluations: [<span class="js_string">&quot;linear&quot;</span>, <span class="js_string">&quot;linear&quot;</span>, <span class="js_string">&quot;linear&quot;</span>, <span class="js_string">&quot;linear&quot;</span>], <wbr><span class="js_comment">// how should the score of a category be calculated</span><br>
-                        &emsp;&emsp;categoryWeightPresets: [<span class="js_number">25</span>, <span class="js_number">25</span>, <span class="js_number">25</span>, <span class="js_number">25</span>], <wbr><span class="js_comment">// presets</span><br>
-                        &emsp;&emsp;categoryColors: [<span class="js_string">&quot;#ff0000&quot;</span>, <span class="js_string">&quot;#ff7b00&quot;</span>, <span class="js_string">&quot;#ffbb00&quot;</span>, <span class="js_string">&quot;#00dfba&quot;</span>, <span class="js_string">&quot;#127efa&quot;</span>, <span class="js_string">&quot;#8921ff&quot;</span>, <span class="js_string">&quot;#d500e9&quot;</span>], <wbr><span class="js_comment">// define the circle colors</span><br>};
-                </code>
-            </div>
+            </div>     
+            <details>
+                <summary> Show the configuration for this example</summary>
+                <div class="config">
+                    <code class="code_box">
+                        <span class="js_var">let</span> data = [<span class="js_number">20</span>, <span class="js_number">23</span>, <span class="js_number">80</span>, <span class="js_number">2</span>];<br>
+                        <span class="js_var">let</span>
+                        config = {<br>
+                            &emsp;&emsp;categoryCount: <span class="js_number">4</span>, <wbr><span class="js_comment">// number of category</span><br>
+                            &emsp;&emsp;categoryNames: [<span class="js_string">&quot;Time&quot;</span>, <span class="js_string">&quot;Cost&quot;</span>, <span class="js_string">&quot;Efficiency&quot;</span>, <span class="js_string">&quot;Personell&quot;</span>], <wbr><span class="js_comment">//category title to display</span><br>
+                            &emsp;&emsp;categoryUnits: [<span class="js_string">&quot;s&quot;</span>, <span class="js_string">&quot;€&quot;</span>, <span class="js_string">&quot;%&quot;</span>, <span class="js_string">&quot;P&quot;</span>], <wbr><span class="js_comment">// category unit to display</span><br>
+                            &emsp;&emsp;categoryTargets: [<span class="js_number">10</span>, <span class="js_number">20</span>, <span class="js_number">100</span>, <span class="js_number">0</span>], <wbr><span class="js_comment">// target value to which a data Point in the data set should converge</span><br>
+                            &emsp;&emsp;categorySteps: [<span class="js_number">1</span>, <span class="js_number">0.01</span>, <span class="js_number">0.01</span>, <span class="js_number">1</span>], <wbr><span class="js_comment">//how big on step on the slider should be</span><br>
+                            &emsp;&emsp;categoryDirections: [<span class="js_number">1</span>, <span class="js_number">1</span>, <span class="js_number">-1</span>, <span class="js_number">1</span>], <wbr><span class="js_comment">// 1: data point &gt; target value; -1: data point &lt; target value </span><br>
+                            &emsp;&emsp;categoryGrains: [<span class="js_number">1</span>, <span class="js_number">1</span>, <span class="js_number">1</span>, <span class="js_number">1</span>], <wbr><span class="js_comment">//(g > 0) && (if categoryValue == targetValue + categoryGrain  => categoryScore = 500</span><br>
+                            &emsp;&emsp;categoryEvaluations: [<span class="js_string">&quot;linear&quot;</span>, <span class="js_string">&quot;linear&quot;</span>, <span class="js_string">&quot;linear&quot;</span>, <span class="js_string">&quot;linear&quot;</span>], <wbr><span class="js_comment">// how should the score of a category be calculated</span><br>
+                            &emsp;&emsp;categoryWeightPresets: [<span class="js_number">25</span>, <span class="js_number">25</span>, <span class="js_number">25</span>, <span class="js_number">25</span>], <wbr><span class="js_comment">// presets</span><br>
+                            &emsp;&emsp;categoryColors: [<span class="js_string">&quot;#ff0000&quot;</span>, <span class="js_string">&quot;#ff7b00&quot;</span>, <span class="js_string">&quot;#ffbb00&quot;</span>, <span class="js_string">&quot;#00dfba&quot;</span>, <span class="js_string">&quot;#127efa&quot;</span>, <span class="js_string">&quot;#8921ff&quot;</span>, <span class="js_string">&quot;#d500e9&quot;</span>], <wbr><span class="js_comment">// define the circle colors</span><br>};
+                    </code>
+                </div>
+            </details>
+        </div >
+        <div name="web-component" class="dvsc_showcase">
             <h2>Demo 2 - Web Component (Vanilla JavaScript)</h2>
             <p class="description">In this example some imaginary Monitor is being scored. Using The Web Components
                 Method
                 is the easiest way to get this Scoring Calculator onto a Website</p>
-            <script src="../../src/web-comp/DVSC.js" defer type="text/javascript"></script>
             <scoring-calc
-                style="background: white; color: black ;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; padding: 64px; border-radius: 16px;">
+                class="calculator">
                 <scoring-calc-category number="0" rowName="Resolution" unit="px" value="1080" target="1440" step="1"
                     direction="-1" evaluation="default" bias="0" weight="39.72519332681899" score="500" color="#FF1D15"
                     grain="400"></scoring-calc-category>
@@ -109,297 +129,293 @@
                     direction="1" evaluation="linear" bias="-2" weight="20.153155418892357" score="500" color="#34F6F2"
                     grain="20"></scoring-calc-category>
             </scoring-calc>
-            <p>For using web components all that needs to be done is shown in the next example. The configuration is
-                directly passed on via the HTML properties</p>
-            <code class="code_box">
-                <span class="xml_syntax">&lt;<span class="html_tag">script </span><span class="property">src</span>=<span class="property_value">&quot;DVSC.js&quot; </span><span class="property">defer</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">script</span>&gt;</span><br>
-                    <span class="xml_syntax">&lt;<span class="html_tag">scoring-calc</span>&gt;</span><br>
-                    &emsp;&emsp;<span style="text-indent: 50px;" class="xml_syntax">&lt;<span class="html_tag">scoring-calc-category</span>
-                        <span class="property">number</span>=<span class="property_value">&quot;0&quot;</span>
-                        <span class="property">rowName</span>=<span class="property_value">&quot;Resolution&quot;</span>
-                        <span class="property">unit</span>=<span class="property_value">&quot;px&quot;</span> <wbr>
-                        <span class="property">value</span>=<span class="property_value">&quot;1080&quot;</span> 
-                        <span class="property">target</span>=<span class="property_value">&quot;1440&quot;</span> 
-                        <span class="property">step</span>=<span class="property_value">&quot;1&quot;</span> 
-                        <span class="property">direction</span>=<span class="property_value">&quot;-1&quot;</span><br>
-                        &emsp;&emsp;&emsp;&emsp;<span class="property">evaluation</span>=<span class="property_value">&quot;linear&quot;</span> 
-                        <span class="property">bias</span>=<span class="property_value">&quot;2&quot;</span> 
-                        <span class="property">weight</span>=<span class="property_value">&quot;39.72519332681899&quot;</span> 
-                        <span class="property">score</span>=<span class="property_value">&quot;500&quot;</span> 
-                        <span class="property">color</span>=<span class="property_value">&quot;#FF1D15&quot;</span> 
-                        <span class="property">grain</span>=<span class="property_value">&quot;100&quot;</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">scoring-calc-category</span>&gt;</span><br>
-                    &emsp;&emsp;<span class="xml_syntax">&lt;<span class="html_tag">scoring-calc-category</span> 
-                        <span class="property">number</span>=<span class="property_value">&quot;1&quot;</span> 
-                        <span class="property">rowName</span>=<span class="property_value">&quot;Size&quot;</span> 
-                        <span class="property">unit</span>=<span class="property_value">&quot;in&quot;</span> <wbr>
-                        <span class="property">value</span>=<span class="property_value">&quot;24&quot;</span> 
-                        <span class="property">target</span>=<span class="property_value">&quot;27&quot;</span> 
-                        <span class="property">step</span>=<span class="property_value">&quot;0.5&quot;</span> 
-                        <span class="property">direction</span>=<span class="property_value">&quot;-1&quot;</span><br>
-                        &emsp;&emsp;&emsp;&emsp;<span class="property">evaluation</span>=<span class="property_value">&quot;linear&quot;</span> 
-                        <span class="property">bias</span>=<span class="property_value">&quot;-1&quot;</span> 
-                        <span class="property">weight</span>=<span class="property_value">&quot;16.693640030592356&quot;</span> 
-                        <span class="property">score</span>=<span class="property_value">&quot;500&quot;</span> 
-                        <span class="property">color</span>=<span class="property_value">&quot;#0075FF&quot;</span> 
-                        <span class="property">grain</span>=<span class="property_value">&quot;1&quot;</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">scoring-calc-category</span>&gt;</span><br>
-                    &emsp;&emsp;<span class="xml_syntax">&lt;<span class="html_tag">scoring-calc-category</span> 
-                        <span class="property">number</span>=<span class="property_value">&quot;2&quot;</span> 
-                        <span class="property">rowName</span>=<span class="property_value">&quot;Refresh Rate&quot;</span> 
-                        <span class="property">unit</span>=<span class="property_value">&quot;Hz&quot;</span> <wbr>
-                        <span class="property">value</span>=<span class="property_value">&quot;75&quot;</span> 
-                        <span class="property">target</span>=<span class="property_value">&quot;90&quot;</span> 
-                        <span class="property">step</span>=<span class="property_value">&quot;1&quot;</span> 
-                        <span class="property">direction</span>=<span class="property_value">&quot;-1&quot;</span><br>
-                        &emsp;&emsp;&emsp;&emsp;<span class="property">evaluation</span>=<span class="property_value">&quot;quad&quot;</span> 
-                        <span class="property">bias</span>=<span class="property_value">&quot;1&quot;</span> 
-                        <span class="property">weight</span>=<span class="property_value">&quot;13.247233998615995&quot;</span> 
-                        <span class="property">score</span>=<span class="property_value">&quot;500&quot;</span> 
-                        <span class="property">color</span>=<span class="property_value">&quot;#61E786&quot;</span> 
-                        <span class="property">grain</span>=<span class="property_value">&quot;5&quot;</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">scoring-calc-category</span>&gt;</span><br>
-                    &emsp;&emsp;<span class="xml_syntax">&lt;<span class="html_tag">scoring-calc-category</span> 
-                        <span class="property">number</span>=<span class="property_value">&quot;3&quot;</span> 
-                        <span class="property">rowName</span>=<span class="property_value">&quot;Color Accuracy&quot;</span> 
-                        <span class="property">unit</span>=<span class="property_value">&quot;%&quot;</span> <wbr>
-                        <span class="property">value</span>=<span class="property_value">&quot;96&quot;</span> 
-                        <span class="property">target</span>=<span class="property_value">&quot;99&quot;</span> 
-                        <span class="property">step</span>=<span class="property_value">&quot;0.1&quot;</span> 
-                        <span class="property">direction</span>=<span class="property_value">&quot;-1&quot;</span><br> 
-                        &emsp;&emsp;&emsp;&emsp;<span class="property">evaluation</span>=<span class="property_value">&quot;linear&quot;</span> 
-                        <span class="property">bias</span>=<span class="property_value">&quot;0&quot;</span> 
-                        <span class="property">weight</span>=<span class="property_value">&quot;10.1807772250803&quot;</span> 
-                        <span class="property">score</span>=<span class="property_value">&quot;500&quot;</span> 
-                        <span class="property">color</span>=<span class="property_value">&quot;#FCC217&quot;</span> 
-                        <span class="property">grain</span>=<span class="property_value">&quot;1&quot;</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">scoring-calc-category</span>&gt;</span><br>
-                    &emsp;&emsp;<span class="xml_syntax">&lt;<span class="html_tag">scoring-calc-category</span> 
-                        <span class="property">number</span>=<span class="property_value">&quot;4&quot;</span> 
-                        <span class="property">rowName</span>=<span class="property_value">&quot;Cost&quot;</span> 
-                        <span class="property">unit</span>=<span class="property_value">&quot;$&quot;</span> <wbr>
-                        <span class="property">value</span>=<span class="property_value">&quot;105&quot;</span> 
-                        <span class="property">target</span>=<span class="property_value">&quot;90&quot;</span> 
-                        <span class="property">step</span>=<span class="property_value">&quot;0.01&quot;</span> 
-                        <span class="property">direction</span>=<span class="property_value">&quot;1&quot;</span> <br>
-                        &emsp;&emsp;&emsp;&emsp;<span class="property">evaluation</span>=<span class="property_value">&quot;cube&quot;</span> 
-                        <span class="property">bias</span>=<span class="property_value">&quot;-2&quot;</span> 
-                        <span class="property">weight</span>=<span class="property_value">&quot;20.153155418892357&quot;</span> 
-                        <span class="property">score</span>=<span class="property_value">&quot;500&quot;</span> 
-                        <span class="property">color</span>=<span class="property_value">&quot;#34F6F2&quot;</span> 
-                        <span class="property">grain</span>=<span class="property_value">&quot;20&quot;</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">scoring-calc-category</span>&gt;</span><br>
+            <p  class="description">For using web components all that needs to be done is shown in the next example. The configuration is
+            directly passed on via the HTML properties. Everything is being handled via attributes applied on the scoring-calc-category html element. Even
+            accessing any value via JavaScript is possible</p>
+            <details style="margin-bottom: 16px!important;">
+                <summary>Show configuration for this example</summary>
+                <code class="code_box">
+                    <span class="xml_syntax">&lt;<span class="html_tag">script </span><span class="property">src</span>=<span class="property_value">&quot;DVSC.js&quot; </span><span class="property">defer</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">script</span>&gt;</span><br>
+                        <span class="xml_syntax">&lt;<span class="html_tag">scoring-calc</span>&gt;</span><br>
+                        &emsp;&emsp;<span style="text-indent: 50px;" class="xml_syntax">&lt;<span class="html_tag">scoring-calc-category</span>
+                            <span class="property">number</span>=<span class="property_value">&quot;0&quot;</span>
+                            <span class="property">rowName</span>=<span class="property_value">&quot;Resolution&quot;</span>
+                            <span class="property">unit</span>=<span class="property_value">&quot;px&quot;</span> <wbr>
+                            <span class="property">value</span>=<span class="property_value">&quot;1080&quot;</span> 
+                            <span class="property">target</span>=<span class="property_value">&quot;1440&quot;</span> 
+                            <span class="property">step</span>=<span class="property_value">&quot;1&quot;</span> 
+                            <span class="property">direction</span>=<span class="property_value">&quot;-1&quot;</span><br>
+                            &emsp;&emsp;&emsp;&emsp;<span class="property">evaluation</span>=<span class="property_value">&quot;linear&quot;</span> 
+                            <span class="property">bias</span>=<span class="property_value">&quot;2&quot;</span> 
+                            <span class="property">weight</span>=<span class="property_value">&quot;39.72519332681899&quot;</span> 
+                            <span class="property">score</span>=<span class="property_value">&quot;500&quot;</span> 
+                            <span class="property">color</span>=<span class="property_value">&quot;#FF1D15&quot;</span> 
+                            <span class="property">grain</span>=<span class="property_value">&quot;100&quot;</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">scoring-calc-category</span>&gt;</span><br>
+                        &emsp;&emsp;<span class="xml_syntax">&lt;<span class="html_tag">scoring-calc-category</span> 
+                            <span class="property">number</span>=<span class="property_value">&quot;1&quot;</span> 
+                            <span class="property">rowName</span>=<span class="property_value">&quot;Size&quot;</span> 
+                            <span class="property">unit</span>=<span class="property_value">&quot;in&quot;</span> <wbr>
+                            <span class="property">value</span>=<span class="property_value">&quot;24&quot;</span> 
+                            <span class="property">target</span>=<span class="property_value">&quot;27&quot;</span> 
+                            <span class="property">step</span>=<span class="property_value">&quot;0.5&quot;</span> 
+                            <span class="property">direction</span>=<span class="property_value">&quot;-1&quot;</span><br>
+                            &emsp;&emsp;&emsp;&emsp;<span class="property">evaluation</span>=<span class="property_value">&quot;linear&quot;</span> 
+                            <span class="property">bias</span>=<span class="property_value">&quot;-1&quot;</span> 
+                            <span class="property">weight</span>=<span class="property_value">&quot;16.693640030592356&quot;</span> 
+                            <span class="property">score</span>=<span class="property_value">&quot;500&quot;</span> 
+                            <span class="property">color</span>=<span class="property_value">&quot;#0075FF&quot;</span> 
+                            <span class="property">grain</span>=<span class="property_value">&quot;1&quot;</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">scoring-calc-category</span>&gt;</span><br>
+                        &emsp;&emsp;<span class="xml_syntax">&lt;<span class="html_tag">scoring-calc-category</span> 
+                            <span class="property">number</span>=<span class="property_value">&quot;2&quot;</span> 
+                            <span class="property">rowName</span>=<span class="property_value">&quot;Refresh Rate&quot;</span> 
+                            <span class="property">unit</span>=<span class="property_value">&quot;Hz&quot;</span> <wbr>
+                            <span class="property">value</span>=<span class="property_value">&quot;75&quot;</span> 
+                            <span class="property">target</span>=<span class="property_value">&quot;90&quot;</span> 
+                            <span class="property">step</span>=<span class="property_value">&quot;1&quot;</span> 
+                            <span class="property">direction</span>=<span class="property_value">&quot;-1&quot;</span><br>
+                            &emsp;&emsp;&emsp;&emsp;<span class="property">evaluation</span>=<span class="property_value">&quot;quad&quot;</span> 
+                            <span class="property">bias</span>=<span class="property_value">&quot;1&quot;</span> 
+                            <span class="property">weight</span>=<span class="property_value">&quot;13.247233998615995&quot;</span> 
+                            <span class="property">score</span>=<span class="property_value">&quot;500&quot;</span> 
+                            <span class="property">color</span>=<span class="property_value">&quot;#61E786&quot;</span> 
+                            <span class="property">grain</span>=<span class="property_value">&quot;5&quot;</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">scoring-calc-category</span>&gt;</span><br>
+                        &emsp;&emsp;<span class="xml_syntax">&lt;<span class="html_tag">scoring-calc-category</span> 
+                            <span class="property">number</span>=<span class="property_value">&quot;3&quot;</span> 
+                            <span class="property">rowName</span>=<span class="property_value">&quot;Color Accuracy&quot;</span> 
+                            <span class="property">unit</span>=<span class="property_value">&quot;%&quot;</span> <wbr>
+                            <span class="property">value</span>=<span class="property_value">&quot;96&quot;</span> 
+                            <span class="property">target</span>=<span class="property_value">&quot;99&quot;</span> 
+                            <span class="property">step</span>=<span class="property_value">&quot;0.1&quot;</span> 
+                            <span class="property">direction</span>=<span class="property_value">&quot;-1&quot;</span><br> 
+                            &emsp;&emsp;&emsp;&emsp;<span class="property">evaluation</span>=<span class="property_value">&quot;linear&quot;</span> 
+                            <span class="property">bias</span>=<span class="property_value">&quot;0&quot;</span> 
+                            <span class="property">weight</span>=<span class="property_value">&quot;10.1807772250803&quot;</span> 
+                            <span class="property">score</span>=<span class="property_value">&quot;500&quot;</span> 
+                            <span class="property">color</span>=<span class="property_value">&quot;#FCC217&quot;</span> 
+                            <span class="property">grain</span>=<span class="property_value">&quot;1&quot;</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">scoring-calc-category</span>&gt;</span><br>
+                        &emsp;&emsp;<span class="xml_syntax">&lt;<span class="html_tag">scoring-calc-category</span> 
+                            <span class="property">number</span>=<span class="property_value">&quot;4&quot;</span> 
+                            <span class="property">rowName</span>=<span class="property_value">&quot;Cost&quot;</span> 
+                            <span class="property">unit</span>=<span class="property_value">&quot;$&quot;</span> <wbr>
+                            <span class="property">value</span>=<span class="property_value">&quot;105&quot;</span> 
+                            <span class="property">target</span>=<span class="property_value">&quot;90&quot;</span> 
+                            <span class="property">step</span>=<span class="property_value">&quot;0.01&quot;</span> 
+                            <span class="property">direction</span>=<span class="property_value">&quot;1&quot;</span> <br>
+                            &emsp;&emsp;&emsp;&emsp;<span class="property">evaluation</span>=<span class="property_value">&quot;cube&quot;</span> 
+                            <span class="property">bias</span>=<span class="property_value">&quot;-2&quot;</span> 
+                            <span class="property">weight</span>=<span class="property_value">&quot;20.153155418892357&quot;</span> 
+                            <span class="property">score</span>=<span class="property_value">&quot;500&quot;</span> 
+                            <span class="property">color</span>=<span class="property_value">&quot;#34F6F2&quot;</span> 
+                            <span class="property">grain</span>=<span class="property_value">&quot;20&quot;</span>&gt;</span><span class="xml_syntax">&lt;/<span class="html_tag">scoring-calc-category</span>&gt;</span><br>
 
-                <span class="xml_syntax">&lt;/<span class="html_tag">scoring-calc</span>&gt;</span>
-            </code>
+                    <span class="xml_syntax">&lt;/<span class="html_tag">scoring-calc</span>&gt;</span>
+                </code>
+            </details>
 
-            <p>everything is being handled via attributes applied on the scoring-calc-category html element. Even
-                accessing any value via JavaScript is possible</p>
-            <code class="code_box">
-                <span class="js_var">let</span> dvsc = <span class="hljs-variable language_">document</span>.<span class="js_function">querySelector</span>(<span class="js_string">&quot;scoring-calc&quot;</span>);
-            </code>
-            <table class="web_comp_access_table">
-                <thead>
-                    <tr>
-                        <th>Property</th>
-                        <th>Usage</th>
-                        <th>Example Output</th>
-                        <th>Definition</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryBiases</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryBiases</code></td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_number">0</span>, <span class="js_number">0</span>, <span
-                                    class="js_number">1</span>, <span class="js_number">0</span>, <span
-                                    class="js_number">-2</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an Array of the current bias slider input
-                            values</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryColors</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryColors</code></td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_string">'#FF1D15'</span>, <span class="js_string">'#0075FF'</span>, <span
-                                    class="js_string">'#61E786'</span>, <span class="js_string">'#FCC217'</span>, <span
-                                    class="js_string">'#34F6F2'</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an array filled with every
-                            scoring-calc-category color property</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryCount</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryCount</code></td>
-                        <td class="web_comp_access_table_output"><samp class="code_box"><span
-                                    class="js_number">5</span></samp></td>
-                        <td class="web_comp_access_table_definition">Returns an the total number of categories</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryDirections</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryDirections</code>
-                        </td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_number">-1</span>, <span class="js_number">-1</span>, <span
-                                    class="js_number">-1</span>, <span class="js_number">-1</span>, <span
-                                    class="js_number">1</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an array filled with all
-                            scoring-calc-category direction properties</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryEvaluations</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryEvaluations</code>
-                        </td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_string">'default'</span>, <span class="js_string">'linear'</span>, <span
-                                    class="js_string">'quadratic'</span>, <span class="js_string">'cube'</span>, <span
-                                    class="js_string">'ERF'</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an array filled with all
-                            scoring-calc-category evaluation properties</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryGrains</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryGrains</code></td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_number">400</span>,<span class="js_number">3</span>, <span
-                                    class="js_number">7.5</span>, <span class="js_number">1</span>, <span
-                                    class="js_number">20</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an array filled with all
-                            scoring-calc-category color properties</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryNames</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryNames</code></td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_string">'Resolution'</span>,<span class="js_string">'Size'</span>, <span
-                                    class="js_string">'Refresh Rate'</span>, <span class="js_string">'Color
-                                    Accuracy'</span>, <span class="js_string">'Cost'</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an array filled with all
-                            scoring-calc-category rowname properties</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryNumbers</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryNumbers</code>
-                        </td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_number">0</span>, <span class="js_number">1</span>, <span
-                                    class="js_number">2</span>, <span class="js_number">3</span>, <span
-                                    class="js_number">4</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an array filled with all
-                            scoring-calc-category number properties</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryScores</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryScores</code></td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_number">500</span>,<span class="js_number">949.99</span>, <span
-                                    class="js_number">315.5</span>, <span class="js_number">31.49</span>, <span
-                                    class="js_number">912.51</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an array filled with all
-                            scoring-calc-category score properties</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categorySteps</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categorySteps</code></td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_number">1</span>, <span class="js_number">3</span>, <span
-                                    class="js_number">5</span>, <span class="js_number">0.1</span>, <span
-                                    class="js_number">0.01</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an array filled with all
-                            scoring-calc-category step properties</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryTargets</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryTargets</code>
-                        </td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_number">1440</span>, <span class="js_number">27</span>, <span
-                                    class="js_number">90</span>, <span class="js_number">99</span>, <span
-                                    class="js_number">90</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an array filled with all current
-                            scoring-calc-category target properties</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryUnits</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryUnits</code></td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_string">'px'</span>, <span class="js_string">'in'</span>, <span
-                                    class="js_string">'Hz'</span>, <span class="js_string">'%'</span>, <span
-                                    class="js_string">'$'</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an array filled with all
-                            scoring-calc-category unit properties</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryValues</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryValues</code></td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_number">1080</span>, <span class="js_number">24</span>, <span
-                                    class="js_number">75</span>, <span class="js_number">96</span>, <span
-                                    class="js_number">105</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an array filled with all
-                            scoring-calc-category value properties</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">categoryWeights</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryWeights</code>
-                        </td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="js_number">39.725</span>, <span class="js_number">16.693</span>, <span
-                                    class="js_number">13.247</span>, <span class="js_number">10.180</span>, <span
-                                    class="js_number">20.153</span>]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns an array filled with all current
-                            scoring-calc-category weight properties</td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">elements</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.elements</code></td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">[<span
-                                    class="html_tag">scoring-calc-category</span>, <span
-                                    class="html_tag">scoring-calc-category</span>, ...]</samp></td>
-                        <td class="web_comp_access_table_definition">Returns a HTMLCollection of all children html
-                            elements of the parent scoring-calc html element
-                        <td>
-                    </tr>
-                    <tr>
-                        <td class="web_comp_access_table_prop">score</td>
-                        <td class="web_comp_access_table_example"><code class="code_box">dvsc.score</code></td>
-                        <td class="web_comp_access_table_output"><samp class="code_box"><span
-                                    class="js_number">58.61188808308917</span></samp></td>
-                        <td class="web_comp_access_table_definition">Returns the total current score</td>
-                    </tr>
-                </tbody>
-                <thead>
-                    <tr>
-                        <th>Method</th>
-                        <th>Usage</th>
-                        <th>Example Output</th>
-                        <th>Definition</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="web_comp_access_table_method">dump</td>
-                        <td class="web_comp_access_table_example"><code
-                                class="code_box">dvsc.<span class="js_function">dump()</span></code></td>
-                        <td class="web_comp_access_table_output"><samp class="code_box">{<span
-                                    class="html_tag">elements:</span>
-                                HTMLCollection(5), <span
-                                    class="html_tag">categoryCount:</span> <span
-                                    class="js_number">5</span>, <span
-                                    class="html_tag">categoryNumbers:</span>
-                                Array(5), …}</samp></td>
-                        <td class="web_comp_access_table_definition">Returns a Object with every property and its values
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <details> 
+                <summary>Show Documentation</summary>
+                <code class="code_box" style="margin: auto; width: fit-content">
+                    <span class="js_var">let</span> dvsc = <span class="hljs-variable language_">document</span>.<span class="js_function">querySelector</span>(<span class="js_string">&quot;scoring-calc&quot;</span>);
+                </code>
+                <table class="web_comp_access_table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Usage</th>
+                            <th>Example Output</th>
+                            <th>Definition</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryBiases</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryBiases</code></td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_number">0</span>, <span class="js_number">0</span>, <span
+                                        class="js_number">1</span>, <span class="js_number">0</span>, <span
+                                        class="js_number">-2</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an Array of the current bias slider input
+                                values</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryColors</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryColors</code></td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_string">'#FF1D15'</span>, <span class="js_string">'#0075FF'</span>, <span
+                                        class="js_string">'#61E786'</span>, <span class="js_string">'#FCC217'</span>, <span
+                                        class="js_string">'#34F6F2'</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an array filled with every
+                                scoring-calc-category color property</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryCount</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryCount</code></td>
+                            <td class="web_comp_access_table_output"><samp class="code_box"><span
+                                        class="js_number">5</span></samp></td>
+                            <td class="web_comp_access_table_definition">Returns an the total number of categories</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryDirections</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryDirections</code>
+                            </td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_number">-1</span>, <span class="js_number">-1</span>, <span
+                                        class="js_number">-1</span>, <span class="js_number">-1</span>, <span
+                                        class="js_number">1</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an array filled with all
+                                scoring-calc-category direction properties</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryEvaluations</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryEvaluations</code>
+                            </td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_string">'default'</span>, <span class="js_string">'linear'</span>, <span
+                                        class="js_string">'quadratic'</span>, <span class="js_string">'cube'</span>, <span
+                                        class="js_string">'ERF'</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an array filled with all
+                                scoring-calc-category evaluation properties</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryGrains</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryGrains</code></td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_number">400</span>,<span class="js_number">3</span>, <span
+                                        class="js_number">7.5</span>, <span class="js_number">1</span>, <span
+                                        class="js_number">20</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an array filled with all
+                                scoring-calc-category color properties</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryNames</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryNames</code></td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_string">'Resolution'</span>,<span class="js_string">'Size'</span>, <span
+                                        class="js_string">'Refresh Rate'</span>, <span class="js_string">'Color
+                                        Accuracy'</span>, <span class="js_string">'Cost'</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an array filled with all
+                                scoring-calc-category rowname properties</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryNumbers</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryNumbers</code>
+                            </td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_number">0</span>, <span class="js_number">1</span>, <span
+                                        class="js_number">2</span>, <span class="js_number">3</span>, <span
+                                        class="js_number">4</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an array filled with all
+                                scoring-calc-category number properties</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryScores</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryScores</code></td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_number">500</span>,<span class="js_number">949.99</span>, <span
+                                        class="js_number">315.5</span>, <span class="js_number">31.49</span>, <span
+                                        class="js_number">912.51</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an array filled with all
+                                scoring-calc-category score properties</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categorySteps</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categorySteps</code></td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_number">1</span>, <span class="js_number">3</span>, <span
+                                        class="js_number">5</span>, <span class="js_number">0.1</span>, <span
+                                        class="js_number">0.01</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an array filled with all
+                                scoring-calc-category step properties</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryTargets</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryTargets</code>
+                            </td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_number">1440</span>, <span class="js_number">27</span>, <span
+                                        class="js_number">90</span>, <span class="js_number">99</span>, <span
+                                        class="js_number">90</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an array filled with all current
+                                scoring-calc-category target properties</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryUnits</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryUnits</code></td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_string">'px'</span>, <span class="js_string">'in'</span>, <span
+                                        class="js_string">'Hz'</span>, <span class="js_string">'%'</span>, <span
+                                        class="js_string">'$'</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an array filled with all
+                                scoring-calc-category unit properties</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryValues</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryValues</code></td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_number">1080</span>, <span class="js_number">24</span>, <span
+                                        class="js_number">75</span>, <span class="js_number">96</span>, <span
+                                        class="js_number">105</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an array filled with all
+                                scoring-calc-category value properties</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">categoryWeights</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.categoryWeights</code>
+                            </td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="js_number">39.725</span>, <span class="js_number">16.693</span>, <span
+                                        class="js_number">13.247</span>, <span class="js_number">10.180</span>, <span
+                                        class="js_number">20.153</span>]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns an array filled with all current
+                                scoring-calc-category weight properties</td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">elements</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.elements</code></td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">[<span
+                                        class="html_tag">scoring-calc-category</span>, <span
+                                        class="html_tag">scoring-calc-category</span>, ...]</samp></td>
+                            <td class="web_comp_access_table_definition">Returns a HTMLCollection of all children html
+                                elements of the parent scoring-calc html element
+                            <td>
+                        </tr>
+                        <tr>
+                            <td class="web_comp_access_table_prop">score</td>
+                            <td class="web_comp_access_table_example"><code class="code_box">dvsc.score</code></td>
+                            <td class="web_comp_access_table_output"><samp class="code_box"><span
+                                        class="js_number">58.61188808308917</span></samp></td>
+                            <td class="web_comp_access_table_definition">Returns the total current score</td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Usage</th>
+                            <th>Example Output</th>
+                            <th>Definition</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="web_comp_access_table_method">dump</td>
+                            <td class="web_comp_access_table_example"><code
+                                    class="code_box">dvsc.<span class="js_function">dump()</span></code></td>
+                            <td class="web_comp_access_table_output"><samp class="code_box">{<span
+                                        class="html_tag">elements:</span>
+                                    HTMLCollection(5), <span class="html_tag">categoryCount:</span> <span
+                                        class="js_number">5</span>, <span class="html_tag">categoryNumbers:</span>
+                                    Array(5), …}</samp></td>
+                            <td class="web_comp_access_table_definition">Returns a Object with every property and its values
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </details>
+        </div>
+        <div name="react" class="dvsc_showcase">
             <h2>Demo 3 - React Component (JSX)</h2>
-            <div style="background: white; color: black ;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; padding: 64px; border-radius: 16px;" id="reactRoot"></div>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"
-                integrity="sha512-8Q6Y9XnTbOE+JNvjBQwJ2H8S+UV4uA6hiRykhdtIyDYZ2TprdNmWOUaKdGzOhyr4dCyk287OejbPvwl7lrfqrQ=="
-                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"
-                integrity="sha512-MOCpqoRoisCTwJ8vQQiciZv0qcpROCidek3GTFS6KTk2+y7munJIlKCVkFCYY+p3ErYFXCjmFjnfTTRSC1OHWQ=="
-                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.21.1/babel.min.js"
-                integrity="sha512-z0rp+2sMVuQ6y3OEU9pb4eVTdf4bZ8LXrEx58aUZn3BBkVxJmeTGqBbSwrnNqbHDMdxrgW9b2PPGerobCB3dWQ=="
-                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            <link href="../../src/react/style.css" type="text/css" rel="stylesheet">
+            <div class="calculator"  id="reactRoot"></div>
+           
             <script type="text/babel">
                 const { useState, useEffect, useCallback, useRef } = React;
                 const App = (props) => {
@@ -419,264 +435,6 @@
                         categoryValues: [70, 12, 5, 60, 80],
                         categoryWeights: [20.00, 20.00, 20.00, 20.00, 20.00], // presets	
                     };
-
-                    const getScoreLinear = useCallback((value, bias, target, direction, grain) => {
-                        if (grain === 0) {
-                            throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
-                        }
-                        else if (direction === 0) {
-                            throw console.error("Invalid direction value found in config!\nThe direction value can not be 0.\nAllowed values are either '-1' or '1')");
-                        }
-                        let g = 1 / (2 * grain);
-                        let b = (bias - 5.001) / (bias + 5.001);
-                        function h(x) {
-                            return direction * (x - target);
-                        }
-                        function f(x) {
-                            return (1000 / Math.PI) * Math.atan(1000 * x);
-                        }
-                        let factor = f(-h(value)) + f(h(value)) * (b * g * h(value) + 1) + f(h(value + (1 / (direction * b * g)))) * (-1 * b * g * h(value) - 1) + 500;
-                        return factor < 0.0001 ? 0.0001 : factor;
-                    })
-
-                    const getScoreQuadratic = useCallback((value, bias, target, direction, grain) => {
-                        if (grain === 0) {
-                            throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
-                        }
-                        else if (direction === 0) {
-                            throw console.error("Invalid direction value found in config!\nThe direction value can not be 0.\nAllowed values are either '-1' or '1')");
-                        }
-                        let b = (bias - 5.001) / (bias + 5.001);
-                        let g = 1 / (Math.pow(2, (1 / 2)) * grain);
-                        function f(x) {
-                            return (1 / Math.PI) * Math.atan(x) + 0.5;
-                        }
-                        function h(x) {
-                            return 2 * f(-2 * Math.pow(x, 2)) - 1;
-                        }
-                        function j(x) {
-                            return direction * (x - target);
-                        }
-                        let factor = 1000 * f(1000 * j(value)) * h(g * b * j(value)) + 1000;
-                        return factor < 0.0001 ? 0.0001 : factor;
-                    });
-                    const getScoreCubic = useCallback((value, bias, target, direction, grain) => {
-                        if (grain === 0) {
-                            throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
-                        }
-                        else if (direction === 0) {
-                            throw console.error("Invalid direction value found in config!\nThe direction value can not be 0.\nAllowed values are either '-1' or '1')");
-                        }
-                        let b = (bias - 5.001) / (bias + 5.001);
-                        let g = 1 / (Math.pow(2, (1 / 3)) * grain);
-                        function f(x) {
-                            return (1 / Math.PI) * Math.atan(x) + 0.5;
-                        }
-                        function h(x) {
-                            return 2 * f(2 * Math.pow(x, 3)) - 1;
-                        }
-                        function j(x) {
-                            return direction * (x - target);
-                        }
-
-                        let factor = 1000 * f(1000 * j(value)) * h(g * b * j(value)) + 1000;
-                        return factor < 0.0001 ? 0.0001 : factor;
-                    });
-                    const getScoreDefault = useCallback((value, bias, target, direction, grain) => {
-                        if (grain === 0) {
-                            throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
-                        }
-                        else if (direction === 0) {
-                            throw console.error("Invalid direction value found in config!\nThe direction value can not be 0.\nAllowed values are either '-1' or '1')");
-                        }
-                        let b = (bias - 5.001) / (bias + 5.001);
-                        let g = 1 / (2 * grain);
-                        function f(x) {
-                            return (1 / Math.PI) * Math.atan(x) + 0.5;
-                        }
-                        function h(x) {
-                            return 2 * f(2 * x) - 1;
-                        }
-                        function j(x) {
-                            return direction * (x - target);
-                        }
-                        let factor = 1000 * f(1000 * j(value)) * h(g * b * j(value)) + 1000;
-                        return factor < 0.0001 ? 0.0001 : factor;
-                    });
-
-                    const calcWeights = useCallback((inputMatrix, inputVector) => {
-
-                        let output;
-                        /*
-                          Made with matrix.js from Raghavendra Ravikumar
-                          MIT License copyright (c) 2016 Raghavendra Ravikumar
-                          https://github.com/RaghavCodeHub/matrix/blob/master/LICENSE-MIT
-                        */
-                        function rational(t, n) {
-                            return (
-                                (n = n || 1),
-                                -1 === Math.sign(n) && ((t = -t), (n = -n)),
-                                { num: t, den: n, add: (e) => rational(t * e.den + n * e.num, n * e.den), sub: (e) => rational(t * e.den - n * e.num, n * e.den), mul: (e) => multiply(e, t, n), div: (e) => multiply(rational(e.den, e.num), t, n) }
-                            );
-                        }
-                        function multiply(t, n, e) {
-
-                            let r = Math.sign(n) * Math.sign(t.num),
-                                i = Math.sign(e) * Math.sign(t.den);
-                            return (
-                                Math.abs(n) === Math.abs(t.den) && Math.abs(e) === Math.abs(t.num)
-                                    ? ((r = r), (i = i))
-                                    : Math.abs(e) === Math.abs(t.num)
-                                        ? ((r *= Math.abs(n)), (i *= Math.abs(t.den)))
-                                        : Math.abs(n) === Math.abs(t.den)
-                                            ? ((r *= Math.abs(t.num)), (i *= Math.abs(e)))
-                                            : ((r = n * t.num), (i = e * t.den)),
-                                rational(r, i)
-                            );
-                        }
-                        function merge(t) {
-
-
-                            return { top: (n) => top(t, n), bottom: (n) => bottom(t, n), left: (n) => left(t, n), right: (n) => right(t, n) };
-                        }
-                        function matrix(t) {
-
-
-                            if (!Array.isArray(t)) throw new Error("Input should be of type array");
-                            return Object.assign(function () {
-                                let n = 1 === arguments.length ? [arguments[0]] : Array.apply(null, arguments);
-                                return read(t, n);
-                            }, _mat(t));
-                        }
-                        function _mat(t) {
-
-                            return {
-                                size: () => size(t),
-                                add: (n) => operate(t, n, addition),
-                                sub: (n) => operate(t, n, subtraction),
-                                mul: (n) => operate(t, n, multiplication),
-                                div: (n) => operate(t, n, division),
-                                prod: (n) => prod(t, n),
-                                trans: () => trans(t),
-                                set: function () {
-                                    let n = 1 === arguments.length ? [arguments[0]] : Array.apply(null, arguments);
-                                    return { to: (e) => replace(t, e, n) };
-                                },
-                                det: () => determinant(t),
-                                inv: () => invert(t),
-                                merge: merge(t),
-                                map: (n) => map(t, n),
-                                equals: (n) => equals(t, n),
-                            };
-                        }
-                        function size(t) {
-                            let n = [];
-                            for (; Array.isArray(t);) n.push(t.length), (t = t[0]);
-                            return n;
-                        }
-                        function read(t, n) {
-                            return 0 === n.length ? t : extract(t, n);
-                        }
-                        function prod(t, n) {
-
-
-                            let e = t,
-                                r = n(),
-                                i = size(e),
-                                a = size(r),
-                                l = [];
-                            if (i[1] === a[0])
-                                for (let t = 0; t < i[0]; t++) {
-                                    l[t] = [];
-                                    for (let n = 0; n < a[1]; n++) for (let a = 0; a < i[1]; a++) void 0 === l[t][n] && (l[t][n] = 0), (l[t][n] += multiplication(e[t][a], r[a][n]));
-                                }
-                            return l;
-                        }
-                        function multiplication(t, n) {
-                            return t * n;
-                        }
-                        function invert(t) {
-
-                            let n = rationalize(t),
-                                e = size(t),
-                                r = rationalize(identity(e[0])),
-                                i = 0,
-                                a = 0;
-                            for (; a < e[0];) {
-                                if (0 === n[i][a].num) for (let t = i + 1; t < e[0]; t++) 0 !== n[t][a].num && (interchange(n, i, t), interchange(r, i, t));
-                                if (0 !== n[i][a].num) {
-                                    if (1 !== n[i][a].num || 1 !== n[i][a].den) {
-                                        let t = rational(n[i][a].num, n[i][a].den);
-                                        for (let a = 0; a < e[1]; a++) (n[i][a] = n[i][a].div(t)), (r[i][a] = r[i][a].div(t));
-                                    }
-                                    for (let t = i + 1; t < e[0]; t++) {
-                                        let l = n[t][a];
-                                        for (let a = 0; a < e[1]; a++) (n[t][a] = n[t][a].sub(l.mul(n[i][a]))), (r[t][a] = r[t][a].sub(l.mul(r[i][a])));
-                                    }
-                                }
-                                (i += 1), (a += 1);
-                            }
-                            let l = e[0] - 1;
-                            if (1 !== n[l][l].num || 1 !== n[l][l].den) {
-                                let t = rational(n[l][l].num, n[l][l].den);
-                                for (let i = 0; i < e[1]; i++) (n[l][i] = n[l][i].div(t)), (r[l][i] = r[l][i].div(t));
-                            }
-                            for (let t = e[0] - 1; t > 0; t--)
-                                for (let i = t - 1; i >= 0; i--) {
-                                    let a = rational(-n[i][t].num, n[i][t].den);
-                                    for (let l = 0; l < e[1]; l++) (n[i][l] = a.mul(n[t][l]).add(n[i][l])), (r[i][l] = a.mul(r[t][l]).add(r[i][l]));
-                                }
-                            return derationalize(r);
-                        }
-                        function rationalize(t) {
-
-                            let n = [];
-                            return (
-                                t.forEach((t, e) => {
-                                    n.push(t.map((t) => rational(t)));
-                                }),
-                                n
-                            );
-                        }
-                        function derationalize(t) {
-
-
-                            let n = [];
-                            return (
-                                t.forEach((t, e) => {
-                                    n.push(t.map((t) => t.num / t.den));
-                                }),
-                                n
-                            );
-                        }
-                        function generate(t, n) {
-
-
-                            let e = 2;
-                            for (; e > 0;) {
-                                for (var r = [], i = 0; i < t; i++) Array.isArray(n) ? r.push(Object.assign([], n)) : r.push(n);
-                                (n = r), (e -= 1);
-                            }
-                            return n;
-                        }
-                        function identity(t) {
-
-                            let n = generate(t, 0);
-                            return (
-                                n.forEach((t, n) => {
-                                    t[n] = 1;
-                                }),
-                                n
-                            );
-                        }
-
-                        let A = matrix(inputMatrix);
-                        let b = matrix(inputVector);
-                        let MatrixInverse = A.inv();
-                        output = prod(MatrixInverse, b);
-                        return output.flat();
-                    })
-
 
                     function DynamicVisualScoringCalculator(props) {
                         const [categoryBias, setCategoryBias] = useState(props.config.categoryBias);
@@ -979,7 +737,6 @@
 
                         }, [categoryScores, categoryWeights, categoryCount, svgTexts]);
 
-
                         const minHandler = (index) => {
                             if (categoryDirections[index] === -1) {
                                 return (categoryValues[index]).toString();
@@ -1135,6 +892,265 @@
                             calcTotalScore();
                             setOffset();
                         }, [categoryWeights])
+
+
+
+                        const getScoreLinear = useCallback((value, bias, target, direction, grain) => {
+                            if (grain === 0) {
+                                throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
+                            }
+                            else if (direction === 0) {
+                                throw console.error("Invalid direction value found in config!\nThe direction value can not be 0.\nAllowed values are either '-1' or '1')");
+                            }
+                            let g = 1 / (2 * grain);
+                            let b = (bias - 5.001) / (bias + 5.001);
+                            function h(x) {
+                                return direction * (x - target);
+                            }
+                            function f(x) {
+                                return (1000 / Math.PI) * Math.atan(1000 * x);
+                            }
+                            let factor = f(-h(value)) + f(h(value)) * (b * g * h(value) + 1) + f(h(value + (1 / (direction * b * g)))) * (-1 * b * g * h(value) - 1) + 500;
+                            return factor < 0.0001 ? 0.0001 : factor;
+                        })
+                        const getScoreQuadratic = useCallback((value, bias, target, direction, grain) => {
+                            if (grain === 0) {
+                                throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
+                            }
+                            else if (direction === 0) {
+                                throw console.error("Invalid direction value found in config!\nThe direction value can not be 0.\nAllowed values are either '-1' or '1')");
+                            }
+                            let b = (bias - 5.001) / (bias + 5.001);
+                            let g = 1 / (Math.pow(2, (1 / 2)) * grain);
+                            function f(x) {
+                                return (1 / Math.PI) * Math.atan(x) + 0.5;
+                            }
+                            function h(x) {
+                                return 2 * f(-2 * Math.pow(x, 2)) - 1;
+                            }
+                            function j(x) {
+                                return direction * (x - target);
+                            }
+                            let factor = 1000 * f(1000 * j(value)) * h(g * b * j(value)) + 1000;
+                            return factor < 0.0001 ? 0.0001 : factor;
+                        });
+                        const getScoreCubic = useCallback((value, bias, target, direction, grain) => {
+                            if (grain === 0) {
+                                throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
+                            }
+                            else if (direction === 0) {
+                                throw console.error("Invalid direction value found in config!\nThe direction value can not be 0.\nAllowed values are either '-1' or '1')");
+                            }
+                            let b = (bias - 5.001) / (bias + 5.001);
+                            let g = 1 / (Math.pow(2, (1 / 3)) * grain);
+                            function f(x) {
+                                return (1 / Math.PI) * Math.atan(x) + 0.5;
+                            }
+                            function h(x) {
+                                return 2 * f(2 * Math.pow(x, 3)) - 1;
+                            }
+                            function j(x) {
+                                return direction * (x - target);
+                            }
+
+                            let factor = 1000 * f(1000 * j(value)) * h(g * b * j(value)) + 1000;
+                            return factor < 0.0001 ? 0.0001 : factor;
+                        });
+                        const getScoreDefault = useCallback((value, bias, target, direction, grain) => {
+                            if (grain === 0) {
+                                throw console.error("Invalid grain value found in config!\nThe grain value needs to be greater than 0");
+                            }
+                            else if (direction === 0) {
+                                throw console.error("Invalid direction value found in config!\nThe direction value can not be 0.\nAllowed values are either '-1' or '1')");
+                            }
+                            let b = (bias - 5.001) / (bias + 5.001);
+                            let g = 1 / (2 * grain);
+                            function f(x) {
+                                return (1 / Math.PI) * Math.atan(x) + 0.5;
+                            }
+                            function h(x) {
+                                return 2 * f(2 * x) - 1;
+                            }
+                            function j(x) {
+                                return direction * (x - target);
+                            }
+                            let factor = 1000 * f(1000 * j(value)) * h(g * b * j(value)) + 1000;
+                            return factor < 0.0001 ? 0.0001 : factor;
+                        });
+                        const calcWeights = useCallback((inputMatrix, inputVector) => {
+
+                            let output;
+                            /*
+                              Made with matrix.js from Raghavendra Ravikumar
+                              MIT License copyright (c) 2016 Raghavendra Ravikumar
+                              https://github.com/RaghavCodeHub/matrix/blob/master/LICENSE-MIT
+                            */
+                            function rational(t, n) {
+                                return (
+                                    (n = n || 1),
+                                    -1 === Math.sign(n) && ((t = -t), (n = -n)),
+                                    { num: t, den: n, add: (e) => rational(t * e.den + n * e.num, n * e.den), sub: (e) => rational(t * e.den - n * e.num, n * e.den), mul: (e) => multiply(e, t, n), div: (e) => multiply(rational(e.den, e.num), t, n) }
+                                );
+                            }
+                            function multiply(t, n, e) {
+
+                                let r = Math.sign(n) * Math.sign(t.num),
+                                    i = Math.sign(e) * Math.sign(t.den);
+                                return (
+                                    Math.abs(n) === Math.abs(t.den) && Math.abs(e) === Math.abs(t.num)
+                                        ? ((r = r), (i = i))
+                                        : Math.abs(e) === Math.abs(t.num)
+                                            ? ((r *= Math.abs(n)), (i *= Math.abs(t.den)))
+                                            : Math.abs(n) === Math.abs(t.den)
+                                                ? ((r *= Math.abs(t.num)), (i *= Math.abs(e)))
+                                                : ((r = n * t.num), (i = e * t.den)),
+                                    rational(r, i)
+                                );
+                            }
+                            function merge(t) {
+
+
+                                return { top: (n) => top(t, n), bottom: (n) => bottom(t, n), left: (n) => left(t, n), right: (n) => right(t, n) };
+                            }
+                            function matrix(t) {
+
+
+                                if (!Array.isArray(t)) throw new Error("Input should be of type array");
+                                return Object.assign(function () {
+                                    let n = 1 === arguments.length ? [arguments[0]] : Array.apply(null, arguments);
+                                    return read(t, n);
+                                }, _mat(t));
+                            }
+                            function _mat(t) {
+
+                                return {
+                                    size: () => size(t),
+                                    add: (n) => operate(t, n, addition),
+                                    sub: (n) => operate(t, n, subtraction),
+                                    mul: (n) => operate(t, n, multiplication),
+                                    div: (n) => operate(t, n, division),
+                                    prod: (n) => prod(t, n),
+                                    trans: () => trans(t),
+                                    set: function () {
+                                        let n = 1 === arguments.length ? [arguments[0]] : Array.apply(null, arguments);
+                                        return { to: (e) => replace(t, e, n) };
+                                    },
+                                    det: () => determinant(t),
+                                    inv: () => invert(t),
+                                    merge: merge(t),
+                                    map: (n) => map(t, n),
+                                    equals: (n) => equals(t, n),
+                                };
+                            }
+                            function size(t) {
+                                let n = [];
+                                for (; Array.isArray(t);) n.push(t.length), (t = t[0]);
+                                return n;
+                            }
+                            function read(t, n) {
+                                return 0 === n.length ? t : extract(t, n);
+                            }
+                            function prod(t, n) {
+
+
+                                let e = t,
+                                    r = n(),
+                                    i = size(e),
+                                    a = size(r),
+                                    l = [];
+                                if (i[1] === a[0])
+                                    for (let t = 0; t < i[0]; t++) {
+                                        l[t] = [];
+                                        for (let n = 0; n < a[1]; n++) for (let a = 0; a < i[1]; a++) void 0 === l[t][n] && (l[t][n] = 0), (l[t][n] += multiplication(e[t][a], r[a][n]));
+                                    }
+                                return l;
+                            }
+                            function multiplication(t, n) {
+                                return t * n;
+                            }
+                            function invert(t) {
+
+                                let n = rationalize(t),
+                                    e = size(t),
+                                    r = rationalize(identity(e[0])),
+                                    i = 0,
+                                    a = 0;
+                                for (; a < e[0];) {
+                                    if (0 === n[i][a].num) for (let t = i + 1; t < e[0]; t++) 0 !== n[t][a].num && (interchange(n, i, t), interchange(r, i, t));
+                                    if (0 !== n[i][a].num) {
+                                        if (1 !== n[i][a].num || 1 !== n[i][a].den) {
+                                            let t = rational(n[i][a].num, n[i][a].den);
+                                            for (let a = 0; a < e[1]; a++) (n[i][a] = n[i][a].div(t)), (r[i][a] = r[i][a].div(t));
+                                        }
+                                        for (let t = i + 1; t < e[0]; t++) {
+                                            let l = n[t][a];
+                                            for (let a = 0; a < e[1]; a++) (n[t][a] = n[t][a].sub(l.mul(n[i][a]))), (r[t][a] = r[t][a].sub(l.mul(r[i][a])));
+                                        }
+                                    }
+                                    (i += 1), (a += 1);
+                                }
+                                let l = e[0] - 1;
+                                if (1 !== n[l][l].num || 1 !== n[l][l].den) {
+                                    let t = rational(n[l][l].num, n[l][l].den);
+                                    for (let i = 0; i < e[1]; i++) (n[l][i] = n[l][i].div(t)), (r[l][i] = r[l][i].div(t));
+                                }
+                                for (let t = e[0] - 1; t > 0; t--)
+                                    for (let i = t - 1; i >= 0; i--) {
+                                        let a = rational(-n[i][t].num, n[i][t].den);
+                                        for (let l = 0; l < e[1]; l++) (n[i][l] = a.mul(n[t][l]).add(n[i][l])), (r[i][l] = a.mul(r[t][l]).add(r[i][l]));
+                                    }
+                                return derationalize(r);
+                            }
+                            function rationalize(t) {
+
+                                let n = [];
+                                return (
+                                    t.forEach((t, e) => {
+                                        n.push(t.map((t) => rational(t)));
+                                    }),
+                                    n
+                                );
+                            }
+                            function derationalize(t) {
+
+
+                                let n = [];
+                                return (
+                                    t.forEach((t, e) => {
+                                        n.push(t.map((t) => t.num / t.den));
+                                    }),
+                                    n
+                                );
+                            }
+                            function generate(t, n) {
+
+
+                                let e = 2;
+                                for (; e > 0;) {
+                                    for (var r = [], i = 0; i < t; i++) Array.isArray(n) ? r.push(Object.assign([], n)) : r.push(n);
+                                    (n = r), (e -= 1);
+                                }
+                                return n;
+                            }
+                            function identity(t) {
+
+                                let n = generate(t, 0);
+                                return (
+                                    n.forEach((t, n) => {
+                                        t[n] = 1;
+                                    }),
+                                    n
+                                );
+                            }
+
+                            let A = matrix(inputMatrix);
+                            let b = matrix(inputVector);
+                            let MatrixInverse = A.inv();
+                            output = prod(MatrixInverse, b);
+                            return output.flat();
+                        })
+
+
 
                         useEffect(() => {
                             let newTargetMins = [];
@@ -1313,7 +1329,7 @@
                     }
 
                     return (
-                        <DynamicVisualScoringCalculator config={DVSC}/>
+                        <DynamicVisualScoringCalculator config={DVSC} />
                         // <Test />
                     );
                 }
@@ -1322,11 +1338,15 @@
 
                 reactRoot.render(<App />)
             </script>
-            <p style="text-align: center;">
+            <p class="description">In React the configuration is contained by an object and passed to the component via the config property</p>
+        <details>
+            <summary>Show configuration for this example</summary>
+            <p class="description">
                 This is an example on how the implementation in React would look like:<sup>*</sup><br>
-                <small>* This example would only work with an installed npm version of react. The source code of this demo page uses the CDN version of React and is therefore adjusted</small>
+                <small>* This example would only work with an installed npm version of react. The source code of this
+                    demo page uses the CDN version of React and is therefore adjusted</small>
             </p>
-                <code class="code_box">
+            <code class="code_box">
                     <span class="js_var">import</span> <span>React</span> <span class="js_var">from</span> <span class="js_string">&quot;react&quot;</span>;<br>
                <span class="js_var">import</span> <span >DynamicVisualScoringCalculator</span> <span class="js_var">from</span> <span class="js_string">&quot;./DynamicVisualScoringCalculator&quot;</span>;<br><br>
                
@@ -1355,10 +1375,10 @@
                <br>
                <span class="js_var">export</span> <span class="js_var">default</span> <span>MyComponent</span>;
             </code>
-
+        </details>
+        </div>
     </section>
-
-    <section>
+    <section name="guide">
         <h2>Guide</h2>
         <div class="guide">
             <p>To calculate a single <var>categoryScore</var>, the main principle is the difference between the
@@ -2290,8 +2310,4 @@
         </div>
     </section>
 </body>
-<script src="../../src/vanilla/script.js" defer type="module"></script>
-<link href="../../src/vanilla/style.css" type="text/css" rel="stylesheet">
-<link href="./demo.css" type="text/css" rel="stylesheet">
-
 </html>
