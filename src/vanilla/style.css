@@ -1,3 +1,56 @@
+:root{
+    --default-color-1:  rgb(128, 0, 0);
+    --default-color-2:  rgb(106, 107, 26);
+    --default-color-3:  #008011;
+    --default-color-4:  #006680;
+    --default-color-5:  hsl(16, 100%, 50%);
+    --default-color-6:  #558000
+    --default-color-7:  hsl(144, 100%, 50%);
+    --default-color-8:  hwb(208 0% 50%);
+    --default-color-9:  hsl(32, 100%, 50%);
+    --default-color-10: hsl(96, 100%, 50%);
+    --default-color-11: hsl(160, 100%, 50%);
+    --default-color-12: hsl(224, 100%, 50%);
+    --default-color-13: hsl(48, 100%, 50%);
+    --default-color-14: hsl(112, 100%, 50%);
+    --default-color-15: hsl(176, 100%, 50%);
+    --default-color-16: hsl(0, 0%, 47%);
+    
+
+    --default-color-1:  rgb(255, 0, 0);
+    --default-color-2:  rgb(232, 235, 25);
+    --default-color-3:  #008011;
+    --default-color-4:  #006680;
+    --default-color-5:  #804400;
+    --default-color-6:  #558000;
+    --default-color-7:  #00ff66;
+    --default-color-8:  #0088ff;
+    --default-color-9:  #808800;
+    --default-color-10: #66ff00;
+    --default-color-11: #00ffaa;
+    --default-color-12: #0044ff;
+    --default-color-13: #ffcc00;
+    --default-color-14: #22ff00;
+    --default-color-15: #00ffee;
+    --default-color-16: #0000ff;
+
+    --default-color-1:  #ff0000;
+    --default-color-2:  #e8eb19;
+    --default-color-3:  #00ff22;
+    --default-color-4:  #00ccff;
+    --default-color-5:  #ff4400;
+    --default-color-6:  #aaff00;
+    --default-color-7:  #00ff66;
+    --default-color-8:  #0088ff;
+    --default-color-9:  #ff8800;
+    --default-color-10: #66ff00;
+    --default-color-11: #00ffaa;
+    --default-color-12: #0044ff;
+    --default-color-13: #ffcc00;
+    --default-color-14: #22ff00;
+    --default-color-15: #00ffee;
+    --default-color-16: #0000ff;
+}
 
 svg{
     -webkit-transition: all 0.5s ease-out;
@@ -97,6 +150,7 @@ div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td:nt
     -webkit-box-pack: center;
     -webkit-justify-content: center;
             justify-content: center;
+            gap: 0;
 }
 
 div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td>input[type="range"]{
@@ -222,6 +276,12 @@ div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td>.d
     word-break: keep-all;
 }
 
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td>.dvsc_tab:has(mjx-container){
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+
 
 div.dynamic_visual_scoring_calculator#no1>div.dvsc_settings>table>tbody>tr>td>.dvsc_tab>output.dvsc_category_score_display{
     font-weight: bold;
@@ -255,7 +315,7 @@ div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg * 
     dominant-baseline: middle;
 }
 
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions>circle.dvsc_fraction {
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions>g>circle.dvsc_fraction {
     cx: 50;
     cy: 50;
     r: 46;
@@ -267,16 +327,17 @@ div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#
             transform-origin: center;
 }
 
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions>circle.dvsc_fraction_bg {
-    opacity: 0.5;
-}
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions>g>circle.dvsc_fraction_bg {
+    /* opacity: 0.5; */
+  
+    }
 
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions>circle.dvsc_fraction_bar {
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions>g>circle.dvsc_fraction_bar {
     opacity: 1;
 }
 
 
-div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions>text.category_text{
+div.dynamic_visual_scoring_calculator#no1>div.dvsc_output>svg.dvsc_output_svg>g#dvsc_fractions>g>text.category_text{
     font-size: 8px;
     font-weight: 600;
     opacity: 0.5

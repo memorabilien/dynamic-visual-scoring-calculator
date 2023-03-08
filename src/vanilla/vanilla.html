@@ -1,0 +1,78 @@
+<!DocType html>
+<html id="vanilla_html">
+<head>
+<script src="./script.js" async type="module"></script>
+<link  href="./style.css" type="text/css" rel="stylesheet">
+<style>
+    #vanilla_html{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+        margin: 0;
+        height: 100%;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    #vanilla_body{
+        height: fit-content;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+</style>
+</head>
+<body id="vanilla_body">
+<div class="dynamic_visual_scoring_calculator" id="no1">
+    <div class="dvsc_settings">
+        <table>
+            <thead>
+                <th>Category</th>
+                <th>Value</th>
+                <th>Target Value</th>
+                <th>Bias</th>
+                <th>
+                    <span class="dvsc_table_head_weighting">
+                        <button class="discard_btn" style="display: none;" title="discard changes">
+                            <svg height="26" viewBox="0 0 26 26" width="26" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.429 12.524a9.905 9.905 0 0 1-9.905 9.905 9.905 9.905 0 0 1-9.905-9.905 9.905 9.905 0 0 1 19.81 0zM8.81 8.81l7.429 7.429m0-7.429L8.81 16.239" fill="none" stroke="#ff1d15" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        Weighting 
+                        <button class="set_weights_btn" title="set the weights manually">
+                            <svg height="26" viewBox="0 0 26 26" width="26" xmlns="http://www.w3.org/2000/svg">
+                                <g fill="none" fill-rule="evenodd" stroke="#999999" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2">
+                                    <path d="M12.285 3.619c.434 0 .863.032 1.28.094l.629 1.906a6.784 6.784 0 0 1 1.56.664l1.808-.872a8.683 8.683 0 0 1 1.69 1.719l-.904 1.791a6.79 6.79 0 0 1 .636 1.572l1.895.66a8.748 8.748 0 0 1-.021 2.412l-1.906.629a6.893 6.893 0 0 1-.664 1.56l.872 1.808a8.718 8.718 0 0 1-1.719 1.69l-1.791-.904a6.818 6.818 0 0 1-1.572.636l-.66 1.895a8.748 8.748 0 0 1-2.412-.021l-.629-1.906a6.893 6.893 0 0 1-1.56-.664l-1.808.872a8.718 8.718 0 0 1-1.69-1.719l.904-1.791a6.89 6.89 0 0 1-.636-1.572l-1.895-.661a8.748 8.748 0 0 1 .021-2.41l1.906-.629a6.784 6.784 0 0 1 .664-1.56L5.411 7.01A8.718 8.718 0 0 1 7.13 5.32l1.791.904a6.818 6.818 0 0 1 1.572-.636l.661-1.895a8.741 8.741 0 0 1 1.131-.074z"/>
+                                    <path d="M16 12.285A3.715 3.715 0 0 1 12.285 16a3.715 3.715 0 0 1-3.713-3.715 3.715 3.715 0 0 1 7.428 0z"/>
+                                </g>
+                            </svg>                                            
+                        </button>
+                    </span>
+                    <div class="manual_input_modal" style="display: none;">
+                    <span class="manual_input_inputs">
+
+                    </span>
+                    <span class="manual_input_sum">100.00</span>
+                    </div>
+                </th>
+                <th>Score</th>
+            </thead>
+            <tbody class="dvsc_table_body">
+                
+            </tbody>
+        </table>
+    </div>
+    <div class="dvsc_output">
+        <svg xmlns="http://www.w3.org/2000/svg" class="dvsc_output_svg" viewBox="0 0 100 100">
+            <g id="dvsc_fractions">
+            </g>
+            <g id="dvsc_total_score">
+                <circle cx="50"  cy="50" r="40" id="dvsc_score_indicator" fill="none"></circle>
+                <text id="dvsc_score_text" x="50" y="50">100</text>
+            </g>
+        </svg>
+    </div>
+</div>
+</body>
+</html>
